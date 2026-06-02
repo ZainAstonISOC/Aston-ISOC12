@@ -34,8 +34,8 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-20">
           {STATS.map((s) => (
             <div key={s.label} className="text-center p-6" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
-              <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>{s.value}</p>
-              <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{s.label}</p>
+              <p style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>{s.value}</p>
+              <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -46,29 +46,29 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-12 mb-20">
           <div>
             <p className="label mb-4">Our Story</p>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#fff", marginBottom: "1.5rem" }}>
+            <h2 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#fff", marginBottom: "1.5rem" }}>
               Serving Aston for Decades
             </h2>
-            <div className="space-y-4 text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+            <div className="space-y-4 text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
               <p>Aston ISOC has been the home of Muslim students at Aston University for decades. We are a family — built on faith, sustained by community, and driven by purpose.</p>
               <p>From daily congregational prayers to national charity campaigns, from intimate study circles to large-scale conferences, we serve every dimension of the Muslim student experience.</p>
               <p>We exist to ensure that no Muslim student at Aston ever feels alone, lost, or disconnected from their faith and identity.</p>
             </div>
             <div className="mt-8 border-l-2 pl-5" style={{ borderColor: "#C9A227" }}>
-              <p className="italic" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#E5E7EB", lineHeight: 1.6 }}>
+              <p className="italic" style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#E5E7EB", lineHeight: 1.6 }}>
                 &ldquo;And hold firmly to the rope of Allah all together and do not become divided.&rdquo;
               </p>
-              <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>Surah Al-Imran · 3:103</p>
+              <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Surah Al-Imran · 3:103</p>
             </div>
           </div>
           <div>
             <p className="label mb-4">Our Mission</p>
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#fff", marginBottom: "1.5rem" }}>
+            <h2 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#fff", marginBottom: "1.5rem" }}>
               What We Stand For
             </h2>
             <div className="space-y-3">
               {MISSION.map((m) => (
-                <div key={m} className="flex items-start gap-3 text-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+                <div key={m} className="flex items-start gap-3 text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
                   <span style={{ color: "#C9A227", flexShrink: 0, marginTop: 2 }}>✦</span>
                   {m}
                 </div>
@@ -92,8 +92,8 @@ export default function AboutPage() {
               className="block p-6 transition-all duration-200"
               style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
             >
-              <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{l.title} →</p>
-              <p className="text-xs" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{l.sub}</p>
+              <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{l.title} →</p>
+              <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{l.sub}</p>
             </Link>
           ))}
         </div>

@@ -32,11 +32,11 @@ export default function BrothersPage() {
         <div className="container relative z-10">
           <Breadcrumb crumbs={[{ label: "Brothers' Section" }]} />
           <p className="label mb-4" style={{ color: "rgba(165,180,252,0.7)" }}>For Brothers</p>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2.5rem,6vw,4.5rem)", fontWeight: 300, color: "#fff", lineHeight: 1.05, marginBottom: "1rem" }}>
+          <h1 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "clamp(2.5rem,6vw,4.5rem)", fontWeight: 300, color: "#fff", lineHeight: 1.05, marginBottom: "1rem" }}>
             Brothers&apos;<br /><em style={{ color: "#a5b4fc" }}>Section</em>
           </h1>
           <span className="gold-rule" />
-          <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
+          <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", fontSize: "0.95rem" }}>
             Brotherhood, sports, circles, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston — led by Abdikarim &amp; Shaz.
           </p>
           <div className="flex gap-3 flex-wrap">
@@ -61,8 +61,8 @@ export default function BrothersPage() {
                 style={{ background: "#131629", border: "1px solid rgba(165,180,252,0.1)", borderRadius: "1rem" }}
               >
                 <span className="text-2xl block mb-3">{item.icon}</span>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
+                <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -73,7 +73,7 @@ export default function BrothersPage() {
             <Reveal>
               <div className="flex items-end justify-between mb-6">
                 <p className="label">Upcoming Brothers&apos; Events</p>
-                <Link href="/events" className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>All Events →</Link>
+                <Link href="/events" className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>All Events →</Link>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {brothersEvents.map((e) => <EventCard key={e.id} event={e} />)}

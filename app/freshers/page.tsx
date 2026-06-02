@@ -40,11 +40,11 @@ export default function FreshersPage() {
         <div className="container relative z-10">
           <Breadcrumb crumbs={[{ label: "Freshers Hub" }]} />
           <p className="label mb-4">Welcome to Aston</p>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2.5rem,6vw,4.5rem)", fontWeight: 300, color: "#fff", lineHeight: 1.05, marginBottom: "1rem" }}>
+          <h1 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "clamp(2.5rem,6vw,4.5rem)", fontWeight: 300, color: "#fff", lineHeight: 1.05, marginBottom: "1rem" }}>
             Freshers Hub<br /><em style={{ color: "#C9A227" }}>2026</em>
           </h1>
           <span className="gold-rule" />
-          <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
+          <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", fontSize: "0.95rem" }}>
             Starting university is a big step. We&apos;ve made it our mission to ensure every Muslim student at Aston feels welcomed, grounded, and part of a family from day one.
           </p>
           <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ fontSize: "0.78rem" }}>
@@ -70,12 +70,12 @@ export default function FreshersPage() {
               >
                 <p
                   className="text-xs font-semibold tracking-widest uppercase mb-3"
-                  style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif", background: "rgba(201,162,39,0.1)", display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "0.25rem" }}
+                  style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", background: "rgba(201,162,39,0.1)", display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "0.25rem" }}
                 >
                   Coming Soon
                 </p>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.1rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
-                <p className="text-sm" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
+                <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.1rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
+                <p className="text-sm" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -95,8 +95,8 @@ export default function FreshersPage() {
                 style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
               >
                 <span className="text-2xl block mb-3">{item.icon}</span>
-                <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{item.title}</p>
-                <p className="text-xs" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
+                <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{item.title}</p>
+                <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{item.desc}</p>
               </Link>
             ))}
           </div>
@@ -110,8 +110,8 @@ export default function FreshersPage() {
           >
             <div>
               <p className="label mb-1">Member Perk</p>
-              <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>ISOC Discount Card 2025/26</p>
-              <p className="text-sm mt-1" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>Exclusive discounts for ISOC members across Birmingham and online.</p>
+              <p className="font-medium" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>ISOC Discount Card 2025/26</p>
+              <p className="text-sm mt-1" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Exclusive discounts for ISOC members across Birmingham and online.</p>
             </div>
             <a href={MEMBERSHIP.discountCard} target="_blank" rel="noopener noreferrer" className="btn-outline-gold shrink-0" style={{ fontSize: "0.7rem" }}>
               View Discounts →
@@ -122,7 +122,7 @@ export default function FreshersPage() {
         {/* Halal food */}
         <Reveal>
           <p className="label mb-4">Birmingham Halal Food Guide</p>
-          <p className="text-sm mb-5" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>Closest halal options to campus — always verify certification in-store.</p>
+          <p className="text-sm mb-5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Closest halal options to campus — always verify certification in-store.</p>
           <div className="overflow-hidden mb-16" style={{ border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
             {HALAL_FOOD.map((f, i) => (
               <div
@@ -131,10 +131,10 @@ export default function FreshersPage() {
                 style={{ borderBottom: i < HALAL_FOOD.length - 1 ? "1px solid rgba(201,162,39,0.06)" : "none" }}
               >
                 <div>
-                  <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "'DM Sans', sans-serif" }}>{f.name}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{f.type} · {f.notes}</p>
+                  <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{f.name}</p>
+                  <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{f.type} · {f.notes}</p>
                 </div>
-                <span className="text-xs shrink-0" style={{ color: "#4B5563", fontFamily: "'DM Sans', sans-serif" }}>{f.distance}</span>
+                <span className="text-xs shrink-0" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{f.distance}</span>
               </div>
             ))}
           </div>
@@ -170,14 +170,14 @@ export default function FreshersPage() {
               >
                 <summary
                   className="flex justify-between items-center px-5 py-4 cursor-pointer font-medium text-sm"
-                  style={{ color: "#E5E7EB", fontFamily: "'DM Sans', sans-serif", listStyle: "none" }}
+                  style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", listStyle: "none" }}
                 >
                   {faq.q}
                   <span style={{ color: "#C9A227" }}>▾</span>
                 </summary>
                 <div
                   className="px-5 pb-4 text-sm leading-relaxed"
-                  style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", borderTop: "1px solid rgba(201,162,39,0.06)" }}
+                  style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", borderTop: "1px solid rgba(201,162,39,0.06)" }}
                 >
                   {faq.a}
                 </div>

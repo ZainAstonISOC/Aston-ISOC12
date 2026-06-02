@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { DONATIONS } from "@/lib/social";
 
-const PF = "'Playfair Display', Georgia, serif";
-const DM = "'DM Sans', sans-serif";
+const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
+const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
 
 const FREQUENCIES = [
   { id: "once", label: "One-time" },

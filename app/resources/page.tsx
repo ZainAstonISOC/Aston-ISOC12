@@ -47,9 +47,9 @@ export default function ResourcesPage() {
           className="p-6 text-center"
           style={{ border: "1px dashed rgba(201,162,39,0.2)", borderRadius: "1rem" }}
         >
-          <p className="text-sm mb-2" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>Want to suggest a resource?</p>
+          <p className="text-sm mb-2" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Want to suggest a resource?</p>
           <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer"
-            className="text-xs" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>
+            className="text-xs" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
             Message @astonisoc on Instagram →
           </a>
         </div>

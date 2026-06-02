@@ -32,8 +32,8 @@ export default function CareersPage() {
         >
           <div>
             <p className="label mb-1">Coming Up</p>
-            <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>Careers Events</p>
-            <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>Networking panels, CV workshops, mock interviews, and speaker series.</p>
+            <p className="font-medium" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Careers Events</p>
+            <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Networking panels, CV workshops, mock interviews, and speaker series.</p>
           </div>
           <Link href="/events" className="btn-outline-gold shrink-0" style={{ fontSize: "0.7rem" }}>View Events →</Link>
         </div>
@@ -45,7 +45,7 @@ export default function CareersPage() {
           <Reveal>
             <div className="mb-6" style={{ borderBottom: "1px solid rgba(201,162,39,0.08)", paddingBottom: "0.75rem" }}>
               <p className="label">Islamic Finance & Halal Careers</p>
-              <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>The Islamic finance industry is worth $3+ trillion globally.</p>
+              <p className="text-xs mt-1" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>The Islamic finance industry is worth $3+ trillion globally.</p>
             </div>
             <div className="space-y-4">
               {islamicFinance.map((job) => (
@@ -60,9 +60,9 @@ export default function CareersPage() {
                       <span className="badge badge-gold">Islamic Finance</span>
                       {job.deadline && <span className="badge badge-muted">Deadline: {new Date(job.deadline).toLocaleDateString("en-GB")}</span>}
                     </div>
-                    <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{job.title}</p>
-                    <p className="text-sm mt-0.5" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{job.organisation} · {job.location}</p>
-                    <p className="text-sm mt-1.5 leading-relaxed" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{job.description}</p>
+                    <p className="font-medium" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{job.title}</p>
+                    <p className="text-sm mt-0.5" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{job.organisation} · {job.location}</p>
+                    <p className="text-sm mt-1.5 leading-relaxed" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{job.description}</p>
                   </div>
                   <a href={job.url.startsWith("/") ? job.url : job.url}
                     target={job.url.startsWith("http") ? "_blank" : undefined}
@@ -96,8 +96,8 @@ export default function CareersPage() {
                     {job.isIslamicFinance && <span className="badge badge-gold">Islamic Finance</span>}
                     {job.deadline && <span className="badge badge-muted">Deadline: {new Date(job.deadline).toLocaleDateString("en-GB")}</span>}
                   </div>
-                  <p className="font-medium text-sm" style={{ color: "#E5E7EB", fontFamily: "'DM Sans', sans-serif" }}>{job.title}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{job.organisation} · {job.location}</p>
+                  <p className="font-medium text-sm" style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{job.title}</p>
+                  <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{job.organisation} · {job.location}</p>
                 </div>
                 <a href={job.url.startsWith("/") ? job.url : job.url}
                   target={job.url.startsWith("http") ? "_blank" : undefined}

@@ -32,11 +32,11 @@ export default function SistersPage() {
         <div className="container relative z-10">
           <Breadcrumb crumbs={[{ label: "Sisters' Section" }]} />
           <p className="label mb-4" style={{ color: "rgba(249,168,212,0.7)" }}>For Sisters</p>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2.5rem,6vw,4.5rem)", fontWeight: 300, color: "#fff", lineHeight: 1.05, marginBottom: "1rem" }}>
+          <h1 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "clamp(2.5rem,6vw,4.5rem)", fontWeight: 300, color: "#fff", lineHeight: 1.05, marginBottom: "1rem" }}>
             Sisters&apos;<br /><em style={{ color: "#f9a8d4" }}>Section</em>
           </h1>
           <span className="gold-rule" />
-          <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
+          <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", fontSize: "0.95rem" }}>
             A dedicated, welcoming space for Muslim sisters at Aston. Our Sisters&apos; Section runs its own events, halaqa circles, mentorship programmes, and has a warm, supportive community — led by Aminah &amp; Yusra.
           </p>
           <div className="flex gap-3 flex-wrap">
@@ -62,8 +62,8 @@ export default function SistersPage() {
                 style={{ background: "#131629", border: "1px solid rgba(249,168,212,0.1)", borderRadius: "1rem" }}
               >
                 <span className="text-2xl block mb-3">{item.icon}</span>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
+                <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{item.desc}</p>
               </div>
             ))}
           </div>
@@ -75,7 +75,7 @@ export default function SistersPage() {
             <Reveal>
               <div className="flex items-end justify-between mb-6">
                 <p className="label">Upcoming Sisters&apos; Events</p>
-                <Link href="/events" className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>
+                <Link href="/events" className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
                   All Events →
                 </Link>
               </div>
@@ -93,10 +93,10 @@ export default function SistersPage() {
             style={{ background: "rgba(52,211,153,0.04)", border: "1px solid rgba(52,211,153,0.15)", borderRadius: "1.5rem" }}
           >
             <p className="label mb-3" style={{ color: "#34D399" }}>New Muslim Support</p>
-            <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
+            <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
               A Welcoming Space for Every Sister
             </h3>
-            <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
               Whether you&apos;re a new Muslim, returning to faith, or simply curious — our sisters&apos; community is patient, warm, and non-judgmental.
             </p>
             <div className="flex gap-3 flex-wrap">

@@ -37,8 +37,8 @@ export default function SponsorsPage() {
                     className="block p-6 transition-all duration-200"
                     style={{ background: TIER_COLOR[tier], border: `1px solid ${TIER_BORDER[tier]}`, borderRadius: "1rem" }}
                   >
-                    <p className="font-medium mb-1.5" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.name}</p>
-                    <p className="text-xs leading-relaxed" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{s.description}</p>
+                    <p className="font-medium mb-1.5" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.name}</p>
+                    <p className="text-xs leading-relaxed" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.description}</p>
                   </a>
                 ))}
               </div>
@@ -50,10 +50,10 @@ export default function SponsorsPage() {
       <Reveal>
         <div className="p-8" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.15)", borderRadius: "1.5rem" }}>
           <p className="label mb-3">Partner With Us</p>
-          <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.8rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
+          <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.8rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
             Become a Sponsor
           </h3>
-          <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+          <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
             Reach 500+ engaged Muslim students at Aston University. Partner with us for events, digital reach, and community impact.
           </p>
           <div className="grid sm:grid-cols-3 gap-4 mb-6">
@@ -63,9 +63,9 @@ export default function SponsorsPage() {
               { tier:"Bronze — £100+/yr", perks:["Website listing","Social mention"] },
             ].map((t) => (
               <div key={t.tier} className="p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "0.75rem" }}>
-                <p className="text-xs font-semibold mb-3" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>{t.tier}</p>
+                <p className="text-xs font-semibold mb-3" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{t.tier}</p>
                 {t.perks.map((p) => (
-                  <p key={p} className="text-xs mb-1.5 flex gap-2" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>
+                  <p key={p} className="text-xs mb-1.5 flex gap-2" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
                     <span style={{ color: "#C9A227" }}>✓</span>{p}
                   </p>
                 ))}

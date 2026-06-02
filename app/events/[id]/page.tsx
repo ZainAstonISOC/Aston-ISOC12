@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return { title: event?.title ?? "Event Not Found" };
 }
 
-const PF = "'Playfair Display', Georgia, serif";
-const DM = "'DM Sans', sans-serif";
+const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
+const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
 
 const EVENT_LABELS: Record<string, string> = {
   all: "All Welcome", sisters: "Sisters Only", brothers: "Brothers Only",

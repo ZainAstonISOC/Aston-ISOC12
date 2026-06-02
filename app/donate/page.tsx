@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   description: "Support Aston ISOC — one-time, weekly, or monthly giving. 100% transparent.",
 };
 
-const PF = "'Playfair Display', Georgia, serif";
-const DM = "'DM Sans', sans-serif";
+const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
+const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
 
 export default function DonatePage() {
   const active = getActiveCampaigns();

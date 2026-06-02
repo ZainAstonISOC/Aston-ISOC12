@@ -47,9 +47,9 @@ export default function StartHerePage() {
               style={{ background: p.accent, border: `1px solid ${p.border}`, borderRadius: "1.25rem" }}
             >
               <span className="text-3xl block mb-4">{p.icon}</span>
-              <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.35rem", color: "#fff", marginBottom: "0.5rem" }}>{p.title}</h3>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{p.desc}</p>
-              <Link href={p.href} className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>{p.cta}</Link>
+              <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.35rem", color: "#fff", marginBottom: "0.5rem" }}>{p.title}</h3>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{p.desc}</p>
+              <Link href={p.href} className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{p.cta}</Link>
             </div>
           ))}
         </div>
@@ -65,16 +65,16 @@ export default function StartHerePage() {
               className="flex items-start gap-6 p-6"
               style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
             >
-              <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "rgba(201,162,39,0.2)", lineHeight: 1, flexShrink: 0, minWidth: 48 }}>
+              <span style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "rgba(201,162,39,0.2)", lineHeight: 1, flexShrink: 0, minWidth: 48 }}>
                 {s.n}
               </span>
               <div className="flex-1">
-                <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.title}</p>
-                <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{s.desc}</p>
+                <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.title}</p>
+                <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.desc}</p>
               </div>
               <a href={s.href} target="_blank" rel="noopener noreferrer"
                 className="text-xs font-semibold tracking-widest uppercase shrink-0"
-                style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>
+                style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
                 {s.cta}
               </a>
             </div>
@@ -93,14 +93,14 @@ export default function StartHerePage() {
             >
               <summary
                 className="flex justify-between items-center px-5 py-4 cursor-pointer font-medium text-sm"
-                style={{ color: "#E5E7EB", fontFamily: "'DM Sans', sans-serif", listStyle: "none" }}
+                style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", listStyle: "none" }}
               >
                 {faq.q}
                 <span style={{ color: "#C9A227", flexShrink: 0 }}>▾</span>
               </summary>
               <div
                 className="px-5 pb-4 text-sm leading-relaxed"
-                style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", borderTop: "1px solid rgba(201,162,39,0.06)" }}
+                style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", borderTop: "1px solid rgba(201,162,39,0.06)" }}
               >
                 {faq.a}
               </div>
@@ -126,8 +126,8 @@ export default function StartHerePage() {
               className="block p-5 transition-all duration-200"
               style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1rem" }}
             >
-              <p className="font-medium text-sm mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.title}</p>
-              <p className="text-xs" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{s.desc}</p>
+              <p className="font-medium text-sm mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.title}</p>
+              <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.desc}</p>
             </a>
           ))}
         </div>

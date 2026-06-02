@@ -27,8 +27,8 @@ export default function CharityPage() {
             { value: "100%", label: "Transparent" },
           ].map((s) => (
             <div key={s.label} className="text-center p-6" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
-              <p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>{s.value}</p>
-              <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{s.label}</p>
+              <p style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>{s.value}</p>
+              <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -53,9 +53,9 @@ export default function CharityPage() {
                   <span className="badge badge-green">Active</span>
                   {c.isFeatured && <span className="badge badge-gold">Featured</span>}
                 </div>
-                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.4rem", fontWeight: 400, color: "#fff", marginBottom: "0.5rem" }}>{c.name}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{c.description}</p>
-                {c.organisation && <p className="text-xs mt-2" style={{ color: "#4B5563", fontFamily: "'DM Sans', sans-serif" }}>Via {c.organisation}</p>}
+                <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.4rem", fontWeight: 400, color: "#fff", marginBottom: "0.5rem" }}>{c.name}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{c.description}</p>
+                {c.organisation && <p className="text-xs mt-2" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Via {c.organisation}</p>}
               </div>
               <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn-gold shrink-0" style={{ fontSize: "0.72rem" }}>Donate →</a>
             </div>
@@ -83,8 +83,8 @@ export default function CharityPage() {
               className="block p-4 transition-all duration-200"
               style={{ background: "#131629", border: "1px solid rgba(52,211,153,0.1)", borderRadius: "0.75rem" }}
             >
-              <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "'DM Sans', sans-serif" }}>{p.name}</p>
-              <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>{p.desc}</p>
+              <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{p.name}</p>
+              <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{p.desc}</p>
             </a>
           ))}
         </div>

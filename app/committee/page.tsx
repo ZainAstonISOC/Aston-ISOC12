@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: "Meet the Aston ISOC 2026/27 committee — Core Committee, Heads of Divisions, and Committee Members.",
 };
 
-const PF = "'Playfair Display', Georgia, serif";
-const DM = "'DM Sans', sans-serif";
+const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
+const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
 
 // ── Section 1: Core Committee ─────────────────────────────────────────────
 const CORE_IDS = ["head-sister", "vice-sister", "head-brother", "vice-brother", "treasurer", "general-secretary"];

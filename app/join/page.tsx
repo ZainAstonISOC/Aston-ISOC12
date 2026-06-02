@@ -46,10 +46,10 @@ export default function JoinPage() {
           <div className="absolute inset-0 geo-pattern opacity-20" />
           <div className="relative z-10">
             <p className="label mb-4">Membership 2025/26</p>
-            <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(4rem,10vw,7rem)", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>
+            <div style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "clamp(4rem,10vw,7rem)", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>
               £5
             </div>
-            <p className="mt-2 mb-6 text-sm tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="mt-2 mb-6 text-sm tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
               Full Academic Year
             </p>
             <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ fontSize: "0.78rem" }}>
@@ -71,7 +71,7 @@ export default function JoinPage() {
                 style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "0.75rem" }}
               >
                 <span style={{ color: "#C9A227", flexShrink: 0, marginTop: 2 }}>✦</span>
-                <span className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{b}</span>
+                <span className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{b}</span>
               </div>
             ))}
           </div>
@@ -86,8 +86,8 @@ export default function JoinPage() {
         >
           <div>
             <p className="label mb-1">Exclusive Perk</p>
-            <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>ISOC Discount Card 2025/26</p>
-            <p className="text-sm mt-1" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+            <p className="font-medium" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>ISOC Discount Card 2025/26</p>
+            <p className="text-sm mt-1" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
               Exclusive discounts for members across Birmingham and online.
             </p>
           </div>
@@ -115,7 +115,7 @@ export default function JoinPage() {
             >
               <span
                 style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif",
                   fontSize: "2.5rem",
                   fontWeight: 300,
                   color: "rgba(201,162,39,0.25)",
@@ -127,15 +127,15 @@ export default function JoinPage() {
                 {s.n}
               </span>
               <div className="flex-1">
-                <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.title}</p>
-                <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{s.desc}</p>
+                <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.title}</p>
+                <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.desc}</p>
               </div>
               <a
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-semibold tracking-widest uppercase shrink-0 transition-colors"
-                style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}
+                style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}
               >
                 {s.cta}
               </a>
@@ -151,7 +151,7 @@ export default function JoinPage() {
           style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1.25rem" }}
         >
           <p className="label mb-3">Already a Member?</p>
-          <p className="text-sm mb-5" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>
+          <p className="text-sm mb-5" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
             Join our WhatsApp community or get in touch on Instagram.
           </p>
           <div className="flex gap-3 flex-wrap">

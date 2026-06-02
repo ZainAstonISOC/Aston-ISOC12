@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: "Volunteer with Aston ISOC. Join Ramadan, Discover Islam Week, and Charity Week campaigns. Make a real impact.",
 };
 
-const PF = "'Playfair Display', Georgia, serif";
-const DM = "'DM Sans', sans-serif";
+const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
+const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
 
 const BENEFITS = [
   { icon: "🌱", title: "Real Leadership", desc: "Build genuine leadership skills managing events and people — experience valued by employers." },

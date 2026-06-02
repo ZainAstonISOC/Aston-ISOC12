@@ -36,10 +36,10 @@ export default function LecturesPage() {
       <Reveal>
         <div className="p-8" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1.5rem" }}>
           <p className="label mb-3">Subscribe</p>
-          <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
+          <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
             Never Miss a Lecture
           </h3>
-          <p className="text-sm mb-6" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>Follow on YouTube and Instagram to be notified of new content.</p>
+          <p className="text-sm mb-6" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Follow on YouTube and Instagram to be notified of new content.</p>
           <div className="flex gap-3 flex-wrap">
             <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" className="btn-outline-gold" style={{ fontSize: "0.7rem" }}>YouTube →</a>
             <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ fontSize: "0.7rem" }}>Instagram →</a>

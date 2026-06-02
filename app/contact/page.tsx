@@ -39,9 +39,9 @@ export default function ContactPage() {
             >
               <span className="text-3xl">{c.icon}</span>
               <div>
-                <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{c.title}</p>
-                <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{c.sub}</p>
-                <p className="text-xs mt-1" style={{ color: "#C9A227", fontFamily: "'DM Sans', sans-serif" }}>{c.note}</p>
+                <p className="font-medium" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{c.title}</p>
+                <p className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{c.sub}</p>
+                <p className="text-xs mt-1" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{c.note}</p>
               </div>
             </a>
           ))}
@@ -56,18 +56,18 @@ export default function ContactPage() {
             <div key={r.category} className="p-5" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
               <div className="flex items-center gap-2 mb-3">
                 <span>{r.icon}</span>
-                <span className="font-medium text-sm" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{r.category}</span>
+                <span className="font-medium text-sm" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{r.category}</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 <a href={r.primary} target="_blank" rel="noopener noreferrer"
                   className="text-xs px-3 py-1.5 rounded-full transition-colors"
-                  style={{ background: "rgba(201,162,39,0.1)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.2)", fontFamily: "'DM Sans', sans-serif" }}>
+                  style={{ background: "rgba(201,162,39,0.1)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.2)", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
                   {r.primaryLabel}
                 </a>
                 {r.secondary && (
                   <a href={r.secondary} target="_blank" rel="noopener noreferrer"
                     className="text-xs px-3 py-1.5 rounded-full"
-                    style={{ background: "rgba(52,211,153,0.08)", color: "#6ee7b7", border: "1px solid rgba(52,211,153,0.2)", fontFamily: "'DM Sans', sans-serif" }}>
+                    style={{ background: "rgba(52,211,153,0.08)", color: "#6ee7b7", border: "1px solid rgba(52,211,153,0.2)", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
                     {r.secondaryLabel}
                   </a>
                 )}
@@ -78,7 +78,7 @@ export default function ContactPage() {
       </Reveal>
 
       <Reveal delay={150}>
-        <div className="text-sm" style={{ color: "#4B5563", fontFamily: "'DM Sans', sans-serif" }}>
+        <div className="text-sm" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
           <span style={{ color: "#6B7280" }}>📍 </span>
           {CONTACT.address}
         </div>

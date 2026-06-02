@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Event, BlogPost, CommitteeMember, Resource, Lecture } from "@/types";
 
-const PF = "'Playfair Display', Georgia, serif";
-const DM = "'DM Sans', sans-serif";
+const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
+const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
 
 /* ── PAGE HEADER ─────────────────────────────────────────────────────────── */
 export function PageHeader({ label, title, subtitle }: { label?: string; title: string; subtitle?: string }) {

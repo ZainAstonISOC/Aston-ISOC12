@@ -33,22 +33,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </span>
             ))}
           </div>
-          <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 300, color: "#fff", lineHeight: 1.1, marginBottom: "1rem" }}>
+          <h1 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 300, color: "#fff", lineHeight: 1.1, marginBottom: "1rem" }}>
             {post.title}
           </h1>
           <span className="gold-rule" />
           <div className="flex items-center gap-6 mb-8">
-            <span className="text-xs" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>✍ {post.author}</span>
-            <span className="text-xs" style={{ color: "#6B7280", fontFamily: "'DM Sans', sans-serif" }}>
+            <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>✍ {post.author}</span>
+            <span className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
               {new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
             </span>
           </div>
-          <p className="text-base leading-relaxed mb-8 italic" style={{ color: "#C9A227", fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.1rem" }}>
+          <p className="text-base leading-relaxed mb-8 italic" style={{ color: "#C9A227", fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.1rem" }}>
             {post.excerpt}
           </p>
           <div className="space-y-5">
             {post.content.split("\n\n").map((para, i) => (
-              <p key={i} className="text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif" }}>{para}</p>
+              <p key={i} className="text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{para}</p>
             ))}
           </div>
           <div className="mt-10 flex gap-3">
