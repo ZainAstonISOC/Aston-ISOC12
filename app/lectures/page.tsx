@@ -6,15 +6,21 @@ import Reveal from "@/components/ui/Reveal";
 import { lectures, LECTURE_CATEGORY_LABELS, getLecturesByCategory } from "@/data/lectures";
 import { SOCIAL } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Lectures & Podcasts" };
+export const metadata: Metadata = {
+  title: "Lectures & Podcasts",
+  description: "Recorded talks, Jumu'ah khutbahs, halaqa sessions, and the ISOC podcast.",
+};
 
 const CATS = ["lecture", "khutbah", "halaqa", "podcast", "event"] as const;
+const PF = "'Playfair Display', Georgia, serif";
+const DM = "'DM Sans', sans-serif";
 
 export default function LecturesPage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Lectures & Podcasts" }]} />
-      <PageHeader label="Knowledge" title="Lectures & Podcasts" subtitle="Recorded talks, Jumu'ah khutbahs, halaqa sessions, and the ISOC podcast." />
+      <PageHeader label="Knowledge" title="Lectures & Podcasts"
+        subtitle="Recorded talks, Jumu'ah khutbahs, halaqa sessions, and the ISOC podcast archive." />
 
       {CATS.map((cat, si) => {
         const items = getLecturesByCategory(cat);
@@ -35,15 +41,16 @@ export default function LecturesPage() {
 
       <Reveal>
         <div className="p-8" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1.5rem" }}>
-          <p className="label mb-3">Subscribe</p>
-          <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
+          <p className="label mb-3">Stay Updated</p>
+          <h3 style={{ fontFamily: PF, fontSize: "1.6rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem" }}>
             Never Miss a Lecture
           </h3>
-          <p className="text-sm mb-6" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Follow on YouTube and Instagram to be notified of new content.</p>
-          <div className="flex gap-3 flex-wrap">
-            <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" className="btn-outline-gold" style={{ fontSize: "0.7rem" }}>YouTube →</a>
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ fontSize: "0.7rem" }}>Instagram →</a>
-          </div>
+          <p className="text-sm mb-6" style={{ color: "#A8A8B3", fontFamily: DM }}>
+            Follow @astonisoc on Instagram for all lecture announcements, recordings, and events.
+          </p>
+          <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ fontSize: "0.7rem" }}>
+            Follow @astonisoc →
+          </a>
         </div>
       </Reveal>
     </PageShell>

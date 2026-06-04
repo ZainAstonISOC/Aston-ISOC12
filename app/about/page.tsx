@@ -27,6 +27,7 @@ export default function AboutPage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "About Us" }]} />
+      <div className="text-center mb-8"><p style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "1.1rem", color: "#C9A227", opacity: 0.6 }}>بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p></div>
       <PageHeader label="Who We Are" title="More Than a Society" subtitle="Aston ISOC is the home of Muslim students at Aston University. A community built on faith, sustained by brotherhood and sisterhood, and driven by purpose." />
 
       {/* Stats */}

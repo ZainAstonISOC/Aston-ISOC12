@@ -133,7 +133,7 @@ export default async function PrayerTimesPage() {
                   Jumu&apos;ah Prayer
                 </h2>
                 <div className="space-y-1.5 text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-                  <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Location:</span> Main Lecture Theatre</p>
+                  <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Location:</span> Aston Students' Union Hall (SU Hall)</p>
                   <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Khutbah:</span> 13:30 (doors 13:15)</p>
                   <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Prayer:</span> ~14:00</p>
                   <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Sisters:</span> Dedicated section — side entrance</p>

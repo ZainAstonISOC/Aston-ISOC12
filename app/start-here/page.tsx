@@ -27,7 +27,7 @@ const FAQS = [
   { q: "I missed freshers week — can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
   { q: "Is there a sisters-only space?", a: "Yes. The Sisters' Section has dedicated events, a weekly halaqa, a private WhatsApp group, and committee members specifically there for sisters." },
   { q: "I'm a new Muslim — what support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
-  { q: "Where is Friday prayer (Jumu'ah)?", a: "Every Friday during term time — Main Lecture Theatre, Aston University. Khutbah 13:30, prayer ~14:00." },
+  { q: "Where is Friday prayer (Jumu'ah)?", a: "Every Friday during term time — Aston Students' Union Hall (SU Hall). Khutbah 13:30, prayer ~14:00." },
 ];
 
 export default function StartHerePage() {

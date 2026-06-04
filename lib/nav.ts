@@ -9,30 +9,37 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about", children: [
-    { label: "About ISOC", href: "/about" },
-    { label: "Committee Team", href: "/committee" },
-    { label: "Sponsorships & Partners", href: "/sponsors" },
-  ]},
-  { label: "Community", href: "/freshers", children: [
-    { label: "Start Here", href: "/start-here" },
-    { label: "Freshers Hub", href: "/freshers" },
-    { label: "Sisters' Section", href: "/sisters" },
-    { label: "Brothers' Section", href: "/brothers" },
-    { label: "Volunteer", href: "/volunteer" },
-  ]},
+  {
+    label: "About", href: "/about", children: [
+      { label: "About ISOC", href: "/about" },
+      { label: "Committee Team", href: "/committee" },
+      { label: "Sponsorships & Partners", href: "/sponsors" },
+    ]
+  },
+  {
+    label: "Community", href: "/freshers", children: [
+      { label: "Start Here", href: "/start-here" },
+      { label: "Freshers Hub", href: "/freshers" },
+      { label: "Sisters' Section", href: "/sisters" },
+      { label: "Brothers' Section", href: "/brothers" },
+      { label: "Volunteer", href: "/volunteer" },
+    ]
+  },
   { label: "Prayer Times", href: "/prayer-times" },
   { label: "Events", href: "/events" },
-  { label: "Learn", href: "/resources", children: [
-    { label: "Resources", href: "/resources" },
-    { label: "Lectures & Podcasts", href: "/lectures" },
-    { label: "Blog & Articles", href: "/blog" },
-    { label: "Careers", href: "/careers" },
-  ]},
-  { label: "Give", href: "/charity", children: [
-    { label: "Charity Initiatives", href: "/charity" },
-    { label: "Donate", href: "/donate" },
-  ]},
+  {
+    label: "Learn", href: "/resources", children: [
+      { label: "Resources", href: "/resources" },
+      { label: "Lectures & Podcasts", href: "/lectures" },
+      { label: "Careers", href: "/careers" },
+    ]
+  },
+  {
+    label: "Give", href: "/charity", children: [
+      { label: "Charity Initiatives", href: "/charity" },
+      { label: "Donate", href: "/donate" },
+    ]
+  },
   { label: "Join ISOC", href: "/join" },
   { label: "Contact", href: "/contact" },
 ];
@@ -51,20 +58,18 @@ export const footerLinks = {
     { label: "Prayer Times", href: "/prayer-times" },
     { label: "Lectures & Podcasts", href: "/lectures" },
     { label: "Resources", href: "/resources" },
-    { label: "Blog & Articles", href: "/blog" },
+    { label: "Careers & Networking", href: "/careers" },
   ],
   "Get Involved": [
     { label: "Events", href: "/events" },
     { label: "Join ISOC", href: "/join" },
     { label: "Charity Initiatives", href: "/charity" },
     { label: "Donate", href: "/donate" },
-    { label: "Careers & Networking", href: "/careers" },
   ],
   Connect: [
     { label: "Contact Us", href: "/contact" },
     { label: "Sponsorships", href: "/sponsors" },
     { label: "Instagram", href: SOCIAL.instagram, external: true },
-    { label: "YouTube", href: SOCIAL.youtube, external: true },
     { label: "Linktree", href: SOCIAL.linktree, external: true },
   ],
 };
