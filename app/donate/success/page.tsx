@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 
-export const metadata: Metadata = { title: "Donation Received — JazakAllah Khayran" };
+export const metadata: Metadata = {
+  title: "Thank You — Donation Confirmed",
+  description: "JazakAllah khayran. Your donation to Aston ISOC has been received.",
+};
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
@@ -10,31 +13,55 @@ const DM = "'DM Sans', sans-serif";
 export default function DonationSuccessPage() {
   return (
     <PageShell>
-      <div className="max-w-lg mx-auto text-center py-10">
-        <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full"
-          style={{ background: "rgba(52,211,153,0.12)", border: "1px solid rgba(52,211,153,0.3)" }}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M5 13l4 4L19 7" stroke="#6ee7b7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+      <section style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ maxWidth: "560px", margin: "0 auto", textAlign: "center", padding: "4rem 2rem" }}>
+
+          <div className="status-icon-wrap status-icon-success">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"
+              stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+
+          <p style={{ fontFamily: PF, fontSize: "1.3rem", color: "var(--gold)", marginBottom: "0.5rem", direction: "rtl" }}>
+            جَزَاكَ اللَّهُ خَيْرًا
+          </p>
+
+          <h1 style={{ fontFamily: PF, fontSize: "clamp(1.8rem, 4vw, 2.6rem)", color: "var(--white)", marginBottom: "1rem" }}>
+            JazakAllah Khayran
+          </h1>
+
+          <span className="gold-rule" style={{ margin: "0 auto 1.75rem" }} />
+
+          <p style={{ fontFamily: DM, color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "0.75rem" }}>
+            Your donation has been received and will go directly towards supporting the Aston ISOC community.
+            May Allah accept it from you and multiply its reward.
+          </p>
+          <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--text-dim)", marginBottom: "2.5rem" }}>
+            A confirmation receipt has been sent to your email address.
+          </p>
+
+          <div style={{
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-lg)",
+            padding: "1.5rem 2rem",
+            marginBottom: "2.5rem",
+          }}>
+            <p style={{ fontFamily: PF, fontStyle: "italic", color: "var(--gold-pale)", lineHeight: 1.7, fontSize: "0.95rem" }}>
+              &ldquo;Charity does not decrease wealth.&rdquo;
+            </p>
+            <p style={{ fontFamily: DM, fontSize: "0.72rem", color: "var(--text-dim)", marginTop: "0.5rem", letterSpacing: "0.08em" }}>
+              — Prophet Muhammad ﷺ · Sahih Muslim
+            </p>
+          </div>
+
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/" className="btn-gold">Return Home</Link>
+            <Link href="/donate" className="btn-outline-gold">Give Again</Link>
+          </div>
         </div>
-        <p className="label mb-3">Donation Received</p>
-        <h1 style={{ fontFamily: PF, fontSize: "2.5rem", fontWeight: 500, color: "#fff", marginBottom: "1rem" }}>
-          JazakAllah Khayran
-        </h1>
-        <p className="text-sm leading-relaxed mb-3" style={{ color: "#A8A8B3", fontFamily: DM }}>
-          Your donation has been received. May Allah accept it from you and multiply its reward.
-        </p>
-        <p className="italic mb-8 text-sm" style={{ color: "#C9A227", fontFamily: PF }}>
-          &ldquo;The believer&apos;s shade on the Day of Resurrection will be their charity.&rdquo;
-          <span className="block mt-1 text-xs not-italic tracking-widest uppercase" style={{ color: "#6B6B80", fontFamily: DM }}>
-            Prophet Muhammad ﷺ · Tirmidhi
-          </span>
-        </p>
-        <div className="flex gap-3 justify-center flex-wrap">
-          <Link href="/" className="btn-gold" style={{ fontSize: "0.72rem" }}>Return Home</Link>
-          <Link href="/charity" className="btn-outline-gold" style={{ fontSize: "0.72rem" }}>View Campaigns</Link>
-        </div>
-      </div>
+      </section>
     </PageShell>
   );
 }

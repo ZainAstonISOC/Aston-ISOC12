@@ -68,7 +68,7 @@ export default function JoinPage() {
               <div
                 key={b}
                 className="flex items-start gap-3 p-4"
-                style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "0.75rem" }}
+                style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "0.75rem" }}
               >
                 <span style={{ color: "#C9A227", flexShrink: 0, marginTop: 2 }}>✦</span>
                 <span className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{b}</span>
@@ -111,7 +111,7 @@ export default function JoinPage() {
             <div
               key={s.n}
               className="flex items-start gap-6 p-6"
-              style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
+              style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
             >
               <span
                 style={{
@@ -148,7 +148,7 @@ export default function JoinPage() {
       <Reveal>
         <div
           className="p-7"
-          style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1.25rem" }}
+          style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1.25rem" }}
         >
           <p className="label mb-3">Already a Member?</p>
           <p className="text-sm mb-5" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>

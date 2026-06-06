@@ -7,11 +7,12 @@ import { getBySection } from "@/data/committee";
 import { volunteerCampaigns } from "@/data/volunteers";
 import { EventCard, MemberCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
+import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Aston ISOC — Faith. Community. Excellence.",
-  description: "Aston University Islamic Society. Serving Muslim students at Aston University, Birmingham. Prayer times, events, community, charity.",
+  description: "Aston University Islamic Society. Serving Muslim students at Aston University, Birmingham.",
 };
 export const revalidate = 3600;
 
@@ -25,246 +26,183 @@ export default async function HomePage() {
     Promise.resolve(getActiveCampaigns()),
   ]);
   const core = getBySection("executive").slice(0, 3);
-  const volunteerCamps = volunteerCampaigns.filter((c) => c.status !== "archived").slice(0, 3);
+  const volunteerCamps = volunteerCampaigns.filter(c => c.status !== "archived").slice(0, 3);
 
   return (
-    <div style={{ background: "#0D1025" }}>
-
+    <div>
       {/* ══ HERO ══════════════════════════════════════════════════════════ */}
-      <section className="relative flex items-center justify-center overflow-hidden"
-        style={{ minHeight: "100svh", background: "linear-gradient(160deg, #0D1025 0%, #151937 55%, #0D1025 100%)" }}>
-        <div className="absolute inset-0 geo-pattern opacity-30" />
-        <div className="glow-orb glow-gold" style={{ width: 700, height: 700, top: "5%", left: "50%", transform: "translateX(-50%)" }} />
-        <div className="glow-orb glow-purple" style={{ width: 400, height: 400, bottom: "10%", right: "5%" }} />
-
-        {/* Mosque silhouette */}
-        <svg className="mosque-bg" viewBox="0 0 1000 300" fill="none" aria-hidden="true">
-          <rect x="380" y="80" width="240" height="220" fill="white"/>
-          <ellipse cx="500" cy="80" rx="120" ry="90" fill="white"/>
-          <rect x="260" y="120" width="80" height="180" fill="white"/>
-          <ellipse cx="300" cy="120" rx="40" ry="36" fill="white"/>
-          <rect x="285" y="60" width="30" height="65" fill="white"/>
-          <polygon points="300,52 285,68 315,68" fill="white"/>
-          <rect x="660" y="120" width="80" height="180" fill="white"/>
-          <ellipse cx="700" cy="120" rx="40" ry="36" fill="white"/>
-          <rect x="685" y="60" width="30" height="65" fill="white"/>
-          <polygon points="700,52 685,68 715,68" fill="white"/>
-          <rect x="488" y="0" width="24" height="90" fill="white"/>
-          <polygon points="500,0 486,18 514,18" fill="white"/>
-          <rect x="0" y="280" width="1000" height="20" fill="white"/>
-        </svg>
-
-        <div className="relative z-10 text-center px-4" style={{ maxWidth: 820 }}>
-          {/* Bismillah */}
-          <p className="mb-3" style={{ fontFamily: PF, fontSize: "clamp(1rem,2vw,1.3rem)", color: "rgba(201,162,39,0.7)", letterSpacing: "0.05em" }}>
-            بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
-          </p>
-          <p className="mb-8 text-xs tracking-widest uppercase" style={{ color: "rgba(201,162,39,0.45)", fontFamily: DM }}>
-            In the name of Allah, the Most Merciful, the Especially Merciful
-          </p>
-
-          <p className="label mb-4" style={{ color: "rgba(201,162,39,0.6)" }}>
-            Aston University · Birmingham
-          </p>
-
-          <h1 style={{ fontFamily: PF, fontSize: "clamp(3rem,8.5vw,6.5rem)", fontWeight: 500, color: "#fff", lineHeight: 1.02, letterSpacing: "-0.02em", marginBottom: "0.75rem" }}>
-            Aston University<br />
-            <em style={{ color: "#C9A227", fontStyle: "italic", fontWeight: 400 }}>Islamic Society</em>
-          </h1>
-
-          <div style={{ width: 72, height: 1, background: "linear-gradient(to right, transparent, #C9A227, transparent)", margin: "0 auto 1.75rem" }} />
-
-          <p className="mb-3 tracking-[0.3em] uppercase" style={{ fontFamily: DM, fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.5)" }}>
-            Faith &nbsp;·&nbsp; Community &nbsp;·&nbsp; Excellence
-          </p>
-
-          <p className="mb-10 max-w-lg mx-auto leading-relaxed" style={{ fontFamily: DM, fontSize: "0.92rem", color: "rgba(255,255,255,0.4)" }}>
-            Serving Muslim students at Aston University — through prayer, community, education, charity and purpose.
-          </p>
-
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-gold">Join ISOC — £5</a>
-            <Link href="/events" className="btn-outline-gold">Explore Events</Link>
-            <Link href="/donate" className="btn-ghost">Donate</Link>
-          </div>
+      <section className="hero" style={{ position: "relative", paddingTop: "clamp(8rem,16vw,12rem)", paddingBottom: "clamp(4rem,8vw,7rem)", overflow: "hidden" }}>
+        {/* Rotating geometric ornament */}
+        <div aria-hidden="true" style={{ position: "absolute", right: "-8%", top: "10%", width: "min(46vw,560px)", aspectRatio: "1", zIndex: -1, opacity: 0.28, color: "#d8af72", animation: "spin 80s linear infinite" }}>
+          <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" strokeWidth="0.8" style={{ width: "100%", height: "100%" }}>
+            <circle cx="100" cy="100" r="98"/>
+            <circle cx="100" cy="100" r="72"/>
+            <polygon points="180,100 100,180 20,100 100,20"/>
+            <polygon points="156.6,156.6 43.4,156.6 43.4,43.4 156.6,43.4"/>
+            <polygon points="150,100 100,150 50,100 100,50"/>
+            <polygon points="135.4,135.4 64.6,135.4 64.6,64.6 135.4,64.6"/>
+          </svg>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          style={{ color: "rgba(201,162,39,0.35)" }}>
-          <span className="text-xs tracking-widest uppercase" style={{ fontFamily: DM, fontSize: "0.58rem" }}>Scroll</span>
-          <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(201,162,39,0.5), transparent)", animation: "scrollPulse 2s ease-in-out infinite" }} />
-        </div>
-      </section>
-
-      {/* ══ PRAYER TIMES ══════════════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#151937", borderTop: "1px solid rgba(201,162,39,0.08)" }}>
         <div className="container">
+          {/* Bismillah */}
           <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-              <div>
-                <p className="label mb-3">Daily Salah</p>
-                <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.6rem)", fontWeight: 500, color: "#fff" }}>
-                  Prayer Times · Birmingham
-                </h2>
-                <span className="gold-rule" />
-                <p className="text-xs italic mb-1" style={{ color: "#6B6B80", fontFamily: PF }}>
-                  &ldquo;Indeed, prayer has been decreed upon the believers a decree of specified times.&rdquo; — Surah An-Nisa&apos; 4:103
-                </p>
-              </div>
-              <Link href="/prayer-times" className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: "#C9A227", fontFamily: DM }}>
-                Full timetable →
-              </Link>
+            <p style={{ fontFamily: "'Noto Naskh Arabic', serif", direction: "rtl", color: "#d8af72", fontSize: "clamp(1.6rem,4vw,2.4rem)", marginBottom: "1.2rem", opacity: 0.9 }}>
+              بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </p>
+          </Reveal>
+
+          <Reveal delay={60}>
+            <p className="eyebrow">Aston University · Birmingham</p>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <h1 style={{ fontFamily: PF, fontWeight: 600, maxWidth: "16ch", lineHeight: 1.1, marginBottom: "0" }}>
+              A home away from home for{" "}
+              <em style={{ fontStyle: "italic", color: "#d8af72", fontWeight: 500 }}>every</em>{" "}
+              Muslim student.
+            </h1>
+          </Reveal>
+
+          <Reveal delay={200}>
+            <p className="lede" style={{ marginTop: "1.6rem" }}>
+              Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities — for daily prayer, weekly circles, charity, and a community that lasts a lifetime.
+            </p>
+          </Reveal>
+
+          <Reveal delay={280}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "2.4rem" }}>
+              <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-gold btn-lg">
+                Become a Member
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <Link href="/prayer-times" className="btn btn-ghost btn-lg">View Prayer Times</Link>
             </div>
           </Reveal>
-          <Reveal delay={80}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              {prayers.map((p, i) => (
-                <div key={p.name} className="prayer-card" style={{ borderRadius: "1rem" }}>
-                  <p className="text-xs tracking-widest uppercase mb-2" style={{ color: i === 2 ? "#C9A227" : "#4B4B60", fontFamily: DM }}>{p.name}</p>
-                  <p style={{ fontFamily: PF, fontSize: "1.85rem", fontWeight: 400, color: i === 2 ? "#C9A227" : "#fff", lineHeight: 1 }}>{p.time}</p>
-                  {p.iqamaTime && p.name !== "Sunrise" && (
-                    <p className="mt-1.5 text-xs" style={{ color: "#4B4B60", fontFamily: DM }}>Iqama {p.iqamaTime}</p>
-                  )}
+
+          <Reveal delay={340}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(1.5rem,5vw,3.5rem)", marginTop: "3.5rem", paddingTop: "2.2rem", borderTop: "1px solid rgba(216,175,114,0.12)" }}>
+              {[
+                { n: "500+", label: "Members" },
+                { n: "5×", label: "Daily prayers on campus" },
+                { n: "£25k", label: "Raised for charity" },
+                { n: "40+", label: "Events each year" },
+              ].map(s => (
+                <div key={s.label}>
+                  <b style={{ fontFamily: PF, fontSize: "clamp(1.8rem,3vw,2.4rem)", color: "#fff", display: "block" }}>{s.n}</b>
+                  <span style={{ fontFamily: DM, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#8d86a3" }}>{s.label}</span>
                 </div>
               ))}
             </div>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="mt-5 flex items-center justify-between px-6 py-4 flex-wrap gap-3"
-              style={{ background: "rgba(201,162,39,0.04)", border: "1px solid rgba(201,162,39,0.12)", borderRadius: "0.875rem" }}>
-              <div>
-                <p className="text-sm font-medium" style={{ color: "#EAEAEA", fontFamily: DM }}>Jumu&apos;ah · Every Friday during term</p>
-                <p className="text-xs mt-0.5" style={{ color: "#6B6B80", fontFamily: DM }}>
-                  Khutbah 13:30 · Aston Students&apos; Union Hall (SU Hall)
-                </p>
-              </div>
-              <Link href="/prayer-times" className="btn-outline-gold shrink-0" style={{ padding: "0.5rem 1.1rem", fontSize: "0.66rem" }}>
-                Prayer Rooms →
-              </Link>
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      <div className="section-divider" />
-
-      {/* ══ FRESHERS + START HERE ══════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#0D1025" }}>
+      {/* ══ PRAYER TIMES ══════════════════════════════════════════════════ */}
+      <section className="section section--tight">
         <div className="container">
           <Reveal>
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div className="p-9 relative overflow-hidden hover-l3"
-                style={{ background: "linear-gradient(135deg, rgba(201,162,39,0.09) 0%, rgba(21,25,55,0.9) 100%)", border: "1px solid rgba(201,162,39,0.22)", borderRadius: "1.5rem" }}>
-                <div className="absolute inset-0 geo-pattern opacity-20" />
-                <div className="relative z-10">
-                  <p className="label mb-3">New to Aston?</p>
-                  <h2 style={{ fontFamily: PF, fontSize: "2.1rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem" }}>Freshers Hub 2026</h2>
-                  <p className="text-sm leading-relaxed mb-7" style={{ color: "#A8A8B3", fontFamily: DM }}>
-                    Prayer rooms, halal food guide, welcome events, and your community — all in one place.
-                  </p>
-                  <Link href="/freshers" className="btn-gold" style={{ fontSize: "0.72rem" }}>Explore Hub</Link>
-                </div>
-              </div>
-              <div className="p-9 relative overflow-hidden hover-l2"
-                style={{ background: "linear-gradient(135deg, rgba(27,31,74,0.9) 0%, rgba(13,16,37,0.8) 100%)", border: "1px solid rgba(201,162,39,0.13)", borderRadius: "1.5rem" }}>
-                <div className="relative z-10">
-                  <p className="label mb-3">Not sure where to begin?</p>
-                  <h2 style={{ fontFamily: PF, fontSize: "2.1rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem" }}>Start Here</h2>
-                  <p className="text-sm leading-relaxed mb-7" style={{ color: "#A8A8B3", fontFamily: DM }}>
-                    New Muslim, returning to faith, or simply curious? This is your starting point.
-                  </p>
-                  <Link href="/start-here" className="btn-outline-gold" style={{ fontSize: "0.72rem" }}>Get Started</Link>
-                </div>
-              </div>
-            </div>
+            <p className="eyebrow" style={{ justifyContent: "center", display: "flex" }}>Live · Birmingham</p>
+            <h2 style={{ fontFamily: PF, textAlign: "center", marginBottom: "2rem" }}>Today&apos;s prayer times</h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <PrayerTimesDisplay times={prayers} />
+          </Reveal>
+          <Reveal delay={120}>
+            <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "#8d86a3", textAlign: "center", marginTop: "1.2rem" }}>
+              Jumu&apos;ah every Friday · Aston Students&apos; Union Hall (SU Hall) · Khutbah 13:30
+            </p>
           </Reveal>
         </div>
       </section>
 
-      <div className="section-divider" />
+      {/* ══ WHAT WE OFFER ══════════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head center">
+            <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>What we offer</p></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>More than a society — a community</h2></Reveal>
+            <Reveal delay={140}><p className="lede" style={{ margin: "0 auto" }}>Everything you need to keep your deen strong while you study, all in one place.</p></Reveal>
+          </div>
+          <div className="grid cols-3">
+            {[
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>, title: "Prayer & Jumu'ah", desc: "Dedicated brothers' and sisters' prayer spaces, with congregational Jumu'ah every Friday at the SU Hall." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>, title: "Weekly Halaqa", desc: "Reflect, learn and grow together with weekly circles, tafsir sessions and guest speakers from across the UK." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>, title: "Charity & Sadaqah", desc: "Make your time at university count. Our Charity Week and year-round fundraising support causes at home and abroad." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>, title: "Sisters & Brothers", desc: "From football and futsal to game nights and meals out — find your people and make friendships that last." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>, title: "Mentoring & Support", desc: "New to Aston? Our mentoring scheme pairs first-years with senior students for guidance, academic and spiritual." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/></svg>, title: "Discover Islam Week", desc: "Our flagship dawah event — a week of talks, exhibitions and open conversations welcoming the whole university." },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={(i % 3) * 80}>
+                <article className="card feature">
+                  <div className="icon-badge">{item.icon}</div>
+                  <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.25rem" }}>{item.title}</h3>
+                  <p style={{ fontFamily: DM, fontSize: "0.95rem", marginTop: "0.5rem" }}>{item.desc}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ══ EVENTS ════════════════════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#151937" }}>
+      <section className="section section--tight">
         <div className="container">
-          <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
-              <div>
-                <p className="label mb-3">What&apos;s On</p>
-                <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.6rem)", fontWeight: 500, color: "#fff" }}>Events</h2>
-                <span className="gold-rule" />
-              </div>
-              <Link href="/events" className="btn-ghost mb-2" style={{ padding: "0.6rem 1.2rem", fontSize: "0.68rem" }}>View All</Link>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
+            <div>
+              <Reveal><p className="eyebrow">What&apos;s On</p></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Events</h2></Reveal>
             </div>
-          </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <Reveal><Link href="/events" className="btn btn-ghost">View All</Link></Reveal>
+          </div>
+          <div className="grid cols-3">
             {featuredEvents.map((e, i) => (
-              <Reveal key={e.id} delay={i * 70}>
+              <Reveal key={e.id} delay={i * 80}>
                 <EventCard event={e} />
               </Reveal>
             ))}
           </div>
           <Reveal delay={120}>
-            <div className="mt-5 flex items-center justify-between px-5 py-4"
-              style={{ border: "1px solid rgba(201,162,39,0.1)", borderRadius: "0.875rem" }}>
-              <p className="text-sm" style={{ color: "#6B6B80", fontFamily: DM }}>More events announced on Instagram</p>
-              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer"
-                className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: DM }}>
-                @astonisoc →
-              </a>
+            <div style={{ marginTop: "1.5rem", padding: "1rem 1.5rem", borderRadius: "12px", border: "1px solid rgba(216,175,114,0.12)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+              <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#8d86a3" }}>More events announced on Instagram</p>
+              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>@astonisoc →</a>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <div className="section-divider" />
-
       {/* ══ SISTERS & BROTHERS ════════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#0D1025" }}>
+      <section className="section">
         <div className="container">
-          <Reveal>
-            <p className="label mb-3">Community</p>
-            <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.6rem)", fontWeight: 500, color: "#fff", marginBottom: "0.5rem" }}>Sisters &amp; Brothers</h2>
-            <span className="gold-rule" />
-            <p className="text-xs italic mb-10" style={{ color: "#6B6B80", fontFamily: PF }}>
-              &ldquo;The believers, in their mutual love, mercy, and compassion, are like one body.&rdquo; — Prophet Muhammad ﷺ · Bukhari &amp; Muslim
-            </p>
-          </Reveal>
-          <div className="grid sm:grid-cols-2 gap-0 overflow-hidden"
-            style={{ border: "1px solid rgba(201,162,39,0.12)", borderRadius: "1.5rem" }}>
+          <div className="section-head center" style={{ marginBottom: "2.5rem" }}>
+            <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>Community</p></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Sisters &amp; Brothers</h2></Reveal>
+            <Reveal delay={120}>
+              <p className="lede" style={{ marginInline: "auto", fontStyle: "italic", color: "#8d86a3", fontFamily: PF, fontSize: "0.95rem" }}>
+                &ldquo;The believers are like one body in their mutual love.&rdquo; — Prophet Muhammad ﷺ
+              </p>
+            </Reveal>
+          </div>
+          <div className="grid cols-2">
             <Reveal>
-              <div className="p-10 relative overflow-hidden hover-sisters h-full"
-                style={{ borderRight: "1px solid rgba(201,162,39,0.1)", transition: "all 0.28s" }}>
-                <div className="glow-orb absolute" style={{ width: 280, height: 280, top: -70, right: -70, background: "radial-gradient(circle, rgba(244,114,182,0.07) 0%, transparent 70%)" }} />
-                <div className="relative z-10">
-                  <p className="label mb-4" style={{ color: "rgba(249,168,212,0.7)" }}>For Sisters</p>
-                  <h3 style={{ fontFamily: PF, fontSize: "2.3rem", fontWeight: 500, color: "#fff", marginBottom: "1rem", lineHeight: 1.08 }}>
-                    Sisters&apos;<br /><em style={{ color: "#f9a8d4", fontWeight: 400 }}>Section</em>
-                  </h3>
-                  <p className="text-sm leading-relaxed mb-7" style={{ color: "#A8A8B3", fontFamily: DM, maxWidth: 320 }}>
-                    Weekly halaqa, dedicated events, mentorship, and a strong sisterhood led by Aminah &amp; Yusra.
-                  </p>
-                  <div className="flex gap-3 flex-wrap">
-                    <Link href="/sisters" className="btn-outline-gold" style={{ borderColor: "rgba(249,168,212,0.35)", color: "#f9a8d4", fontSize: "0.7rem" }}>Sisters&apos; Section</Link>
-                    <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ fontSize: "0.7rem" }}>WhatsApp</a>
-                  </div>
+              <div className="card hover-sisters" style={{ borderColor: "rgba(244,114,182,0.15)" }}>
+                <p className="eyebrow" style={{ color: "rgba(249,168,212,0.8)" }}>For Sisters</p>
+                <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Sisters&apos; <em style={{ color: "#f9a8d4" }}>Section</em></h3>
+                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Weekly halaqa, dedicated events, mentorship, and a strong sisterhood led by Aminah &amp; Yusra.</p>
+                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                  <Link href="/sisters" className="btn btn-ghost" style={{ borderColor: "rgba(249,168,212,0.3)", color: "#f9a8d4" }}>Sisters&apos; Section</Link>
+                  <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
                 </div>
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <div className="p-10 relative overflow-hidden hover-brothers h-full" style={{ transition: "all 0.28s" }}>
-                <div className="glow-orb absolute" style={{ width: 280, height: 280, top: -70, left: -70, background: "radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)" }} />
-                <div className="relative z-10">
-                  <p className="label mb-4" style={{ color: "rgba(165,180,252,0.7)" }}>For Brothers</p>
-                  <h3 style={{ fontFamily: PF, fontSize: "2.3rem", fontWeight: 500, color: "#fff", marginBottom: "1rem", lineHeight: 1.08 }}>
-                    Brothers&apos;<br /><em style={{ color: "#a5b4fc", fontWeight: 400 }}>Section</em>
-                  </h3>
-                  <p className="text-sm leading-relaxed mb-7" style={{ color: "#A8A8B3", fontFamily: DM, maxWidth: 320 }}>
-                    Brotherhood events, sports, circles, and networking led by Abdikarim &amp; Shaz.
-                  </p>
-                  <div className="flex gap-3 flex-wrap">
-                    <Link href="/brothers" className="btn-outline-gold" style={{ borderColor: "rgba(165,180,252,0.35)", color: "#a5b4fc", fontSize: "0.7rem" }}>Brothers&apos; Section</Link>
-                    <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ fontSize: "0.7rem" }}>WhatsApp</a>
-                  </div>
+              <div className="card hover-brothers" style={{ borderColor: "rgba(129,140,248,0.15)" }}>
+                <p className="eyebrow" style={{ color: "rgba(165,180,252,0.8)" }}>For Brothers</p>
+                <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Brothers&apos; <em style={{ color: "#a5b4fc" }}>Section</em></h3>
+                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Brotherhood events, sports, circles, and networking led by Abdikarim &amp; Shaz.</p>
+                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                  <Link href="/brothers" className="btn btn-ghost" style={{ borderColor: "rgba(165,180,252,0.3)", color: "#a5b4fc" }}>Brothers&apos; Section</Link>
+                  <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
                 </div>
               </div>
             </Reveal>
@@ -272,37 +210,33 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="section-divider" />
-
-      {/* ══ VOLUNTEER ════════════════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#151937" }}>
+      {/* ══ VOLUNTEER ═════════════════════════════════════════════════════ */}
+      <section className="section section--tight">
         <div className="container">
-          <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
-              <div>
-                <p className="label mb-3">Get Involved</p>
-                <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.6rem)", fontWeight: 500, color: "#fff" }}>We Need You</h2>
-                <span className="gold-rule" />
-                <p className="text-xs italic" style={{ color: "#6B6B80", fontFamily: PF }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
+            <div>
+              <Reveal><p className="eyebrow">Get Involved</p></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>We Need You</h2></Reveal>
+              <Reveal delay={100}>
+                <p style={{ fontFamily: PF, fontStyle: "italic", color: "#8d86a3", fontSize: "0.92rem" }}>
                   &ldquo;The best of people are those most beneficial to people.&rdquo; — Prophet Muhammad ﷺ
                 </p>
-              </div>
-              <Link href="/volunteer" className="btn-gold mb-2" style={{ fontSize: "0.7rem" }}>All Opportunities</Link>
+              </Reveal>
             </div>
-          </Reveal>
-          <div className="grid md:grid-cols-3 gap-5">
+            <Reveal><Link href="/volunteer" className="btn btn-gold">All Opportunities</Link></Reveal>
+          </div>
+          <div className="grid cols-3">
             {volunteerCamps.map((c, i) => (
-              <Reveal key={c.id} delay={i * 70}>
-                <Link href="/volunteer" className="block h-full">
-                  <div className="h-full p-7 flex flex-col volunteer-card"
-                    style={{ background: c.colour, border: "1px solid rgba(201,162,39,0.15)", borderRadius: "1.375rem" }}>
-                    <span className="text-3xl mb-4 block">{c.icon}</span>
-                    <h3 style={{ fontFamily: PF, fontSize: "1.4rem", fontWeight: 500, color: "#fff", marginBottom: "0.3rem" }}>{c.name}</h3>
-                    <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "#C9A227", fontFamily: DM }}>{c.tagline}</p>
-                    <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: "#A8A8B3", fontFamily: DM }}>{c.description.slice(0, 110)}…</p>
-                    <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: DM }}>
+              <Reveal key={c.id} delay={i * 80}>
+                <Link href="/volunteer" className="block">
+                  <div className="card link" style={{ borderColor: "rgba(216,175,114,0.15)" }}>
+                    <span style={{ fontSize: "2rem", display: "block", marginBottom: "1rem" }}>{c.icon}</span>
+                    <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.3rem", marginBottom: "0.3rem" }}>{c.name}</h3>
+                    <p style={{ fontFamily: DM, fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d8af72", marginBottom: "0.75rem" }}>{c.tagline}</p>
+                    <p style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3", lineHeight: 1.7, marginBottom: "1.2rem" }}>{c.description.slice(0, 110)}…</p>
+                    <p style={{ fontFamily: DM, fontSize: "0.75rem", fontWeight: 600, color: "#d8af72", letterSpacing: "0.08em" }}>
                       {c.status === "active" ? "Recruiting Now →" : "Register Interest →"}
-                    </span>
+                    </p>
                   </div>
                 </Link>
               </Reveal>
@@ -311,35 +245,31 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="section-divider" />
-
-      {/* ══ CHARITY ══════════════════════════════════════════════════════ */}
+      {/* ══ CHARITY ═══════════════════════════════════════════════════════ */}
       {campaigns.length > 0 && (
-        <section className="section-wrap-lg" style={{ background: "#0D1025" }}>
+        <section className="section section--tight">
           <div className="container">
-            <Reveal>
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
-                <div>
-                  <p className="label mb-3">Giving Back</p>
-                  <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.6rem)", fontWeight: 500, color: "#fff" }}>Active Campaigns</h2>
-                  <span className="gold-rule" />
-                  <p className="text-xs italic" style={{ color: "#6B6B80", fontFamily: PF }}>
-                    &ldquo;Charity does not decrease wealth.&rdquo; — Prophet Muhammad ﷺ · Muslim
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
+              <div>
+                <Reveal><p className="eyebrow">Sadaqah</p></Reveal>
+                <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Active Campaigns</h2></Reveal>
+                <Reveal delay={100}>
+                  <p style={{ fontFamily: PF, fontStyle: "italic", color: "#8d86a3", fontSize: "0.92rem" }}>
+                    &ldquo;Charity does not decrease wealth.&rdquo; — Prophet Muhammad ﷺ
                   </p>
-                </div>
-                <Link href="/charity" className="btn-ghost mb-2" style={{ padding: "0.6rem 1.2rem", fontSize: "0.68rem" }}>All Campaigns</Link>
+                </Reveal>
               </div>
-            </Reveal>
-            <div className="grid sm:grid-cols-2 gap-5">
+              <Reveal><Link href="/charity" className="btn btn-ghost">All Campaigns</Link></Reveal>
+            </div>
+            <div className="grid cols-2">
               {campaigns.slice(0, 2).map((c, i) => (
-                <Reveal key={c.id} delay={i * 70}>
-                  <div className="p-8 flex flex-col h-full hover-l3"
-                    style={{ background: "linear-gradient(135deg, rgba(201,162,39,0.06) 0%, rgba(19,22,41,0.9) 100%)", border: "1px solid rgba(201,162,39,0.16)", borderRadius: "1.125rem" }}>
-                    {c.isFeatured && <span className="badge badge-gold self-start mb-4">Featured Campaign</span>}
-                    <h3 style={{ fontFamily: PF, fontSize: "1.4rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem" }}>{c.name}</h3>
-                    <p className="text-sm leading-relaxed flex-1 mb-6" style={{ color: "#A8A8B3", fontFamily: DM }}>{c.description.slice(0, 140)}…</p>
-                    {c.organisation && <p className="text-xs mb-5" style={{ color: "#4B4B60", fontFamily: DM }}>Via {c.organisation}</p>}
-                    <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn-gold self-start" style={{ fontSize: "0.72rem" }}>Donate Now</a>
+                <Reveal key={c.id} delay={i * 80}>
+                  <div className="card">
+                    {c.isFeatured && <span className="pill" style={{ marginBottom: "1rem", display: "inline-block" }}>Featured Campaign</span>}
+                    <h3 style={{ fontFamily: PF, fontSize: "1.4rem", color: "#fff", marginBottom: "0.75rem" }}>{c.name}</h3>
+                    <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "#8d86a3", lineHeight: 1.75, marginBottom: "1.5rem" }}>{c.description.slice(0, 150)}…</p>
+                    {c.organisation && <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#8d86a3", marginBottom: "1.25rem" }}>Via {c.organisation}</p>}
+                    <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Donate Now</a>
                   </div>
                 </Reveal>
               ))}
@@ -348,24 +278,19 @@ export default async function HomePage() {
         </section>
       )}
 
-      <div className="section-divider" />
-
-      {/* ══ COMMITTEE ════════════════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#151937" }}>
+      {/* ══ COMMITTEE ═════════════════════════════════════════════════════ */}
+      <section className="section section--tight">
         <div className="container">
-          <Reveal>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
-              <div>
-                <p className="label mb-3">Leadership</p>
-                <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.6rem)", fontWeight: 500, color: "#fff" }}>Committee 2026/27</h2>
-                <span className="gold-rule" />
-              </div>
-              <Link href="/committee" className="btn-ghost mb-2" style={{ padding: "0.6rem 1.2rem", fontSize: "0.68rem" }}>Full Committee</Link>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
+            <div>
+              <Reveal><p className="eyebrow">Leadership</p></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Committee 2026/27</h2></Reveal>
             </div>
-          </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <Reveal><Link href="/committee" className="btn btn-ghost">Full Committee</Link></Reveal>
+          </div>
+          <div className="grid cols-3">
             {core.map((m, i) => (
-              <Reveal key={m.id} delay={i * 70}>
+              <Reveal key={m.id} delay={i * 80}>
                 <MemberCard member={m} />
               </Reveal>
             ))}
@@ -373,55 +298,39 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="section-divider" />
-
-      {/* ══ ECOSYSTEM / LINKTREE ══════════════════════════════════════════ */}
-      <section className="section-wrap" style={{ background: "#0D1025" }}>
+      {/* ══ ECOSYSTEM ════════════════════════════════════════════════════ */}
+      <section className="section section--tight">
         <div className="container">
-          <Reveal>
-            <div className="text-center mb-12">
-              <p className="label mb-3">Our Ecosystem</p>
-              <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.5rem)", fontWeight: 500, color: "#fff", marginBottom: "0.5rem" }}>
-                Stay Connected
-              </h2>
-              <span className="gold-rule" style={{ margin: "0 auto 1.5rem" }} />
-              <p className="max-w-md mx-auto text-sm leading-relaxed" style={{ color: "#A8A8B3", fontFamily: DM }}>
-                Follow us, join us, support us. Every official Aston ISOC platform in one place.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                { icon: "📸", label: "Instagram", sub: "@astonisoc · Primary announcements channel", href: SOCIAL.instagram, accent: "rgba(244,114,182,0.08)", border: "rgba(244,114,182,0.18)" },
-                { icon: "💬", label: "WhatsApp Community", sub: "Join announcements & community groups", href: WHATSAPP.community, accent: "rgba(52,211,153,0.07)", border: "rgba(52,211,153,0.18)" },
-                { icon: "🔗", label: "Linktree", sub: "All official links in one place", href: SOCIAL.linktree, accent: "rgba(99,91,255,0.08)", border: "rgba(99,91,255,0.2)" },
-              ].map((s, i) => (
-                <Reveal key={s.label} delay={i * 60}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="flex flex-col items-center p-8 text-center hover-l2"
-                    style={{ background: s.accent, border: `1px solid ${s.border}`, borderRadius: "1.125rem", textDecoration: "none" }}>
-                    <span className="text-3xl mb-3">{s.icon}</span>
-                    <p className="font-semibold text-sm mb-1.5" style={{ color: "#EAEAEA", fontFamily: DM }}>{s.label}</p>
-                    <p className="text-xs leading-relaxed" style={{ color: "#6B6B80", fontFamily: DM }}>{s.sub}</p>
-                  </a>
-                </Reveal>
-              ))}
-            </div>
-          </Reveal>
+          <div className="section-head center" style={{ marginBottom: "2.5rem" }}>
+            <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>Stay Connected</p></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Find us online</h2></Reveal>
+          </div>
+          <div className="grid cols-3">
+            {[
+              { icon: "📸", label: "Instagram", sub: "@astonisoc — primary channel", href: SOCIAL.instagram },
+              { icon: "💬", label: "WhatsApp", sub: "Community announcements", href: WHATSAPP.community },
+              { icon: "🔗", label: "Linktree", sub: "All official links", href: SOCIAL.linktree },
+            ].map((s, i) => (
+              <Reveal key={s.label} delay={i * 80}>
+                <a href={s.href} target="_blank" rel="noopener noreferrer" className="card link" style={{ textAlign: "center" }}>
+                  <span style={{ fontSize: "2rem", display: "block", marginBottom: "0.75rem" }}>{s.icon}</span>
+                  <h3 style={{ fontFamily: PF, fontSize: "1.15rem", color: "#fff", marginBottom: "0.3rem" }}>{s.label}</h3>
+                  <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#8d86a3" }}>{s.sub}</p>
+                </a>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      <div className="section-divider" />
-
       {/* ══ JOIN CTA ══════════════════════════════════════════════════════ */}
-      <section className="section-wrap-lg" style={{ background: "#151937" }}>
+      <section className="section">
         <div className="container">
           <Reveal>
             <CtaBanner
               title="Join the Aston ISOC Family"
-              description="£5 for the full academic year. Access all events, both WhatsApp communities, the discount card, and a lifelong network of Muslim students and alumni."
-              primaryLabel="Join ISOC — £5"
+              description="£5 for the full academic year. Access all events, WhatsApp communities, the discount card, and a lifelong network of Muslim students."
+              primaryLabel="Become a Member"
               primaryHref={MEMBERSHIP.join}
               secondaryLabel="Start Here"
               secondaryHref="/start-here"
@@ -429,7 +338,6 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
-
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default function FreshersPage() {
   const featuredEvents = getFeaturedEvents();
 
   return (
-    <div style={{ background: "#0D1025", minHeight: "100vh", paddingTop: "5rem" }}>
+    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
       {/* Hero */}
       <div
         className="relative overflow-hidden py-20 px-4"
@@ -92,7 +92,7 @@ export default function FreshersPage() {
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noopener noreferrer" : undefined}
                 className="block p-5 transition-all duration-200"
-                style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
+                style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
               >
                 <span className="text-2xl block mb-3">{item.icon}</span>
                 <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{item.title}</p>

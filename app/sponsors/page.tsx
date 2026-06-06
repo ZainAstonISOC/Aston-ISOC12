@@ -48,7 +48,7 @@ export default function SponsorsPage() {
       })}
 
       <Reveal>
-        <div className="p-8" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.15)", borderRadius: "1.5rem" }}>
+        <div className="p-8" style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.15)", borderRadius: "1.5rem" }}>
           <p className="label mb-3">Partner With Us</p>
           <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.8rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>
             Become a Sponsor

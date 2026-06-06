@@ -63,7 +63,7 @@ export default function StartHerePage() {
             <div
               key={s.n}
               className="flex items-start gap-6 p-6"
-              style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
+              style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}
             >
               <span style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "rgba(201,162,39,0.2)", lineHeight: 1, flexShrink: 0, minWidth: 48 }}>
                 {s.n}
@@ -124,7 +124,7 @@ export default function StartHerePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="block p-5 transition-all duration-200"
-              style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1rem" }}
+              style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1rem" }}
             >
               <p className="font-medium text-sm mb-1" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.title}</p>
               <p className="text-xs" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.desc}</p>

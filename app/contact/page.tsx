@@ -53,7 +53,7 @@ export default function ContactPage() {
         <p className="label mb-6">Route Your Enquiry</p>
         <div className="grid sm:grid-cols-2 gap-4 mb-16">
           {ROUTES.map((r) => (
-            <div key={r.category} className="p-5" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
+            <div key={r.category} className="p-5" style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
               <div className="flex items-center gap-2 mb-3">
                 <span>{r.icon}</span>
                 <span className="font-medium text-sm" style={{ color: "#fff", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{r.category}</span>

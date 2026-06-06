@@ -26,7 +26,7 @@ export default function CharityPage() {
             { value: "6+", label: "Partner Orgs" },
             { value: "100%", label: "Transparent" },
           ].map((s) => (
-            <div key={s.label} className="text-center p-6" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
+            <div key={s.label} className="text-center p-6" style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
               <p style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "2.5rem", fontWeight: 300, color: "#C9A227", lineHeight: 1 }}>{s.value}</p>
               <p className="mt-2 text-xs tracking-widest uppercase" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{s.label}</p>
             </div>
@@ -81,7 +81,7 @@ export default function CharityPage() {
               target="_blank"
               rel="noopener noreferrer"
               className="block p-4 transition-all duration-200"
-              style={{ background: "#131629", border: "1px solid rgba(52,211,153,0.1)", borderRadius: "0.75rem" }}
+              style={{ background: "var(--surface)", border: "1px solid rgba(52,211,153,0.1)", borderRadius: "0.75rem" }}
             >
               <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{p.name}</p>
               <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{p.desc}</p>

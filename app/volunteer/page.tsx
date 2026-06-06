@@ -27,7 +27,7 @@ export default function VolunteerPage() {
   const campaigns = getActiveCampaigns();
 
   return (
-    <div style={{ background: "#0D1025", minHeight: "100vh", paddingTop: "5rem" }}>
+    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <div className="relative overflow-hidden py-24 px-4"
@@ -149,7 +149,7 @@ export default function VolunteerPage() {
               <div
                 className="p-6 hover-l1"
                 style={{
-                  background: "#131629",
+                  background: "var(--surface)",
                   border: "1px solid rgba(201,162,39,0.1)",
                   borderRadius: "1.125rem",
                 }}

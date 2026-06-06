@@ -22,7 +22,7 @@ export default function BrothersPage() {
   const brothersEvents = getBrotherEvents().slice(0, 3);
 
   return (
-    <div style={{ background: "#0D1025", minHeight: "100vh", paddingTop: "5rem" }}>
+    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
       {/* Section hero */}
       <div
         className="relative overflow-hidden py-20 px-4"
@@ -58,7 +58,7 @@ export default function BrothersPage() {
               <div
                 key={item.title}
                 className="p-6 transition-all duration-200"
-                style={{ background: "#131629", border: "1px solid rgba(165,180,252,0.1)", borderRadius: "1rem" }}
+                style={{ background: "var(--surface)", border: "1px solid rgba(165,180,252,0.1)", borderRadius: "1rem" }}
               >
                 <span className="text-2xl block mb-3">{item.icon}</span>
                 <h3 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>

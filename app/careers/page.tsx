@@ -88,7 +88,7 @@ export default function CareersPage() {
               <div
                 key={job.id}
                 className="p-5 flex items-start justify-between gap-4 flex-wrap transition-all duration-200"
-                style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1rem" }}
+                style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "1rem" }}
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap gap-1.5 mb-2">

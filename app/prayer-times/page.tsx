@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
+import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import { fetchLivePrayerTimes, PRAYER_LINKS } from "@/data/prayer";
 import { SOCIAL } from "@/lib/social";
 
@@ -12,177 +12,143 @@ export const metadata: Metadata = {
 };
 export const revalidate = 3600;
 
+const PF = "'Playfair Display', Georgia, serif";
+const DM = "'DM Sans', sans-serif";
+
 export default async function PrayerTimesPage() {
   const times = await fetchLivePrayerTimes();
   const today = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
   return (
-    <div style={{ background: "#0D1025", minHeight: "100vh", paddingTop: "5rem" }}>
-      <div className="container py-16">
-        <Breadcrumb crumbs={[{ label: "Prayer Times" }]} />
-
-        <div className="mb-16">
-          <p className="label mb-3">Salah</p>
-          <h1 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "clamp(2.2rem,5vw,3.8rem)", fontWeight: 300, color: "#fff", lineHeight: 1.1 }}>
-            Prayer Times
-          </h1>
-          <span className="gold-rule" />
-          <p style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", fontSize: "0.9rem" }}>
-            Birmingham, UK · {today}
-          </p>
-          <p className="mt-1 text-xs" style={{ color: "#34D399", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-            ✓ Live — updates daily via Aladhan API
+    <div style={{ minHeight: "100vh", paddingTop: "5rem" }}>
+      {/* Page hero */}
+      <div className="page-hero">
+        <div className="container">
+          <Breadcrumb crumbs={[{ label: "Prayer Times" }]} />
+          <p className="eyebrow" style={{ justifyContent: "center" }}>Birmingham · Live daily</p>
+          <h1 style={{ fontFamily: PF }}>Never miss a prayer on campus</h1>
+          <p className="lede" style={{ margin: "1.4rem auto 0" }}>
+            Times update automatically each day. Congregational prayers are held in the prayer rooms throughout the day.
           </p>
         </div>
+      </div>
 
-        {/* Prayer times grid */}
-        <Reveal>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-            {times.map((p, i) => (
-              <div
-                key={p.name}
-                className="prayer-card"
-                style={{
-                  borderRadius: "1rem",
-                  background: i === 2 ? "rgba(201,162,39,0.08)" : "#131629",
-                  border: i === 2 ? "1px solid rgba(201,162,39,0.4)" : "1px solid rgba(201,162,39,0.1)",
-                  boxShadow: i === 2 ? "0 0 30px rgba(201,162,39,0.08)" : "none",
-                }}
-              >
-                <p
-                  className="text-xs tracking-widest uppercase mb-2"
-                  style={{ color: i === 2 ? "#C9A227" : "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}
-                >
-                  {p.name}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif",
-                    fontSize: "2rem",
-                    fontWeight: 300,
-                    color: i === 2 ? "#C9A227" : "#fff",
-                    lineHeight: 1,
-                  }}
-                >
-                  {p.time}
-                </p>
-                {p.iqamaTime && p.name !== "Sunrise" && (
-                  <p className="mt-2 text-xs" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-                    Iqama: {p.iqamaTime}
-                  </p>
-                )}
-                {i === 2 && (
-                  <p className="mt-1.5 text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-                    Next
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        {/* Live widget */}
-        <Reveal delay={100}>
-          <div
-            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 mb-12"
-            style={{ background: "rgba(201,162,39,0.04)", border: "1px solid rgba(201,162,39,0.15)", borderRadius: "0.75rem" }}
-          >
-            <div>
-              <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Live Prayer Times Display</p>
-              <p className="text-xs mt-0.5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Digital display for the on-campus prayer room at Aston</p>
-            </div>
-            <a href={PRAYER_LINKS.liveWidget} target="_blank" rel="noopener noreferrer" className="btn-outline-gold shrink-0" style={{ fontSize: "0.68rem", padding: "0.6rem 1.2rem" }}>
-              View Live Display →
-            </a>
-          </div>
-        </Reveal>
-
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {/* Campus rooms */}
+      <section className="section section--tight">
+        <div className="container">
           <Reveal>
-            <div className="h-full" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem", overflow: "hidden" }}>
-              <div className="px-6 py-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.08)" }}>
-                <p className="label">On-Campus</p>
-                <h2 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.4rem", fontWeight: 300, color: "#fff" }}>Prayer Rooms</h2>
-              </div>
-              <div className="divide-y" style={{ borderColor: "rgba(201,162,39,0.06)" }}>
-                {[
-                  { room: "Main Building — MB131", notes: "Mixed · Sisters & brothers sections", wudu: "Yes" },
-                  { room: "Aston Business School — ABS G05", notes: "Sisters preferred space", wudu: "Yes" },
-                  { room: "Engineering — EAS W10", notes: "Open to all", wudu: "Nearby" },
-                  { room: "Student Union — Multi-faith Room", notes: "Bookable, all faiths", wudu: "No" },
-                ].map((r) => (
-                  <div key={r.room} className="px-6 py-3.5" style={{ borderColor: "rgba(201,162,39,0.06)" }}>
-                    <p className="text-sm font-medium" style={{ color: "#E5E7EB", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{r.room}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{r.notes} · Wudu: {r.wudu}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <PrayerTimesDisplay times={times} />
           </Reveal>
+          <Reveal delay={80}>
+            <p className="form-note center mt-3" style={{ fontFamily: DM, color: "#8d86a3", textAlign: "center", fontSize: "0.82rem" }}>
+              Calculation method: Muslim World League (MWL). Always confirm with your local mosque for exact congregation times.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
-          {/* Jummah */}
-          <Reveal delay={100}>
-            <div className="h-full flex flex-col gap-4">
-              <div
-                className="p-6"
-                style={{ background: "rgba(201,162,39,0.05)", border: "1px solid rgba(201,162,39,0.2)", borderRadius: "1rem" }}
-              >
-                <p className="label mb-2">Every Friday</p>
-                <h2 style={{ fontFamily: "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "1rem" }}>
-                  Jumu&apos;ah Prayer
-                </h2>
-                <div className="space-y-1.5 text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-                  <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Location:</span> Aston Students' Union Hall (SU Hall)</p>
-                  <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Khutbah:</span> 13:30 (doors 13:15)</p>
-                  <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Prayer:</span> ~14:00</p>
-                  <p><span className="font-medium" style={{ color: "#E5E7EB" }}>Sisters:</span> Dedicated section — side entrance</p>
+      <section className="section section--tight">
+        <div className="container">
+          <div className="grid cols-2">
+            <Reveal>
+              <article className="card" id="jummah">
+                <div className="icon-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                  </svg>
                 </div>
-                <p className="mt-4 text-xs" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-                  Confirm on <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ color: "#C9A227" }}>@astonisoc</a> during exam periods.
+                <h3 style={{ fontFamily: PF, color: "#fff" }}>Jumu&apos;ah Prayer</h3>
+                <p style={{ fontFamily: DM, marginTop: "0.5rem", marginBottom: "1rem" }}>
+                  Friday congregational prayer is held every week during term time at the Aston Students&apos; Union Hall (SU Hall).
                 </p>
-              </div>
-
-              <div className="p-6" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
-                <p className="label mb-3">Nearby</p>
-                <div className="space-y-2">
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   {[
-                    { name: "Birmingham Central Mosque", dist: "0.4 mi" },
-                    { name: "Green Lane Masjid", dist: "1.2 mi" },
-                    { name: "Al-Furqan Mosque", dist: "0.8 mi" },
-                  ].map((m) => (
-                    <div key={m.name} className="flex justify-between items-center">
-                      <span className="text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{m.name}</span>
-                      <span className="text-xs" style={{ color: "#4B5563", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{m.dist}</span>
-                    </div>
+                    { k: "Location", v: "Aston Students' Union Hall (SU Hall)" },
+                    { k: "Khutbah", v: "13:30 (doors open 13:15)" },
+                    { k: "Prayer", v: "~14:00 (after khutbah)" },
+                    { k: "Sisters", v: "Dedicated section — side entrance" },
+                  ].map(row => (
+                    <p key={row.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
+                      <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.5rem" }}>{row.k}:</span>{row.v}
+                    </p>
                   ))}
                 </div>
+                <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#8d86a3", marginTop: "1rem" }}>
+                  Confirm on <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ color: "#d8af72" }}>@astonisoc</a> during exam periods.
+                </p>
+              </article>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <article className="card">
+                <div className="icon-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <h3 style={{ fontFamily: PF, color: "#fff" }}>Prayer Room Locations</h3>
+                <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem", marginTop: "0.75rem" }}>
+                  {[
+                    { k: "Brothers", v: "Multi-Faith Chaplaincy, Main Building (ground floor)" },
+                    { k: "Sisters", v: "Dedicated sisters' prayer room, Aston Business School G05" },
+                    { k: "Wudu", v: "Available adjacent to both prayer rooms" },
+                    { k: "Open", v: "All day during campus opening hours" },
+                  ].map(item => (
+                    <li key={item.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
+                      <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.4rem" }}>{item.k}:</span>{item.v}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Good to know */}
+      <section className="section section--tight">
+        <div className="container">
+          <div className="flourish reveal" style={{ marginBottom: "2.5rem" }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+              <path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/>
+            </svg>
+          </div>
+          <div className="section-head center">
+            <Reveal><p className="eyebrow">Good to know</p></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Praying on campus for the first time?</h2></Reveal>
+          </div>
+          <div className="grid cols-3">
+            {[
+              { title: "Everyone is welcome", desc: "You don't need to be a member to use the prayer rooms. New Muslims and non-Muslims curious to learn are always welcome too." },
+              { title: "Bring nothing but yourself", desc: "Prayer mats and Qur'ans are provided. There's space to leave bags and shoes, and wudu areas are right next door." },
+              { title: "Find us if you're lost", desc: "Message us on Instagram or WhatsApp and a committee member will happily walk you to the prayer room or Jumu'ah." },
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={i * 80}>
+                <article className="card feature">
+                  <h3 style={{ fontFamily: PF, color: "#fff" }}>{item.title}</h3>
+                  <p style={{ fontFamily: DM, marginTop: "0.5rem" }}>{item.desc}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <Reveal>
+            <div className="cta-band">
+              <h2 style={{ fontFamily: PF }}>Want prayer times in your pocket?</h2>
+              <p className="lede" style={{ margin: "0 auto 2rem" }}>
+                Join our WhatsApp broadcast for daily times, iqamah reminders and Jumu&apos;ah updates straight to your phone.
+              </p>
+              <div className="cta-band__actions">
+                <a className="btn btn-gold btn-lg" href="https://wa.me" target="_blank" rel="noopener noreferrer">Join WhatsApp</a>
+                <Link className="btn btn-ghost btn-lg" href="/join">Become a Member</Link>
               </div>
             </div>
           </Reveal>
         </div>
-
-        {/* Etiquette */}
-        <Reveal>
-          <div className="p-6" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
-            <p className="label mb-3">Etiquette</p>
-            <div className="grid sm:grid-cols-2 gap-3">
-              {[
-                "Remove shoes before entering the prayer area",
-                "Keep mobile phones on silent during prayer",
-                "Maintain cleanliness — leave the space as you found it",
-                "Perform wudu before entering the prayer area",
-                "Respect the shared space with the whole community",
-              ].map((e) => (
-                <div key={e} className="flex items-start gap-2.5 text-sm" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-                  <span style={{ color: "#C9A227", marginTop: "2px", flexShrink: 0 }}>✓</span>
-                  {e}
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      </div>
+      </section>
     </div>
   );
 }

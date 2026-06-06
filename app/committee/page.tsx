@@ -68,7 +68,7 @@ export default function CommitteePage() {
             {core.slice(0, 2).map((m) => (
               <div key={m.id} className="p-8 relative overflow-hidden hover-l1"
                 style={{
-                  background: "linear-gradient(135deg, rgba(201,162,39,0.07) 0%, #131629 100%)",
+                  background: "var(--surface-2)",
                   border: "1px solid rgba(201,162,39,0.22)",
                   borderRadius: "1.375rem",
                 }}>
@@ -119,7 +119,7 @@ export default function CommitteePage() {
             {heads.map((m, i) => (
               <div key={m.id} className="p-6 hover-l1"
                 style={{
-                  background: "#131629",
+                  background: "var(--surface)",
                   border: "1px solid rgba(201,162,39,0.12)",
                   borderRadius: "1.125rem",
                   transition: "all 0.25s",

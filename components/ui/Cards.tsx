@@ -3,33 +3,24 @@ import Link from "next/link";
 import { useState } from "react";
 import { Event, BlogPost, CommitteeMember, Resource, Lecture } from "@/types";
 
-const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
-const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
+const PF = "'Playfair Display', Georgia, serif";
+const DM = "'DM Sans', sans-serif";
 
 /* ── PAGE HEADER ─────────────────────────────────────────────────────────── */
 export function PageHeader({ label, title, subtitle }: { label?: string; title: string; subtitle?: string }) {
   return (
-    <div className="mb-20">
-      {label && <p className="label mb-4">{label}</p>}
-      <h1 style={{ fontFamily: PF, fontSize: "clamp(2.4rem,5vw,4rem)", fontWeight: 500, color: "#fff", lineHeight: 1.08 }}>
-        {title}
-      </h1>
-      <span className="gold-rule" />
+    <div style={{ marginBottom: "3.5rem" }}>
+      {label && <p className="eyebrow">{label}</p>}
+      <h1 style={{ fontFamily: PF, fontWeight: 600, color: "#fff", marginBottom: "1rem" }}>{title}</h1>
+      <div className="gold-rule" />
       {subtitle && (
-        <p className="max-w-2xl leading-relaxed" style={{ color: "#A8A8B3", fontSize: "0.95rem", fontFamily: DM, lineHeight: 1.8 }}>
-          {subtitle}
-        </p>
+        <p className="lede" style={{ color: "#b7b0c9", fontFamily: DM }}>{subtitle}</p>
       )}
     </div>
   );
 }
 
-/* ── EVENT CARD (L2 hover) ──────────────────────────────────────────────── */
-const EVENT_BADGE: Record<string, string> = {
-  all:"badge-all", sisters:"badge-sisters", brothers:"badge-brothers",
-  jummah:"badge-jummah", charity:"badge-charity", sports:"badge-sports",
-  speaker:"badge-speaker", freshers:"badge-freshers", social:"badge-social",
-};
+/* ── EVENT CARD (L2) ─────────────────────────────────────────────────────── */
 const EVENT_LABELS: Record<string, string> = {
   all:"All Welcome", sisters:"Sisters Only", brothers:"Brothers Only",
   jummah:"Jumu'ah", charity:"Charity", sports:"Sports",
@@ -39,272 +30,188 @@ const EVENT_LABELS: Record<string, string> = {
 export function EventCard({ event }: { event: Event }) {
   const [hovered, setHovered] = useState(false);
   const d = new Date(event.date);
+  const day   = d.getDate().toString().padStart(2,"0");
+  const month = d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase();
+
   return (
     <Link href={`/events/${event.id}`} className="block">
       <div
-        className="h-full flex flex-col overflow-hidden"
+        className="card link"
         style={{
-          background: hovered
-            ? "linear-gradient(135deg, #131629 0%, #0F1220 100%)"
-            : "linear-gradient(135deg, #131629 0%, #0D1025 100%)",
-          border: `1px solid ${hovered ? "rgba(201,162,39,0.42)" : "rgba(201,162,39,0.13)"}`,
-          borderRadius: "1.125rem",
-          transition: "all 0.28s cubic-bezier(0.4,0,0.2,1)",
+          borderColor: hovered ? "rgba(216,175,114,0.4)" : undefined,
           transform: hovered ? "translateY(-5px)" : "translateY(0)",
-          boxShadow: hovered ? "0 18px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,162,39,0.1)" : "none",
+          boxShadow: hovered ? "0 24px 60px -24px rgba(0,0,0,0.7)" : undefined,
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        {/* Date bar */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-4"
-          style={{ borderBottom: "1px solid rgba(201,162,39,0.07)" }}>
-          <div className="flex items-baseline gap-2.5">
-            <span style={{ fontFamily: PF, fontSize: "2.8rem", fontWeight: 400, color: hovered ? "#D4AF37" : "#C9A227", lineHeight: 1, transition: "color 0.2s" }}>
-              {d.getDate().toString().padStart(2, "0")}
-            </span>
-            <span className="text-xs font-semibold tracking-widest" style={{ color: "#6B6B80", fontFamily: DM }}>
-              {d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase()}
-            </span>
+        {/* Date + category row */}
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.75rem", marginBottom: "1.2rem" }}>
+          <div style={{
+            textAlign: "center", padding: "0.8rem 1rem",
+            borderRadius: "12px", border: "1px solid rgba(216,175,114,0.18)",
+            background: "rgba(216,175,114,0.06)", flexShrink: 0,
+          }}>
+            <div style={{ fontFamily: PF, fontSize: "1.9rem", color: "#d8af72", lineHeight: 1, fontWeight: 500 }}>{day}</div>
+            <div style={{ fontFamily: DM, fontSize: "0.65rem", letterSpacing: "0.12em", color: "#8d86a3", marginTop: "0.2rem" }}>{month}</div>
           </div>
-          <div className="flex gap-1.5 flex-wrap justify-end">
-            <span className={`badge ${EVENT_BADGE[event.category] ?? "badge-muted"}`}>
-              {EVENT_LABELS[event.category] ?? event.category}
-            </span>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", alignItems: "flex-end" }}>
+            <span className={`badge badge-${event.category}`}>{EVENT_LABELS[event.category] ?? event.category}</span>
             {event.isRecurring && <span className="badge badge-muted">Recurring</span>}
           </div>
         </div>
 
-        {/* Body */}
-        <div className="flex-1 p-5">
-          <h3 style={{ fontFamily: PF, fontSize: "1.2rem", fontWeight: 500, color: "#fff", marginBottom: "0.5rem", lineHeight: 1.25 }}>
-            {event.title}
-          </h3>
-          {event.recurringNote && (
-            <p className="text-xs mb-2" style={{ color: "#C9A227", fontFamily: DM }}>{event.recurringNote}</p>
-          )}
-          <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "#6B6B80", fontFamily: DM }}>
-            {event.description}
-          </p>
-          <div className="space-y-1">
-            <p className="text-xs" style={{ color: "#4B4B60", fontFamily: DM }}>⏰ {event.time}</p>
-            <p className="text-xs" style={{ color: "#4B4B60", fontFamily: DM }}>📍 {event.location}</p>
-          </div>
-        </div>
-
-        {/* CTA — revealed on hover */}
-        <div className="px-5 pb-5 flex items-center gap-2"
-          style={{ opacity: hovered ? 1 : 0.4, transition: "opacity 0.25s" }}>
-          <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#C9A227", fontFamily: DM }}>
-            View Details
+        <h3 style={{ fontFamily: PF, fontSize: "1.25rem", fontWeight: 500, color: "#fff", marginBottom: "0.6rem", lineHeight: 1.2 }}>
+          {event.title}
+        </h3>
+        {event.recurringNote && (
+          <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#d8af72", marginBottom: "0.5rem" }}>{event.recurringNote}</p>
+        )}
+        <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "#8d86a3", lineHeight: 1.7, marginBottom: "1rem" }} className="line-clamp-2">
+          {event.description}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+          <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "#8d86a3", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span style={{ color: "#d8af72" }}>⏰</span> {event.time}
           </span>
-          <span style={{ color: "#C9A227", fontSize: "0.7rem", transition: "transform 0.2s", transform: hovered ? "translateX(4px)" : "none" }}>→</span>
+          <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "#8d86a3", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span style={{ color: "#d8af72" }}>📍</span> {event.location}
+          </span>
+        </div>
+        <div style={{
+          marginTop: "1.2rem", paddingTop: "1rem",
+          borderTop: "1px solid rgba(216,175,114,0.1)",
+          display: "flex", alignItems: "center", gap: "0.4rem",
+          opacity: hovered ? 1 : 0.4,
+          transition: "opacity 0.25s",
+        }}>
+          <span style={{ fontFamily: DM, fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d8af72" }}>View Details</span>
+          <span style={{ color: "#d8af72", fontSize: "0.7rem", transition: "transform 0.2s", transform: hovered ? "translateX(4px)" : "none" }}>→</span>
         </div>
       </div>
     </Link>
   );
 }
 
-/* ── BLOG CARD (L2 hover) ──────────────────────────────────────────────── */
+/* ── BLOG CARD ───────────────────────────────────────────────────────────── */
 export function BlogCard({ post }: { post: BlogPost }) {
   const [hovered, setHovered] = useState(false);
   return (
     <Link href={`/blog/${post.slug}`} className="block">
-      <div
-        className="h-full flex flex-col p-6"
-        style={{
-          background: "#131629",
-          border: `1px solid ${hovered ? "rgba(201,162,39,0.4)" : "rgba(201,162,39,0.1)"}`,
-          borderRadius: "1.125rem",
-          transition: "all 0.28s cubic-bezier(0.4,0,0.2,1)",
-          transform: hovered ? "translateY(-4px)" : "translateY(0)",
-          boxShadow: hovered ? "0 14px 40px rgba(0,0,0,0.42)" : "none",
-        }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <span className="badge badge-muted self-start mb-4">{post.category}</span>
-        <h3 style={{ fontFamily: PF, fontSize: "1.15rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem", lineHeight: 1.25 }}>
-          {post.title}
-        </h3>
-        <p className="text-sm leading-relaxed flex-1 mb-5 line-clamp-3" style={{ color: "#6B6B80", fontFamily: DM }}>
-          {post.excerpt}
-        </p>
-        <div className="flex items-center justify-between">
-          <span className="text-xs" style={{ color: "#4B4B60", fontFamily: DM }}>{post.author}</span>
-          <span className="text-xs" style={{ color: "#4B4B60", fontFamily: DM }}>
-            {new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-          </span>
+      <article className="card link article"
+        style={{ borderColor: hovered ? "rgba(216,175,114,0.35)" : undefined, transform: hovered ? "translateY(-4px)" : undefined }}
+        onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+        <span className="badge badge-muted" style={{ marginBottom: "1rem", display: "inline-block" }}>{post.category}</span>
+        <h3 style={{ fontFamily: PF, fontSize: "1.2rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem", lineHeight: 1.25 }}>{post.title}</h3>
+        <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "#8d86a3", lineHeight: 1.7, marginBottom: "1.2rem" }} className="line-clamp-3">{post.excerpt}</p>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: "#8d86a3", fontFamily: DM }}>
+          <span>{post.author}</span>
+          <span>{new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
         </div>
-      </div>
+      </article>
     </Link>
   );
 }
 
-/* ── MEMBER CARD (L1 hover, initials only) ─────────────────────────────── */
+/* ── MEMBER CARD (initials, no photo) ────────────────────────────────────── */
 export function MemberCard({ member }: { member: CommitteeMember }) {
   const [hovered, setHovered] = useState(false);
-  const initials = member.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
+  const initials = member.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
   return (
-    <div
-      className="p-6"
-      style={{
-        background: "#131629",
-        border: `1px solid ${hovered ? "rgba(201,162,39,0.32)" : "rgba(201,162,39,0.1)"}`,
-        borderRadius: "1.125rem",
-        transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
-        boxShadow: hovered ? "0 8px 28px rgba(0,0,0,0.38), 0 0 0 1px rgba(201,162,39,0.08)" : "none",
-        cursor: "default",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div
-        className="flex items-center justify-center w-11 h-11 mb-4"
-        style={{
-          background: hovered ? "rgba(201,162,39,0.12)" : "rgba(201,162,39,0.07)",
-          border: `1px solid ${hovered ? "rgba(201,162,39,0.38)" : "rgba(201,162,39,0.2)"}`,
-          borderRadius: "50%",
-          fontFamily: PF,
-          fontSize: "1rem",
-          fontWeight: 600,
-          color: "#C9A227",
-          transition: "all 0.25s",
-        }}
-      >
-        {initials}
-      </div>
+    <div className="card"
+      style={{ textAlign: "center", borderColor: hovered ? "rgba(216,175,114,0.3)" : undefined, transform: hovered ? "translateY(-3px)" : undefined, cursor: "default" }}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+      <div style={{
+        width: 88, height: 88, borderRadius: "50%", margin: "0 auto 1.2rem",
+        display: "grid", placeItems: "center",
+        background: hovered ? "linear-gradient(145deg, rgba(216,175,114,0.25), rgba(216,175,114,0.06))" : "linear-gradient(145deg, rgba(216,175,114,0.18), rgba(216,175,114,0.05))",
+        border: "1px solid rgba(216,175,114,0.25)",
+        fontFamily: PF, fontSize: "1.5rem", fontWeight: 600, color: "#d8af72",
+        transition: "all 0.25s",
+      }}>{initials}</div>
       <h3 style={{ fontFamily: PF, fontSize: "1.05rem", fontWeight: 500, color: "#fff", marginBottom: "0.2rem" }}>{member.name}</h3>
-      <p className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: "#C9A227", fontFamily: DM }}>{member.role}</p>
-      {member.department && <p className="text-xs mb-2.5" style={{ color: "#4B4B60", fontFamily: DM }}>{member.department}</p>}
-      <p className="text-xs leading-relaxed line-clamp-3" style={{ color: "#6B6B80", fontFamily: DM }}>{member.bio}</p>
-      {member.linkedin && (
-        <a href={member.linkedin} target="_blank" rel="noopener noreferrer"
-          className="mt-3 block text-xs transition-colors" style={{ color: "#4B4B60", fontFamily: DM }}
-          onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "#C9A227")}
-          onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "#4B4B60")}>
-          LinkedIn →
-        </a>
-      )}
+      <p style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.06em", color: "#d8af72", marginBottom: "0.6rem" }}>{member.role}</p>
+      <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#8d86a3", lineHeight: 1.65 }} className="line-clamp-3">{member.bio}</p>
     </div>
   );
 }
 
-/* ── RESOURCE ITEM (L1 hover) ──────────────────────────────────────────── */
-const TYPE_ICONS: Record<Resource["type"], string> = { pdf: "PDF", link: "→", video: "▶", audio: "♪" };
+/* ── RESOURCE ITEM ───────────────────────────────────────────────────────── */
+const TYPE_LABELS: Record<Resource["type"], string> = { pdf: "PDF", link: "→", video: "▶", audio: "♪" };
 
 export function ResourceItem({ resource }: { resource: Resource }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <a
-      href={resource.url}
+    <a href={resource.url}
       target={resource.isExternal ? "_blank" : undefined}
       rel={resource.isExternal ? "noopener noreferrer" : undefined}
-      className="flex items-start gap-4 p-4"
+      className="card link"
       style={{
-        background: hovered ? "rgba(201,162,39,0.05)" : "rgba(19,22,41,0.7)",
-        border: `1px solid ${hovered ? "rgba(201,162,39,0.3)" : "rgba(201,162,39,0.09)"}`,
-        borderRadius: "0.875rem",
-        transition: "all 0.22s cubic-bezier(0.4,0,0.2,1)",
-        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        display: "flex", alignItems: "flex-start", gap: "1rem", padding: "1.2rem 1.4rem",
+        borderColor: hovered ? "rgba(216,175,114,0.32)" : undefined,
+        background: hovered ? "rgba(216,175,114,0.04)" : undefined,
+        transform: hovered ? "translateY(-2px)" : undefined,
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div className="flex items-center justify-center w-9 h-9 shrink-0 text-xs font-bold"
-        style={{
-          background: hovered ? "rgba(201,162,39,0.15)" : "rgba(201,162,39,0.08)",
-          border: "1px solid rgba(201,162,39,0.2)",
-          borderRadius: "0.5rem",
-          color: "#C9A227",
-          fontFamily: DM,
-          transition: "background 0.2s",
-        }}>
-        {TYPE_ICONS[resource.type]}
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+      <div className="icon-badge" style={{ width: 36, height: 36, borderRadius: "10px", flexShrink: 0, fontSize: "0.7rem", fontWeight: 700, fontFamily: DM }}>
+        {TYPE_LABELS[resource.type]}
       </div>
       <div>
-        <p className="font-medium text-sm mb-0.5" style={{ color: "#EAEAEA", fontFamily: DM }}>{resource.title}</p>
-        <p className="text-xs leading-relaxed" style={{ color: "#6B6B80", fontFamily: DM }}>{resource.description}</p>
-        <p className="text-xs mt-1 capitalize" style={{ color: "#4B4B60", fontFamily: DM }}>{resource.type}</p>
+        <p style={{ fontFamily: DM, fontWeight: 600, color: "#f5f2ea", marginBottom: "0.25rem", fontSize: "0.9rem" }}>{resource.title}</p>
+        <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "#8d86a3", lineHeight: 1.6 }}>{resource.description}</p>
       </div>
     </a>
   );
 }
 
-/* ── LECTURE CARD (L2 hover) ────────────────────────────────────────────── */
+/* ── LECTURE CARD ────────────────────────────────────────────────────────── */
 export function LectureCard({ lecture }: { lecture: Lecture }) {
   const [hovered, setHovered] = useState(false);
   const url = lecture.youtubeUrl ?? lecture.spotifyUrl;
   const inner = (
-    <div
-      className="h-full flex flex-col overflow-hidden"
+    <div className="card link"
       style={{
-        background: "#131629",
-        border: `1px solid ${hovered ? "rgba(201,162,39,0.38)" : "rgba(201,162,39,0.1)"}`,
-        borderRadius: "1.125rem",
-        transition: "all 0.28s cubic-bezier(0.4,0,0.2,1)",
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
-        boxShadow: hovered ? "0 14px 42px rgba(0,0,0,0.45)" : "none",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div className="flex items-center justify-center aspect-video relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0F1220, #151937)" }}>
-        <div className="absolute inset-0 geo-pattern opacity-25" />
-        <div className="relative z-10 flex items-center justify-center w-12 h-12 rounded-full"
-          style={{
-            background: hovered ? "rgba(201,162,39,0.2)" : "rgba(201,162,39,0.1)",
-            border: `1px solid ${hovered ? "rgba(201,162,39,0.5)" : "rgba(201,162,39,0.3)"}`,
-            transition: "all 0.25s",
-            transform: hovered ? "scale(1.1)" : "scale(1)",
-          }}>
-          <span style={{ color: "#C9A227" }}>▶</span>
+        padding: 0, overflow: "hidden",
+        borderColor: hovered ? "rgba(216,175,114,0.38)" : undefined,
+        transform: hovered ? "translateY(-4px)" : undefined,
+      }}>
+      <div style={{
+        aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center",
+        background: "linear-gradient(150deg, rgba(216,175,114,0.12), rgba(31,21,71,0.5))",
+        position: "relative",
+      }}>
+        <div className="icon-badge" style={{ width: 52, height: 52, borderRadius: "50%" }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         </div>
       </div>
-      <div className="flex-1 p-5">
-        <span className="badge badge-muted mb-3 inline-block capitalize">{lecture.category}</span>
-        <h3 style={{ fontFamily: PF, fontSize: "1.05rem", fontWeight: 500, color: "#fff", marginBottom: "0.4rem", lineHeight: 1.25 }}>
-          {lecture.title}
-        </h3>
-        <p className="text-sm" style={{ color: "#A8A8B3", fontFamily: DM }}>{lecture.speaker}</p>
-        <p className="text-xs mt-0.5 mb-3" style={{ color: "#4B4B60", fontFamily: DM }}>{lecture.series} · {lecture.duration}</p>
-        <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "#6B6B80", fontFamily: DM }}>{lecture.description}</p>
+      <div style={{ padding: "1.4rem" }}>
+        <span className="badge badge-muted" style={{ marginBottom: "0.75rem", display: "inline-block", textTransform: "capitalize" }}>{lecture.category}</span>
+        <h3 style={{ fontFamily: PF, fontSize: "1.1rem", fontWeight: 500, color: "#fff", marginBottom: "0.4rem", lineHeight: 1.25 }}>{lecture.title}</h3>
+        <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#b7b0c9", marginBottom: "0.25rem" }}>{lecture.speaker}</p>
+        <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#8d86a3", marginBottom: "0.75rem" }}>{lecture.series} · {lecture.duration}</p>
+        <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#8d86a3", lineHeight: 1.65 }} className="line-clamp-2">{lecture.description}</p>
       </div>
     </div>
   );
-  if (url) return <a href={url} target="_blank" rel="noopener noreferrer" className="block">{inner}</a>;
-  return <div className="block">{inner}</div>;
+  if (url) return <a href={url} target="_blank" rel="noopener noreferrer" className="block" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>{inner}</a>;
+  return <div className="block" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>{inner}</div>;
 }
 
-/* ── CTA BANNER ─────────────────────────────────────────────────────────── */
+/* ── CTA BANNER ──────────────────────────────────────────────────────────── */
 export function CtaBanner({ title, description, primaryLabel, primaryHref, secondaryLabel, secondaryHref }:
   { title: string; description: string; primaryLabel: string; primaryHref: string; secondaryLabel?: string; secondaryHref?: string }) {
   const isExt = primaryHref.startsWith("http");
   return (
-    <div className="text-center p-14 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, rgba(201,162,39,0.07) 0%, rgba(21,25,55,0.9) 50%, rgba(201,162,39,0.04) 100%)",
-        border: "1px solid rgba(201,162,39,0.2)",
-        borderRadius: "1.5rem",
-      }}>
-      <div className="absolute inset-0 geo-pattern opacity-25" />
-      <div className="relative z-10">
-        <h2 style={{ fontFamily: PF, fontSize: "clamp(1.9rem,3vw,2.7rem)", fontWeight: 500, color: "#fff", marginBottom: "0.85rem" }}>
-          {title}
-        </h2>
-        <p className="max-w-md mx-auto mb-9 leading-relaxed" style={{ color: "#A8A8B3", fontSize: "0.92rem", fontFamily: DM }}>
-          {description}
-        </p>
-        <div className="flex gap-3 justify-center flex-wrap">
-          {isExt
-            ? <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="btn-gold">{primaryLabel}</a>
-            : <Link href={primaryHref} className="btn-gold">{primaryLabel}</Link>}
-          {secondaryLabel && secondaryHref && (
-            <Link href={secondaryHref} className="btn-outline-gold">{secondaryLabel}</Link>
-          )}
-        </div>
+    <div className="cta-band">
+      <h2 style={{ fontFamily: PF, fontWeight: 600, marginBottom: "0.75rem" }}>{title}</h2>
+      <p className="lede" style={{ marginBottom: "2rem", marginInline: "auto" }}>{description}</p>
+      <div className="cta-band__actions">
+        {isExt
+          ? <a href={primaryHref} target="_blank" rel="noopener noreferrer" className="btn btn-gold btn-lg">{primaryLabel}</a>
+          : <Link href={primaryHref} className="btn btn-gold btn-lg">{primaryLabel}</Link>}
+        {secondaryLabel && secondaryHref && (
+          <Link href={secondaryHref} className="btn btn-ghost btn-lg">{secondaryLabel}</Link>
+        )}
       </div>
     </div>
   );

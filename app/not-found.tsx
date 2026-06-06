@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div
       className="flex flex-col items-center justify-center text-center px-4"
-      style={{ minHeight: "100svh", background: "#0D1025" }}
+      style={{ minHeight: "100svh", background: "transparent" }}
     >
       {/* Crescent motif */}
       <svg width="60" height="60" viewBox="0 0 28 28" fill="none" className="mb-6 opacity-40">

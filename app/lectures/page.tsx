@@ -40,7 +40,7 @@ export default function LecturesPage() {
       })}
 
       <Reveal>
-        <div className="p-8" style={{ background: "#131629", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1.5rem" }}>
+        <div className="p-8" style={{ background: "var(--surface)", border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1.5rem" }}>
           <p className="label mb-3">Stay Updated</p>
           <h3 style={{ fontFamily: PF, fontSize: "1.6rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem" }}>
             Never Miss a Lecture
