@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://astonisoc.com"),
@@ -12,13 +13,18 @@ export const metadata: Metadata = {
   openGraph: { type: "website", locale: "en_GB", siteName: "Aston ISOC" },
   twitter: { card: "summary_large_image", site: "@astonisoc" },
   robots: { index: true, follow: true },
-  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* Flag returning-this-session visitors before paint so the intro loader is hidden instantly (no flash) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem('isoc_loaded'))document.documentElement.dataset.isocLoaded='1'}catch(e){}`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -27,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <LoadingScreen />
         <Navbar />
         <main>{children}</main>
         <Footer />

@@ -188,6 +188,10 @@ p { color: var(--muted); line-height: 1.78; }
 @media (max-width: 900px) { .cols-3, .cols-4 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 620px) { .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; } }
 
+/* Equal-height link cards (e.g. "Find us online") */
+.link-grid > .reveal { display: flex; }
+.link-grid > .reveal > a { flex: 1; }
+
 .split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem,5vw,4rem); align-items: center; }
 @media (max-width: 880px) { .split { grid-template-columns: 1fr; } }
 

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { navItems } from "@/lib/nav";
@@ -13,6 +14,7 @@ export default function Navbar() {
 
   // Mobile state — fully independent
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openSection, setOpenSection] = useState<string | null>(null);
 
   // Scroll listener
   useEffect(() => {
@@ -26,6 +28,7 @@ export default function Navbar() {
   useEffect(() => {
     setDropdown(null);
     setMobileOpen(false);
+    setOpenSection(null);
   }, [pathname]);
 
   // Lock body scroll when mobile drawer open
@@ -63,13 +66,26 @@ export default function Navbar() {
           }}>
 
             {/* ── Logo ── */}
-            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.65rem", flexShrink: 0, textDecoration: "none" }}>
-              <svg width="33" height="33" viewBox="0 0 40 40" fill="none" aria-hidden="true">
-                <circle cx="20" cy="20" r="19" stroke="#d8af72" strokeOpacity="0.45"/>
-                <polygon points="33,20 20,33 7,20 20,7" stroke="#d8af72" strokeWidth="1.4"/>
-                <polygon points="29.2,29.2 10.8,29.2 10.8,10.8 29.2,10.8" stroke="#d8af72" strokeWidth="1.4"/>
-                <circle cx="20" cy="20" r="3.4" fill="#d8af72"/>
-              </svg>
+            <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexShrink: 0, textDecoration: "none" }}>
+              <div style={{
+                position: "relative",
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: "1px solid rgba(216,175,114,0.3)",
+                flexShrink: 0,
+              }}>
+                {/* Same emblem mark as the favicon (app/icon.png) */}
+                <Image
+                  src="/isoc-mark.png"
+                  alt="Aston ISOC"
+                  fill
+                  sizes="34px"
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
               <div style={{ lineHeight: 1.15 }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "0.95rem", fontWeight: 600, color: "#fff", display: "block" }}>
                   Aston ISOC
@@ -324,7 +340,7 @@ export default function Navbar() {
           borderBottom: "1px solid rgba(216,175,114,0.1)",
         }}>
           <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "0.95rem", fontStyle: "italic", color: "#d8af72" }}>
-            Menu
+            Contents
           </span>
           <button
             type="button"
@@ -341,56 +357,100 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Nav links */}
+        {/* Nav links — collapsible sections */}
         <nav style={{ flex: 1, padding: "1.25rem 1rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
-          {navItems.map(item => (
-            <div key={item.label}>
-              <Link
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "0.8rem 0.9rem",
-                  borderRadius: "12px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "0.95rem",
-                  fontWeight: isActive(item.href) ? 600 : 400,
-                  color: isActive(item.href) ? "#d8af72" : "#e8e3f0",
-                  background: isActive(item.href) ? "rgba(216,175,114,0.1)" : "transparent",
-                  textDecoration: "none",
-                  borderBottom: "1px solid rgba(255,255,255,0.04)",
-                }}
+          {navItems.map(item => {
+            const open = openSection === item.label;
+            const active = isActive(item.href);
+            return (
+              <div
+                key={item.label}
+                onMouseEnter={() => item.children && setOpenSection(item.label)}
               >
-                {item.label}
-                {isActive(item.href) && (
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d8af72", flexShrink: 0 }} />
+                {item.children ? (
+                  /* ── Heading with sub-items: tap / hover to expand ── */
+                  <button
+                    type="button"
+                    onClick={() => setOpenSection(open ? null : item.label)}
+                    aria-expanded={open}
+                    style={{
+                      width: "100%",
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                      padding: "0.8rem 0.9rem",
+                      borderRadius: "12px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "0.95rem",
+                      fontWeight: active || open ? 600 : 400,
+                      color: active || open ? "#d8af72" : "#e8e3f0",
+                      background: open ? "rgba(216,175,114,0.08)" : "transparent",
+                      border: "none", cursor: "pointer", textAlign: "left",
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    {item.label}
+                    <svg width="13" height="13" viewBox="0 0 12 12" fill="none"
+                      style={{ transition: "transform 0.26s var(--ease, ease)", transform: open ? "rotate(180deg)" : "none", flexShrink: 0, opacity: 0.7 }}>
+                      <path d="M2.5 4L6 7.5L9.5 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                ) : (
+                  /* ── Direct link ── */
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                      padding: "0.8rem 0.9rem",
+                      borderRadius: "12px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "0.95rem",
+                      fontWeight: active ? 600 : 400,
+                      color: active ? "#d8af72" : "#e8e3f0",
+                      background: active ? "rgba(216,175,114,0.1)" : "transparent",
+                      textDecoration: "none",
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    {item.label}
+                    {active && (
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d8af72", flexShrink: 0 }} />
+                    )}
+                  </Link>
                 )}
-              </Link>
-              {/* Sub-links */}
-              {item.children && (
-                <div style={{ paddingLeft: "0.9rem", paddingTop: "0.15rem", paddingBottom: "0.35rem", display: "flex", flexDirection: "column", gap: "0.05rem" }}>
-                  {item.children.map(child => (
-                    <Link
-                      key={child.href}
-                      href={child.href}
-                      onClick={() => setMobileOpen(false)}
-                      style={{
-                        display: "block",
-                        padding: "0.5rem 0.9rem",
-                        borderRadius: "10px",
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "0.85rem",
-                        color: pathname === child.href ? "#d8af72" : "var(--muted)",
-                        textDecoration: "none",
-                      }}
-                    >
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+
+                {/* Collapsible sub-links */}
+                {item.children && (
+                  <div style={{
+                    overflow: "hidden",
+                    maxHeight: open ? `${item.children.length * 44 + 16}px` : 0,
+                    opacity: open ? 1 : 0,
+                    transition: "max-height 0.3s var(--ease, ease), opacity 0.25s ease",
+                  }}>
+                    <div style={{ paddingLeft: "0.9rem", paddingTop: "0.3rem", paddingBottom: "0.5rem", display: "flex", flexDirection: "column", gap: "0.05rem" }}>
+                      {item.children.map(child => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={() => setMobileOpen(false)}
+                          style={{
+                            display: "block",
+                            padding: "0.5rem 0.9rem",
+                            borderRadius: "10px",
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontSize: "0.85rem",
+                            color: pathname === child.href ? "#d8af72" : "var(--muted)",
+                            textDecoration: "none",
+                          }}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         {/* CTA buttons */}

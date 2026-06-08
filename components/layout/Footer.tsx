@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { footerLinks, SOCIAL, WHATSAPP } from "@/lib/nav";
 
 export default function Footer() {
@@ -11,12 +12,24 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "1rem" }}>
-              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="19" stroke="#d8af72" strokeOpacity="0.4"/>
-                <polygon points="33,20 20,33 7,20 20,7" stroke="#d8af72" strokeWidth="1.4"/>
-                <polygon points="29.2,29.2 10.8,29.2 10.8,10.8 29.2,10.8" stroke="#d8af72" strokeWidth="1.4"/>
-                <circle cx="20" cy="20" r="3.4" fill="#d8af72"/>
-              </svg>
+              <div style={{
+                position: "relative",
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: "1px solid rgba(216,175,114,0.3)",
+                flexShrink: 0,
+              }}>
+                {/* Same emblem mark as the navbar + favicon */}
+                <Image
+                  src="/isoc-mark.png"
+                  alt="Aston ISOC"
+                  fill
+                  sizes="40px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
               <div style={{ lineHeight: 1.1 }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "1rem", fontWeight: 600, color: "#fff", display: "block" }}>Aston ISOC</span>
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#d8af72" }}>Islamic Society</span>
