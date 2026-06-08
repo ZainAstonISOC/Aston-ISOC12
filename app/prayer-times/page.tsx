@@ -8,7 +8,7 @@ import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Prayer Times",
-  description: "Live daily prayer times for Birmingham — Fajr, Dhuhr, Asr, Maghrib, Isha. Campus prayer rooms and Jumu'ah info.",
+  description: "Live daily prayer times for Birmingham Fajr, Dhuhr, Asr, Maghrib, Isha. Campus prayer rooms and Jumu'ah info.",
 };
 export const revalidate = 3600;
 
@@ -65,7 +65,7 @@ export default async function PrayerTimesPage() {
                     { k: "Location", v: "Aston Students' Union Hall (SU Hall)" },
                     { k: "Khutbah", v: "13:30 (doors open 13:15)" },
                     { k: "Prayer", v: "~14:00 (after khutbah)" },
-                    { k: "Sisters", v: "Dedicated section — side entrance" },
+                    { k: "Sisters", v: "Dedicated section side entrance" },
                   ].map(row => (
                     <p key={row.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
                       <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.5rem" }}>{row.k}:</span>{row.v}

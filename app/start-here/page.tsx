@@ -12,29 +12,29 @@ const PATHWAYS = [
   { icon: "🌱", title: "I'm a Fresher", desc: "Just arrived at Aston? Find your community, prayer facilities, halal food, and your first events.", href: "/freshers", cta: "Freshers Hub →", accent: "rgba(201,162,39,0.12)", border: "rgba(201,162,39,0.25)" },
   { icon: "🕌", title: "Returning Muslim", desc: "Reconnect with your faith and community through halaqas, events, and WhatsApp groups.", href: "/events", cta: "See Events →", accent: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)" },
   { icon: "🌙", title: "New Muslim", desc: "Alhamdulillah. We have dedicated support, resources, and a welcoming community for you.", href: "/resources", cta: "New Muslim Resources →", accent: "rgba(52,211,153,0.08)", border: "rgba(52,211,153,0.2)" },
-  { icon: "🤝", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn — no pressure.", href: "/blog", cta: "Read Articles →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)" },
+  { icon: "🤝", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn no pressure.", href: "/blog", cta: "Read Articles →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)" },
 ];
 
 const STEPS = [
   { n: "01", title: "Join ISOC", desc: "£5 membership via Aston SU gives you full access.", href: MEMBERSHIP.join, cta: "Join Now →", external: true },
   { n: "02", title: "Join WhatsApp", desc: "The fastest way to stay updated with events and announcements.", href: WHATSAPP.community, cta: "Join WhatsApp →", external: true },
-  { n: "03", title: "Follow Instagram", desc: "@astonisoc — all events, news, and community in one place.", href: SOCIAL.instagram, cta: "Follow →", external: true },
+  { n: "03", title: "Follow Instagram", desc: "@astonisoc all events, news, and community in one place.", href: SOCIAL.instagram, cta: "Follow →", external: true },
 ];
 
 const FAQS = [
   { q: "Do I need to be Muslim to attend ISOC events?", a: "Most events are open to everyone. We warmly welcome non-Muslim students to open lectures, social events, and educational talks." },
   { q: "How much does membership cost?", a: "ISOC membership is just £5 for the full academic year, paid through Aston Students' Union." },
-  { q: "I missed freshers week — can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
+  { q: "I missed freshers week can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
   { q: "Is there a sisters-only space?", a: "Yes. The Sisters' Section has dedicated events, a weekly halaqa, a private WhatsApp group, and committee members specifically there for sisters." },
-  { q: "I'm a new Muslim — what support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
-  { q: "Where is Friday prayer (Jumu'ah)?", a: "Every Friday during term time — Aston Students' Union Hall (SU Hall). Khutbah 13:30, prayer ~14:00." },
+  { q: "I'm a new Muslim what support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
+  { q: "Where is Friday prayer (Jumu'ah)?", a: "Every Friday during term time Aston Students' Union Hall (SU Hall). Khutbah 13:30, prayer ~14:00." },
 ];
 
 export default function StartHerePage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Start Here" }]} />
-      <PageHeader label="Welcome" title="Start Here" subtitle="Whether you're a fresher, new Muslim, returning to faith, or simply curious — this is your starting point." />
+      <PageHeader label="Welcome" title="Start Here" subtitle="Whether you're a fresher, new Muslim, returning to faith, or simply curious this is your starting point." />
 
       {/* Pathways */}
       <Reveal>
@@ -116,7 +116,7 @@ export default function StartHerePage() {
           {[
             { title: "Sisters' Support", desc: "Contact Aminah (Head Sister) via Instagram DM", href: SOCIAL.instagram },
             { title: "Brothers' Support", desc: "Contact Abdikarim (Head Brother) via Instagram DM", href: SOCIAL.instagram },
-            { title: "General Enquiry", desc: "Message @astonisoc — replies within 24h", href: SOCIAL.instagram },
+            { title: "General Enquiry", desc: "Message @astonisoc replies within 24h", href: SOCIAL.instagram },
           ].map((s) => (
             <a
               key={s.title}

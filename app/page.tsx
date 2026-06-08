@@ -11,7 +11,7 @@ import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
-  title: "Aston ISOC — Faith. Community. Excellence.",
+  title: "Aston ISOC Faith. Community. Excellence.",
   description: "Aston University Islamic Society. Serving Muslim students at Aston University, Birmingham.",
 };
 export const revalidate = 3600;
@@ -66,7 +66,7 @@ export default async function HomePage() {
 
           <Reveal delay={200}>
             <p className="lede" style={{ marginTop: "1.6rem" }}>
-              Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities — for daily prayer, weekly circles, charity, and a community that lasts a lifetime.
+              Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities for daily prayer, weekly circles, charity, and a community that lasts a lifetime.
             </p>
           </Reveal>
 
@@ -83,10 +83,10 @@ export default async function HomePage() {
           <Reveal delay={340}>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(1.5rem,5vw,3.5rem)", marginTop: "3.5rem", paddingTop: "2.2rem", borderTop: "1px solid rgba(216,175,114,0.12)" }}>
               {[
-                { n: "500+", label: "Members" },
+                { n: "1,000+", label: "Members" },
                 { n: "5×", label: "Daily prayers on campus" },
-                { n: "£25k", label: "Raised for charity" },
-                { n: "40+", label: "Events each year" },
+                { n: "£200k+", label: "Raised for charity" },
+                { n: "50+", label: "Events each semester" },
               ].map(s => (
                 <div key={s.label}>
                   <b style={{ fontFamily: PF, fontSize: "clamp(1.8rem,3vw,2.4rem)", color: "#fff", display: "block" }}>{s.n}</b>
@@ -121,7 +121,7 @@ export default async function HomePage() {
         <div className="container">
           <div className="section-head center">
             <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>What we offer</p></Reveal>
-            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>More than a society — a community</h2></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>More than a society a community</h2></Reveal>
             <Reveal delay={140}><p className="lede" style={{ margin: "0 auto" }}>Everything you need to keep your deen strong while you study, all in one place.</p></Reveal>
           </div>
           <div className="grid cols-3">
@@ -129,9 +129,9 @@ export default async function HomePage() {
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>, title: "Prayer & Jumu'ah", desc: "Dedicated brothers' and sisters' prayer spaces, with congregational Jumu'ah every Friday at the SU Hall." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>, title: "Weekly Halaqa", desc: "Reflect, learn and grow together with weekly circles, tafsir sessions and guest speakers from across the UK." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>, title: "Charity & Sadaqah", desc: "Make your time at university count. Our Charity Week and year-round fundraising support causes at home and abroad." },
-              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>, title: "Sisters & Brothers", desc: "From football and futsal to game nights and meals out — find your people and make friendships that last." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>, title: "Sisters & Brothers", desc: "From football and futsal to game nights and meals out find your people and make friendships that last." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>, title: "Mentoring & Support", desc: "New to Aston? Our mentoring scheme pairs first-years with senior students for guidance, academic and spiritual." },
-              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/></svg>, title: "Discover Islam Week", desc: "Our flagship dawah event — a week of talks, exhibitions and open conversations welcoming the whole university." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/></svg>, title: "Community \u0026 Dawah", desc: "From Friday gatherings to open conversations a week of talks, exhibitions and open conversations welcoming the whole university." },
             ].map((item, i) => (
               <Reveal key={item.title} delay={(i % 3) * 80}>
                 <article className="card feature">
@@ -151,7 +151,7 @@ export default async function HomePage() {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
             <div>
               <Reveal><p className="eyebrow">What&apos;s On</p></Reveal>
-              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Events</h2></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Upcoming Events</h2></Reveal>
             </div>
             <Reveal><Link href="/events" className="btn btn-ghost">View All</Link></Reveal>
           </div>
@@ -179,7 +179,7 @@ export default async function HomePage() {
             <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Sisters &amp; Brothers</h2></Reveal>
             <Reveal delay={120}>
               <p className="lede" style={{ marginInline: "auto", fontStyle: "italic", color: "#8d86a3", fontFamily: PF, fontSize: "0.95rem" }}>
-                &ldquo;The believers are like one body in their mutual love.&rdquo; — Prophet Muhammad ﷺ
+                &ldquo;The believers are like one body in their mutual love.&rdquo; Prophet Muhammad ﷺ
               </p>
             </Reveal>
           </div>
@@ -210,42 +210,32 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ══ VOLUNTEER ═════════════════════════════════════════════════════ */}
+      {/* == GET INVOLVED TEASER == */}
       <section className="section section--tight">
         <div className="container">
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
-            <div>
-              <Reveal><p className="eyebrow">Get Involved</p></Reveal>
-              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>We Need You</h2></Reveal>
-              <Reveal delay={100}>
-                <p style={{ fontFamily: PF, fontStyle: "italic", color: "#8d86a3", fontSize: "0.92rem" }}>
-                  &ldquo;The best of people are those most beneficial to people.&rdquo; — Prophet Muhammad ﷺ
-                </p>
-              </Reveal>
+          <Reveal>
+            <div className="cta-band" style={{ textAlign: "left", padding: "clamp(2rem,4vw,3rem)" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
+                <div style={{ maxWidth: "56ch" }}>
+                  <p className="eyebrow">Get Involved</p>
+                  <h2 style={{ fontFamily: PF, fontSize: "clamp(1.6rem,3vw,2.2rem)" }}>We need you.</h2>
+                  <p style={{ fontFamily: DM, color: "var(--muted)", marginTop: "0.75rem", lineHeight: 1.75 }}>
+                    Ramadan, Discover Islam Week, Charity Week - every campaign runs on volunteers. Whether you can give an hour or a week, your contribution matters.
+                  </p>
+                </div>
+                <div style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap" }}>
+                  <Link href="/volunteer" className="btn btn-gold">View Opportunities</Link>
+                  <Link href="/contact" className="btn btn-ghost">Get in Touch</Link>
+                </div>
+              </div>
             </div>
-            <Reveal><Link href="/volunteer" className="btn btn-gold">All Opportunities</Link></Reveal>
-          </div>
-          <div className="grid cols-3">
-            {volunteerCamps.map((c, i) => (
-              <Reveal key={c.id} delay={i * 80}>
-                <Link href="/volunteer" className="block">
-                  <div className="card link" style={{ borderColor: "rgba(216,175,114,0.15)" }}>
-                    <span style={{ fontSize: "2rem", display: "block", marginBottom: "1rem" }}>{c.icon}</span>
-                    <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.3rem", marginBottom: "0.3rem" }}>{c.name}</h3>
-                    <p style={{ fontFamily: DM, fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d8af72", marginBottom: "0.75rem" }}>{c.tagline}</p>
-                    <p style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3", lineHeight: 1.7, marginBottom: "1.2rem" }}>{c.description.slice(0, 110)}…</p>
-                    <p style={{ fontFamily: DM, fontSize: "0.75rem", fontWeight: 600, color: "#d8af72", letterSpacing: "0.08em" }}>
-                      {c.status === "active" ? "Recruiting Now →" : "Register Interest →"}
-                    </p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ══ CHARITY ═══════════════════════════════════════════════════════ */}
+      <div className="section-divider" />
+
+            {/* ══ CHARITY ═══════════════════════════════════════════════════════ */}
       {campaigns.length > 0 && (
         <section className="section section--tight">
           <div className="container">
@@ -255,7 +245,7 @@ export default async function HomePage() {
                 <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Active Campaigns</h2></Reveal>
                 <Reveal delay={100}>
                   <p style={{ fontFamily: PF, fontStyle: "italic", color: "#8d86a3", fontSize: "0.92rem" }}>
-                    &ldquo;Charity does not decrease wealth.&rdquo; — Prophet Muhammad ﷺ
+                    &ldquo;Charity does not decrease wealth.&rdquo; Prophet Muhammad ﷺ
                   </p>
                 </Reveal>
               </div>
@@ -307,7 +297,7 @@ export default async function HomePage() {
           </div>
           <div className="grid cols-3">
             {[
-              { icon: "📸", label: "Instagram", sub: "@astonisoc — primary channel", href: SOCIAL.instagram },
+              { icon: "📸", label: "Instagram", sub: "@astonisoc primary channel", href: SOCIAL.instagram },
               { icon: "💬", label: "WhatsApp", sub: "Community announcements", href: WHATSAPP.community },
               { icon: "🔗", label: "Linktree", sub: "All official links", href: SOCIAL.linktree },
             ].map((s, i) => (

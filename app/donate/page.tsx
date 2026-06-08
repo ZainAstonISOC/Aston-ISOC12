@@ -10,23 +10,23 @@ import { SOCIAL, DONATIONS } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Donate",
-  description: "Support Aston ISOC — one-time, weekly Jumu'ah giving, or monthly supporter programme. 100% transparent.",
+  description: "Support Aston ISOC one-time, weekly Jumu'ah giving, or monthly supporter programme. 100% transparent.",
 };
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
 const JUMMAH_TIERS = [
-  { amount: "£1", period: "/week", label: "Small & Consistent", sub: "£52/yr — consistent barakah every Jumu'ah" },
-  { amount: "£3", period: "/week", label: "Community Builder",  sub: "£156/yr — funds the weekly halaqa sessions" },
-  { amount: "£5", period: "/week", label: "Major Supporter",    sub: "£260/yr — sustains a full lecture series" },
+  { amount: "£1", period: "/week", label: "Small & Consistent", sub: "£52/yr consistent barakah every Jumu'ah" },
+  { amount: "£3", period: "/week", label: "Community Builder",  sub: "£156/yr funds the weekly halaqa sessions" },
+  { amount: "£5", period: "/week", label: "Major Supporter",    sub: "£260/yr sustains a full lecture series" },
 ];
 
 const MONTHLY_TIERS = [
-  { amount: "£5",  period: "/mo", label: "Sustainer",       sub: "£60/yr — covers event admin & printing",    popular: false },
-  { amount: "£10", period: "/mo", label: "Contributor",     sub: "£120/yr — supports charity campaigns",       popular: false },
-  { amount: "£20", period: "/mo", label: "Patron",          sub: "£240/yr — funds a major community event",   popular: true  },
-  { amount: "£50", period: "/mo", label: "Founding Patron", sub: "£600/yr — sustains ISOC's full programme",  popular: false },
+  { amount: "£5",  period: "/mo", label: "Sustainer",       sub: "£60/yr covers event admin & printing",    popular: false },
+  { amount: "£10", period: "/mo", label: "Contributor",     sub: "£120/yr supports charity campaigns",       popular: false },
+  { amount: "£20", period: "/mo", label: "Patron",          sub: "£240/yr funds a major community event",   popular: true  },
+  { amount: "£50", period: "/mo", label: "Founding Patron", sub: "£600/yr sustains ISOC's full programme",  popular: false },
 ];
 
 const OTHER_WAYS = [
@@ -45,7 +45,7 @@ export default function DonatePage() {
       <PageHeader
         label="Support Aston ISOC"
         title="Give with Intention"
-        subtitle="Every contribution — however small — helps sustain a thriving Muslim community at Aston University."
+        subtitle="Every contribution however small helps sustain a thriving Muslim community at Aston University."
       />
 
       {/* ── ONE-TIME WIDGET ─────────────────────────────────────────────── */}
@@ -96,7 +96,7 @@ export default function DonatePage() {
               ))}
             </div>
             <p style={{ fontFamily: DM, fontSize: "0.75rem", color: "var(--text-dim)" }}>
-              Voluntary — cancel at any time. All contributions go to the ISOC general community fund.
+              Voluntary cancel at any time. All contributions go to the ISOC general community fund.
             </p>
           </Reveal>
         </div>

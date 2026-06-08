@@ -3,7 +3,7 @@ import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 
 export const metadata: Metadata = {
-  title: "Thank You — Donation Confirmed",
+  title: "Thank You Donation Confirmed",
   description: "JazakAllah khayran. Your donation to Aston ISOC has been received.",
 };
 
@@ -52,7 +52,7 @@ export default function DonationSuccessPage() {
               &ldquo;Charity does not decrease wealth.&rdquo;
             </p>
             <p style={{ fontFamily: DM, fontSize: "0.72rem", color: "var(--text-dim)", marginTop: "0.5rem", letterSpacing: "0.08em" }}>
-              — Prophet Muhammad ﷺ · Sahih Muslim
+              Prophet Muhammad ﷺ · Sahih Muslim
             </p>
           </div>
 

@@ -7,12 +7,12 @@ import Reveal from "@/components/ui/Reveal";
 import { getBrotherEvents } from "@/data/events";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Brothers' Section", description: "Aston ISOC Brothers' Section — sports, halaqa, brotherhood events, and careers for Muslim brothers at Aston." };
+export const metadata: Metadata = { title: "Brothers' Section", description: "Aston ISOC Brothers' Section sports, halaqa, brotherhood events, and careers for Muslim brothers at Aston." };
 
 const PROGRAMMES = [
   { icon: "⚽", title: "Football & Sports", desc: "Weekly football sessions, inter-university tournaments, and gym meetups throughout the year." },
-  { icon: "📖", title: "Brothers' Halaqa", desc: "Weekly study circle — Seerah, current affairs, and Qur'an. Every Monday at 18:00." },
-  { icon: "🎙️", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today — faith, identity, and purpose." },
+  { icon: "📖", title: "Brothers' Halaqa", desc: "Weekly study circle Seerah, current affairs, and Qur'an. Every Monday at 18:00." },
+  { icon: "🎙️", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today faith, identity, and purpose." },
   { icon: "💼", title: "Careers Network", desc: "Connecting brothers with Muslim professionals, employers, and industry mentors." },
   { icon: "🤝", title: "Mentorship", desc: "Senior brothers mentor fresher students through their first year at Aston." },
   { icon: "📱", title: "Brothers' WhatsApp", desc: "Private brotherhood group for announcements, community and organising meetups." },
@@ -37,14 +37,14 @@ export default function BrothersPage() {
           </h1>
           <span className="gold-rule" />
           <p className="max-w-lg leading-relaxed mb-8" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif", fontSize: "0.95rem" }}>
-            Brotherhood, sports, circles, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston — led by Abdikarim &amp; Shaz.
+            Brotherhood, sports, circles, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston led by Abdikarim &amp; Shaz.
           </p>
           <div className="flex gap-3 flex-wrap">
             <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn-outline-gold" style={{ borderColor: "rgba(165,180,252,0.4)", color: "#a5b4fc", fontSize: "0.72rem" }}>
               Join Brothers WhatsApp
             </a>
             <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ fontSize: "0.72rem" }}>
-              Join ISOC — £5
+              Join ISOC £5
             </a>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function BrothersPage() {
           <CtaBanner
             title="Join the Brotherhood"
             description="Membership is £5 for the full year. Access all brothers' events, sports programmes, and the full ISOC community."
-            primaryLabel="Join ISOC — £5"
+            primaryLabel="Join ISOC £5"
             primaryHref={MEMBERSHIP.join}
             secondaryLabel="View All Events"
             secondaryHref="/events"

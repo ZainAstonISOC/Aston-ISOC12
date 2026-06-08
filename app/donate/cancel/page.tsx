@@ -50,7 +50,7 @@ export default function DonationCancelPage() {
               &ldquo;The best of people are those most beneficial to people.&rdquo;
             </p>
             <p style={{ fontFamily: DM, fontSize: "0.72rem", color: "var(--text-dim)", marginTop: "0.5rem", letterSpacing: "0.08em" }}>
-              — Prophet Muhammad ﷺ
+              Prophet Muhammad ﷺ
             </p>
           </div>
 

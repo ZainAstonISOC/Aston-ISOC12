@@ -6,7 +6,7 @@ export const blogPosts: BlogPost[] = [
     title: "Navigating University as a Muslim Student",
     excerpt:
       "Starting university can be overwhelming. Here's how Aston ISOC helps Muslim students maintain their faith, identity, and wellbeing throughout their studies.",
-    content: `Starting university is one of the most significant transitions in a young Muslim's life. Away from home, surrounded by new faces, and facing academic pressure — it can feel isolating. This is exactly why Aston ISOC exists.\n\nFrom the very first day of freshers week, we ensure that every Muslim student has a community to belong to. Our buddy system, halaqa circles, and regular social events mean you'll never feel alone in your journey.\n\nKeeping up your Salah, finding halal food, and maintaining your Islamic identity on campus are all challenges we've navigated — and we've built systems to help you do the same.`,
+    content: `Starting university is one of the most significant transitions in a young Muslim's life. Away from home, surrounded by new faces, and facing academic pressure it can feel isolating. This is exactly why Aston ISOC exists.\n\nFrom the very first day of freshers week, we ensure that every Muslim student has a community to belong to. Our buddy system, halaqa circles, and regular social events mean you'll never feel alone in your journey.\n\nKeeping up your Salah, finding halal food, and maintaining your Islamic identity on campus are all challenges we've navigated and we've built systems to help you do the same.`,
     author: "Aston ISOC Advocacy Team",
     date: "2025-09-01",
     category: "Student Life",
@@ -60,8 +60,8 @@ export const blogPosts: BlogPost[] = [
     slug: "charity-impact-report-2025",
     title: "Aston ISOC Charity Impact Report 2024/25",
     excerpt:
-      "How your donations made a difference this year — a full breakdown of every campaign, every pound raised, and every life impacted.",
-    content: `This year, Aston ISOC raised over £25,000 for charity. From Palestine emergency relief to local Birmingham food banks, every campaign reflected our commitment to being a community that gives back.\n\nThis report documents every initiative, the organisations we partnered with, and the measurable impact your generosity created.`,
+      "How your donations made a difference this year a full breakdown of every campaign, every pound raised, and every life impacted.",
+    content: `This year, Aston ISOC raised over £200,000 for charity. From Palestine emergency relief to local Birmingham food banks, every campaign reflected our commitment to being a community that gives back.\n\nThis report documents every initiative, the organisations we partnered with, and the measurable impact your generosity created.`,
     author: "Aston ISOC Advocacy Team",
     date: "2025-06-01",
     category: "Charity",

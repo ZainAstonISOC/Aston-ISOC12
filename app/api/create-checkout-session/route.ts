@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
    *     unit_amount: amountInPence,
    *     recurring: { interval: frequency === "weekly" ? "week" : "month" },
    *     product_data: {
-   *       name: `Aston ISOC — ${frequency === "weekly" ? "Weekly Jumu'ah" : "Monthly Supporter"} Donation`,
+   *       name: `Aston ISOC ${frequency === "weekly" ? "Weekly Jumu'ah" : "Monthly Supporter"} Donation`,
    *     },
    *   });
    *   session = await stripe.checkout.sessions.create({
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
    *       price_data: {
    *         currency: "gbp",
    *         unit_amount: amountInPence,
-   *         product_data: { name: "Aston ISOC — One-Time Donation" },
+   *         product_data: { name: "Aston ISOC One-Time Donation" },
    *       },
    *     }],
    *     success_url: `${APP_URL}/donate/success?session_id={CHECKOUT_SESSION_ID}`,

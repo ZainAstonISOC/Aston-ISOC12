@@ -18,7 +18,7 @@ function getCurrentPrayerIndex(times: PrayerTime[]): number {
   // Find next prayer (skip Sunrise as a prayer)
   const prayerOrder = times.filter(p => p.name !== "Sunrise");
   let nextIdx = prayerOrder.findIndex(p => timeToMinutes(p.time) > nowMins);
-  // nextIdx -1 means all passed today — highlight Fajr (next day)
+  // nextIdx -1 means all passed today highlight Fajr (next day)
   if (nextIdx === -1) nextIdx = 0;
   // Map back to full array index
   const nextName = prayerOrder[nextIdx]?.name;
@@ -77,7 +77,7 @@ export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] }) {
             Next prayer
           </p>
           <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#d8af72", fontWeight: 600 }}>
-            {nextPrayer?.name ?? "—"}
+            {nextPrayer?.name ?? " "}
           </p>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.35rem", color: "#fff", fontVariantNumeric: "tabular-nums", letterSpacing: "0.05em" }}>
             {countdown}

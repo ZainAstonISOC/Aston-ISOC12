@@ -58,9 +58,9 @@ export default function SponsorsPage() {
           </p>
           <div className="grid sm:grid-cols-3 gap-4 mb-6">
             {[
-              { tier:"Gold — £500+/yr", perks:["All marketing materials","Event naming rights","Website feature","Social mentions"] },
-              { tier:"Silver — £250+/yr", perks:["Website listing","Event mentions","Social shoutout"] },
-              { tier:"Bronze — £100+/yr", perks:["Website listing","Social mention"] },
+              { tier:"Gold £500+/yr", perks:["All marketing materials","Event naming rights","Website feature","Social mentions"] },
+              { tier:"Silver £250+/yr", perks:["Website listing","Event mentions","Social shoutout"] },
+              { tier:"Bronze £100+/yr", perks:["Website listing","Social mention"] },
             ].map((t) => (
               <div key={t.tier} className="p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(201,162,39,0.08)", borderRadius: "0.75rem" }}>
                 <p className="text-xs font-semibold mb-3" style={{ color: "#C9A227", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>{t.tier}</p>

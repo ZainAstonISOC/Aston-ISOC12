@@ -71,7 +71,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
             {event.description}
           </p>
 
-          {/* Community-friendly CTA — no "pay" language */}
+          {/* Community-friendly CTA no "pay" language */}
           <div className="flex gap-3 flex-wrap">
             {event.registrationUrl ? (
               <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer" className="btn-gold">

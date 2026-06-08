@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 export const metadata: Metadata = {
   metadataBase: new URL("https://astonisoc.com"),
   title: { default: "Aston ISOC", template: "%s | Aston ISOC" },
-  description: "Aston University Islamic Society — Faith, Community, Excellence. Serving Muslim students at Aston University, Birmingham.",
+  description: "Aston University Islamic Society Faith, Community, Excellence. Serving Muslim students at Aston University, Birmingham.",
   keywords: ["Aston ISOC", "Islamic Society", "Aston University", "Muslim students", "Birmingham"],
   authors: [{ name: "Aston ISOC" }],
   openGraph: { type: "website", locale: "en_GB", siteName: "Aston ISOC" },

@@ -40,7 +40,6 @@ export const navItems: NavItem[] = [
       { label: "Donate", href: "/donate" },
     ]
   },
-  { label: "Join ISOC", href: "/join" },
   { label: "Contact", href: "/contact" },
 ];
 

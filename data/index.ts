@@ -1,4 +1,4 @@
-// Central data barrel — import from here for convenience
+// Central data barrel import from here for convenience
 export * from "./events";
 export * from "./committee";
 export * from "./blog";

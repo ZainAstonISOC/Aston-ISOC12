@@ -1,6 +1,6 @@
 /**
  * VOLUNTEER OPPORTUNITIES DATA
- * Add new campaigns here — the volunteer page updates automatically.
+ * Add new campaigns here the volunteer page updates automatically.
  * To archive a campaign: set status to "archived".
  */
 export interface VolunteerCampaign {
@@ -12,7 +12,7 @@ export interface VolunteerCampaign {
   roles: string[];
   commitment: string;
   impact: string;
-  signupUrl?: string;   // link to form — add when available
+  signupUrl?: string;   // link to form add when available
   colour: string;       // accent colour for card
   icon: string;
 }
@@ -36,7 +36,7 @@ export const volunteerCampaigns: VolunteerCampaign[] = [
     name: "Discover Islam Week",
     tagline: "Opening Doors. Building Bridges.",
     description:
-      "Discover Islam Week (DIW) is Aston ISOC's flagship dawah event — a week-long programme of talks, exhibitions, and open conversations that welcome the whole university community to learn about Islam. Volunteers are at the heart of making it happen.",
+      "Discover Islam Week (DIW) is Aston ISOC's flagship dawah event a week-long programme of talks, exhibitions, and open conversations that welcome the whole university community to learn about Islam. Volunteers are at the heart of making it happen.",
     status: "active",
     roles: ["Event Host", "Exhibition Coordinator", "Guest Speaker Liaison", "Stall Volunteer", "Social Media", "Registration Desk"],
     commitment: "3–6 hours/day during DIW week",

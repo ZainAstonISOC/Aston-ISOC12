@@ -3,7 +3,7 @@
  * ─────────────────────────────────────────────────────
  * Currently displaying Jummah only.
  * To add future events: add a new object to the events array below.
- * All pages update automatically — no redesign needed.
+ * All pages update automatically no redesign needed.
  *
  * Event categories: "all" | "sisters" | "brothers" | "jummah" |
  *   "charity" | "sports" | "speaker" | "freshers" | "social"

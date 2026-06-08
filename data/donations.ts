@@ -19,7 +19,7 @@ export const donationCampaigns: DonationCampaign[] = [
     donationUrl: DONATIONS.ramadanFundraiser,
     status: "active",
     isFeatured: true,
-    organisation: "GoFundMe — Aston ISOC",
+    organisation: "GoFundMe Aston ISOC",
   },
   {
     id: "general-charity",

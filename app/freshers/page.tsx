@@ -6,24 +6,24 @@ import Reveal from "@/components/ui/Reveal";
 import { getFeaturedEvents } from "@/data/events";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Freshers Hub", description: "New to Aston? Prayer rooms, halal food, welcome events, and your ISOC community — all in one place." };
+export const metadata: Metadata = { title: "Freshers Hub", description: "New to Aston? Prayer rooms, halal food, welcome events, and your ISOC community all in one place." };
 
 const HALAL_FOOD = [
   { name: "Sultan's Kitchen", type: "Pakistani / Desi", distance: "5 min", notes: "Student lunch deals" },
   { name: "Dixy Chicken", type: "Fried Chicken", distance: "3 min", notes: "Halal certified" },
   { name: "The Yemeni Kitchen", type: "Middle Eastern", distance: "8 min", notes: "Generous portions" },
-  { name: "Subway — Digbeth", type: "Sandwiches", distance: "7 min", notes: "Full halal branch" },
+  { name: "Subway Digbeth", type: "Sandwiches", distance: "7 min", notes: "Full halal branch" },
   { name: "Co-op (Campus)", type: "Supermarket", distance: "2 min", notes: "Halal certified products" },
   { name: "Birmingham City Centre", type: "Various", distance: "15 min walk", notes: "Extensive halal dining" },
 ];
 
 const GUIDE = [
-  { icon: "💳", title: "Join ISOC — £5", desc: "Full year membership via Aston SU", href: MEMBERSHIP.join, external: true },
+  { icon: "💳", title: "Join ISOC £5", desc: "Full year membership via Aston SU", href: MEMBERSHIP.join, external: true },
   { icon: "👩", title: "Sisters WhatsApp", desc: "Sisters Freshers Group 2025/26", href: WHATSAPP.sistersFreshers, external: true },
   { icon: "👨", title: "Brothers WhatsApp", desc: "Brothers Freshers Group 2025/26", href: WHATSAPP.brothersFreshers, external: true },
   { icon: "🕌", title: "Prayer Times", desc: "Live Birmingham prayer times", href: "/prayer-times", external: false },
   { icon: "📅", title: "Events Calendar", desc: "What's on this term", href: "/events", external: false },
-  { icon: "📸", title: "Instagram", desc: "@astonisoc — all the latest", href: SOCIAL.instagram, external: true },
+  { icon: "📸", title: "Instagram", desc: "@astonisoc all the latest", href: SOCIAL.instagram, external: true },
 ];
 
 export default function FreshersPage() {
@@ -48,7 +48,7 @@ export default function FreshersPage() {
             Starting university is a big step. We&apos;ve made it our mission to ensure every Muslim student at Aston feels welcomed, grounded, and part of a family from day one.
           </p>
           <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ fontSize: "0.78rem" }}>
-            Join ISOC — £5
+            Join ISOC £5
           </a>
         </div>
       </div>
@@ -59,9 +59,9 @@ export default function FreshersPage() {
           <p className="label mb-6">Freshers Week 2026</p>
           <div className="grid sm:grid-cols-3 gap-4 mb-16">
             {[
-              { title: "Freshers Fair Location", desc: "ISOC stall location — stand number and map to follow." },
+              { title: "Freshers Fair Location", desc: "ISOC stall location stand number and map to follow." },
               { title: "Welcome Week Timetable", desc: "Full schedule of ISOC events during welcome week." },
-              { title: "Welcome Pack", desc: "Digital pack — prayer guide, halal map, and key contacts." },
+              { title: "Welcome Pack", desc: "Digital pack prayer guide, halal map, and key contacts." },
             ].map((item) => (
               <div
                 key={item.title}
@@ -122,7 +122,7 @@ export default function FreshersPage() {
         {/* Halal food */}
         <Reveal>
           <p className="label mb-4">Birmingham Halal Food Guide</p>
-          <p className="text-sm mb-5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Closest halal options to campus — always verify certification in-store.</p>
+          <p className="text-sm mb-5" style={{ color: "#6B7280", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>Closest halal options to campus always verify certification in-store.</p>
           <div className="overflow-hidden mb-16" style={{ border: "1px solid rgba(201,162,39,0.1)", borderRadius: "1rem" }}>
             {HALAL_FOOD.map((f, i) => (
               <div
@@ -160,8 +160,8 @@ export default function FreshersPage() {
               { q: "When do ISOC events start?", a: "Events begin from freshers week in September. Check the Events page for the full schedule." },
               { q: "Is ISOC only for Muslims?", a: "Most events are open to everyone. We warmly welcome non-Muslim students curious about Islam." },
               { q: "How do I join ISOC?", a: "Membership is £5 for the full year via Aston SU. Visit the Join page for the full process." },
-              { q: "Is there a sisters-only space?", a: "Yes — dedicated events, private WhatsApp group, and a separate prayer space for sisters." },
-              { q: "I missed freshers week — can I still join?", a: "Yes, ISOC is open year-round. Join via Aston SU at any time." },
+              { q: "Is there a sisters-only space?", a: "Yes dedicated events, private WhatsApp group, and a separate prayer space for sisters." },
+              { q: "I missed freshers week can I still join?", a: "Yes, ISOC is open year-round. Join via Aston SU at any time." },
             ].map((faq) => (
               <details
                 key={faq.q}
@@ -189,8 +189,8 @@ export default function FreshersPage() {
         <Reveal>
           <CtaBanner
             title="Ready to Join Your Community?"
-            description="Come to one event, meet one person — and you'll see why Aston ISOC is home."
-            primaryLabel="Join ISOC — £5"
+            description="Come to one event, meet one person and you'll see why Aston ISOC is home."
+            primaryLabel="Join ISOC £5"
             primaryHref={MEMBERSHIP.join}
             secondaryLabel="View Events"
             secondaryHref="/events"

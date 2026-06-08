@@ -5,13 +5,13 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 
-export const metadata: Metadata = { title: "About Us", description: "Learn about Aston University Islamic Society — our mission, history, and the community we've built." };
+export const metadata: Metadata = { title: "About Us", description: "Learn about Aston University Islamic Society our mission, history, and the community we've built." };
 
 const STATS = [
   { value: "500+", label: "Active Members" },
   { value: "29", label: "Committee Members" },
   { value: "40+", label: "Events Per Year" },
-  { value: "£25k+", label: "Raised for Charity" },
+  { value: "£200k+", label: "Raised for Charity" },
 ];
 
 const MISSION = [
@@ -51,7 +51,7 @@ export default function AboutPage() {
               Serving Aston for Decades
             </h2>
             <div className="space-y-4 text-sm leading-relaxed" style={{ color: "#9CA3AF", fontFamily: "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif" }}>
-              <p>Aston ISOC has been the home of Muslim students at Aston University for decades. We are a family — built on faith, sustained by community, and driven by purpose.</p>
+              <p>Aston ISOC has been the home of Muslim students at Aston University for decades. We are a family built on faith, sustained by community, and driven by purpose.</p>
               <p>From daily congregational prayers to national charity campaigns, from intimate study circles to large-scale conferences, we serve every dimension of the Muslim student experience.</p>
               <p>We exist to ensure that no Muslim student at Aston ever feels alone, lost, or disconnected from their faith and identity.</p>
             </div>

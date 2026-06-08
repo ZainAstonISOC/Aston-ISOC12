@@ -6,7 +6,7 @@ import { EventCard } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { events } from "@/data/events";
 
-export const metadata: Metadata = { title: "Events", description: "All Aston ISOC events — Jumu'ah, sisters, brothers, charity, speakers and more." };
+export const metadata: Metadata = { title: "Events", description: "All Aston ISOC events Jumu'ah, sisters, brothers, charity, speakers and more." };
 
 const CATEGORIES = [
   { key: "all", label: "All Events" },
@@ -22,7 +22,7 @@ export default function EventsPage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Events" }]} />
-      <PageHeader label="What's On" title="Events" subtitle="From weekly prayers to annual conferences — every ISOC event in one place." />
+      <PageHeader label="What's On" title="Events" subtitle="From weekly prayers to annual conferences every ISOC event in one place." />
 
       {/* Category filters */}
       <Reveal>

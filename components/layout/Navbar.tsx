@@ -190,7 +190,7 @@ export default function Navbar() {
 
         <div className="px-5 pb-8 space-y-2.5" style={{ flexShrink: 0, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "1.25rem" }}>
           <Link href="/donate" className="btn btn-ghost w-full justify-center" style={{ fontSize: "0.85rem" }}>Donate</Link>
-          <Link href="/join" className="btn btn-gold w-full justify-center" style={{ fontSize: "0.85rem" }}>Join ISOC — £5</Link>
+          <Link href="/join" className="btn btn-gold w-full justify-center" style={{ fontSize: "0.85rem" }}>Join ISOC £5</Link>
         </div>
       </div>
     </>
