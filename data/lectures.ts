@@ -1,13 +1,5 @@
 import { Lecture } from "@/types";
 
-/**
- * LECTURES DATA
- * ─────────────────────────────────────────────────────────────────
- * All links are verified external URLs pointing to real content.
- * For ISOC-specific recordings: use the ISOC Instagram or YouTube
- * when those channels are active.
- * ─────────────────────────────────────────────────────────────────
- */
 export const lectures: Lecture[] = [
 
   // ── LECTURES ────────────────────────────────────────────────────
@@ -75,7 +67,7 @@ export const lectures: Lecture[] = [
     series: "Yaqeen Institute",
     duration: "35 min",
     date: "2025-04-11",
-    youtubeUrl: "https://www.youtube.com/@YaqeenInstitute",
+    youtubeUrl: "https://www.youtube.com/@yaqeeninstitute",
     category: "khutbah",
     description: "How to remain firm in faith when facing personal and global challenges — a powerful reminder for students.",
   },

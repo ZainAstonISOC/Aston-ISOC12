@@ -6,6 +6,7 @@ import { EventCard } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { events } from "@/data/events";
 
+export const revalidate = 3600; // revalidate hourly so Jumu'ah date stays current
 export const metadata: Metadata = { title: "Events", description: "All Aston ISOC events Jumu'ah, sisters, brothers, charity, speakers and more." };
 
 const CATEGORIES = [

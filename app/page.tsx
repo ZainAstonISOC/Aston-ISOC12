@@ -25,7 +25,12 @@ export default async function HomePage() {
     Promise.resolve(getFeaturedEvents()),
     Promise.resolve(getActiveCampaigns()),
   ]);
-  const core = getBySection("executive").slice(0, 3);
+  // Homepage shows Head Brother + Head Sister only (the two society leads)
+  const allExec = getBySection("executive");
+  const core = [
+    allExec.find(m => m.id === "head-brother"),
+    allExec.find(m => m.id === "head-sister"),
+  ].filter(Boolean) as typeof allExec;
   const volunteerCamps = volunteerCampaigns.filter(c => c.status !== "archived").slice(0, 3);
 
   return (
@@ -278,7 +283,7 @@ export default async function HomePage() {
             </div>
             <Reveal><Link href="/committee" className="btn btn-ghost">Full Committee</Link></Reveal>
           </div>
-          <div className="grid cols-3">
+          <div className="grid cols-2">
             {core.map((m, i) => (
               <Reveal key={m.id} delay={i * 80}>
                 <MemberCard member={m} />
