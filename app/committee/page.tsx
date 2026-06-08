@@ -4,6 +4,7 @@ import Reveal from "@/components/ui/Reveal";
 import CommitteeAccordion from "@/components/ui/CommitteeAccordion";
 import { committeeMembers, SECTION_LABELS, SECTION_ORDER } from "@/data/committee";
 import { SOCIAL } from "@/lib/social";
+import MemberCard from "@/components/ui/MemberCard";
 
 export const metadata: Metadata = {
   title: "Committee Team",
@@ -14,12 +15,25 @@ const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
 export default function CommitteePage() {
-  // Build sections data
-  const sections = SECTION_ORDER.map(section => ({
-    key: section,
-    label: SECTION_LABELS[section],
-    members: committeeMembers.filter(m => m.section === section),
-  })).filter(s => s.members.length > 0);
+  // Exact order: Head Brother, Head Sister, Vice Brother, Vice Sister, Treasurer, General Secretary
+  const headBrother    = committeeMembers.find(m => m.id === "head-brother");
+  const headSister     = committeeMembers.find(m => m.id === "head-sister");
+  const viceBrother    = committeeMembers.find(m => m.id === "vice-brother");
+  const viceSister     = committeeMembers.find(m => m.id === "vice-sister");
+  const treasurer      = committeeMembers.find(m => m.id === "treasurer");
+  const genSec         = committeeMembers.find(m => m.id === "general-secretary");
+
+  // All remaining non-executive members
+  const departments = SECTION_ORDER
+    .filter(s => s !== "executive")
+    .map(section => ({
+      key: section,
+      label: SECTION_LABELS[section],
+      members: committeeMembers.filter(m => m.section === section),
+    }))
+    .filter(s => s.members.length > 0);
+
+  const topSixIds = ["head-brother","head-sister","vice-brother","vice-sister","treasurer","general-secretary"];
 
   return (
     <div style={{ minHeight: "100vh", paddingTop: "5rem" }}>
@@ -35,11 +49,80 @@ export default function CommitteePage() {
       </div>
 
       <section className="section section--tight">
-        <div className="container container-sm">
+        <div className="container">
+
+          {/* ── CORE COMMITTEE ─────────────────────────────────────────── */}
           <Reveal>
-            <CommitteeAccordion sections={sections} />
+            <div style={{ marginBottom: "1rem" }}>
+              <p className="eyebrow">Core Committee</p>
+              <h2 style={{ fontFamily: PF, fontSize: "clamp(1.6rem,3vw,2.2rem)", marginBottom: "0.4rem" }}>
+                Executive Leadership
+              </h2>
+              <div className="gold-rule" />
+            </div>
           </Reveal>
 
+          {/* Row 1 — Head Brother & Head Sister */}
+          <Reveal delay={60}>
+            <div style={{ marginBottom: "1rem" }}>
+              <p style={{ fontFamily: DM, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted-2)", marginBottom: "0.75rem" }}>
+                Society Heads
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                {[headBrother, headSister].filter(Boolean).map(m => m && (
+                  <MemberCard key={m.id} member={m} large />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Row 2 — Vice Brother & Vice Sister */}
+          <Reveal delay={120}>
+            <div style={{ marginBottom: "1rem" }}>
+              <p style={{ fontFamily: DM, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted-2)", marginBottom: "0.75rem" }}>
+                Vice Presidents
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                {[viceBrother, viceSister].filter(Boolean).map(m => m && (
+                  <MemberCard key={m.id} member={m} />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Row 3 — Treasurer & General Secretary */}
+          <Reveal delay={180}>
+            <div style={{ marginBottom: "3.5rem" }}>
+              <p style={{ fontFamily: DM, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted-2)", marginBottom: "0.75rem" }}>
+                Operations
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                {[treasurer, genSec].filter(Boolean).map(m => m && (
+                  <MemberCard key={m.id} member={m} />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* ── DEPARTMENTS ─────────────────────────────────────────────── */}
+          <Reveal delay={80}>
+            <div style={{ marginBottom: "1.5rem" }}>
+              <p className="eyebrow">Departments</p>
+              <h2 style={{ fontFamily: PF, fontSize: "clamp(1.6rem,3vw,2.2rem)", marginBottom: "0.4rem" }}>
+                Heads of Departments & Officers
+              </h2>
+              <div className="gold-rule" />
+              <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted)", marginBottom: "0" }}>
+                Click any department to see its team members.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <CommitteeAccordion sections={departments} />
+          </Reveal>
+
+          {/* CTA */}
           <div className="cta-band" style={{ marginTop: "4rem" }}>
             <h2 style={{ fontFamily: PF }}>Join the Committee 2027/28</h2>
             <p className="lede" style={{ margin: "0 auto 2rem" }}>
@@ -53,6 +136,13 @@ export default function CommitteePage() {
           </div>
         </div>
       </section>
+
+      {/* Responsive grid override for 2-col layout on mobile */}
+      <style>{`
+        @media (max-width: 560px) {
+          .committee-pair { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   );
 }
