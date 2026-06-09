@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: "Volunteer with Aston ISOC. Join Ramadan, Discover Islam Week, and Charity Week campaigns. Make a real impact.",
 };
 
-const PF = "var(--font-playfair), var(--font-playfair), 'Playfair Display', Georgia, serif";
-const DM = "var(--font-dm), var(--font-dm), 'DM Sans', sans-serif";
+const PF = "'Playfair Display', Georgia, serif";
+const DM = "'DM Sans', sans-serif";
 
 const BENEFITS = [
   { icon: "🌱", title: "Real Leadership", desc: "Build genuine leadership skills managing events and people experience valued by employers." },
@@ -38,17 +38,17 @@ export default function VolunteerPage() {
           <Breadcrumb crumbs={[{ label: "Volunteer" }]} />
           <p className="label mb-5">Get Involved</p>
           <h1 style={{ fontFamily: PF, fontSize: "clamp(3rem,7vw,5.5rem)", fontWeight: 500, color: "#fff", lineHeight: 1.02, marginBottom: "1.25rem" }}>
-            We Need<br /><em style={{ color: "#C9A227" }}>You.</em>
+            We Need<br /><em style={{ color: "#d8af72" }}>You.</em>
           </h1>
           <span className="gold-rule" />
           <p className="max-w-xl leading-relaxed mb-10" style={{ color: "#A8A8B3", fontFamily: DM, fontSize: "1.05rem" }}>
             Aston ISOC runs on the dedication of volunteers. Whether it&apos;s Ramadan, Discover Islam Week, or Charity Week your time, energy and passion directly shape the experience of hundreds of Muslim students.
           </p>
           <div className="flex gap-3 flex-wrap">
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn-gold" style={{ fontSize: "0.75rem" }}>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-gold" style={{ fontSize: "0.75rem" }}>
               Express Interest via Instagram
             </a>
-            <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-outline-gold" style={{ fontSize: "0.75rem" }}>
+            <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ fontSize: "0.75rem" }}>
               Register with ISOC First
             </a>
           </div>
@@ -95,7 +95,7 @@ export default function VolunteerPage() {
                 <h3 style={{ fontFamily: PF, fontSize: "1.5rem", fontWeight: 500, color: "#fff", marginBottom: "0.3rem" }}>
                   {c.name}
                 </h3>
-                <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "#C9A227", fontFamily: DM }}>
+                <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "#d8af72", fontFamily: DM }}>
                   {c.tagline}
                 </p>
                 <p className="text-sm leading-relaxed mb-6 flex-1" style={{ color: "#A8A8B3", fontFamily: DM }}>
@@ -188,7 +188,7 @@ export default function VolunteerPage() {
                       target={s.external ? "_blank" : undefined}
                       rel={s.external ? "noopener noreferrer" : undefined}
                       className="text-xs font-semibold tracking-widest uppercase"
-                      style={{ color: "#C9A227", fontFamily: DM }}
+                      style={{ color: "#d8af72", fontFamily: DM }}
                     >
                       {s.cta}
                     </a>
@@ -202,7 +202,7 @@ export default function VolunteerPage() {
         {/* ── QUOTE ─────────────────────────────────────────────────────── */}
         <Reveal>
           <div className="text-center mb-20">
-            <p style={{ fontFamily: PF, fontSize: "clamp(1.2rem,2.5vw,1.6rem)", fontStyle: "italic", color: "#C9A227", opacity: 0.7, marginBottom: "0.5rem" }}>
+            <p style={{ fontFamily: PF, fontSize: "clamp(1.2rem,2.5vw,1.6rem)", fontStyle: "italic", color: "#d8af72", opacity: 0.7, marginBottom: "0.5rem" }}>
               &ldquo;The best of people are those most beneficial to people.&rdquo;
             </p>
             <p className="text-xs tracking-widest uppercase" style={{ color: "#6B6B80", fontFamily: DM }}>
