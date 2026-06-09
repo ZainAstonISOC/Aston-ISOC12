@@ -1,14 +1,12 @@
 /**
  * ASTON ISOC - CENTRAL SOCIAL & CONTACT CONFIGURATION
  * Single source of truth for all external URLs.
- * All pages, components and CTAs MUST reference these - no hardcoded URLs.
- * Links sourced from: https://linktr.ee/astonisoc
  */
 
 export const SOCIAL = {
   linktree:   "https://linktr.ee/astonisoc",
   instagram:  "https://www.instagram.com/astonisoc/",
-  // YouTube removed - not actively used
+  linkedin:   "https://www.linkedin.com/company/aston-isoc",
 } as const;
 
 export const WHATSAPP = {
@@ -30,9 +28,6 @@ export const PRAYER_LINKS = {
 export const DONATIONS = {
   ramadanFundraiser: "https://www.gofundme.com/f/aston-isoc-iftaar-campaign",
   general:           "https://linktr.ee/astonisoc",
-  // Stripe keys go in .env.local - never hardcode here
-  // NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
-  // STRIPE_SECRET_KEY=sk_live_...
 } as const;
 
 export const CONTACT = {

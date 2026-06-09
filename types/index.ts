@@ -1,7 +1,6 @@
 export type CommitteeSection =
   | "executive" | "academic" | "jummah" | "marketing"
   | "social_media" | "education" | "advocacy"
-  // legacy values kept for backward compat
   | "sisters" | "brothers" | "general";
 
 export interface CommitteeMember {
@@ -13,14 +12,14 @@ export interface CommitteeMember {
   bio: string;
   email?: string;
   linkedin?: string;
-  photo?: string;          // filename in /public/committee/
+  photo?: string;
   section: CommitteeSection;
 }
 
 export interface Event {
   id: string;
   title: string;
-  date: string;            // ISO YYYY-MM-DD
+  date: string;
   time: string;
   location: string;
   category: "all" | "sisters" | "brothers" | "jummah" | "charity" | "sports" | "speaker" | "freshers" | "social";
@@ -29,7 +28,7 @@ export interface Event {
   image?: string;
   isFeatured?: boolean;
   isRecurring?: boolean;
-  recurringNote?: string;  // e.g. "Every Friday"
+  recurringNote?: string;
 }
 
 export interface BlogPost {
@@ -129,11 +128,4 @@ export interface SocialLink {
   label: string;
   url: string;
   icon: string;
-}
-// Extended event fields (added in priority update)
-// These fields are optional — add to existing events as needed
-export interface EventTicket {
-  type: "free" | "contribution" | "ticket";
-  amount?: number;           // e.g. 5 for £5
-  label?: string;            // e.g. "£5 event contribution"
 }

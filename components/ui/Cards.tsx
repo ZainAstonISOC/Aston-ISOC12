@@ -191,7 +191,7 @@ export function ResourceItem({ resource }: { resource: Resource }) {
 /* ── LECTURE CARD ────────────────────────────────────────────────────────── */
 export function LectureCard({ lecture }: { lecture: Lecture }) {
   const [hovered, setHovered] = useState(false);
-  // Use the best available URL — never fall back to a non-functional link
+  // Use the best available URL never fall back to a non-functional link
   const url = lecture.youtubeUrl ?? lecture.spotifyUrl ?? null;
 
   const inner = (

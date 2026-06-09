@@ -69,6 +69,7 @@ export const footerLinks = {
     { label: "Contact Us", href: "/contact" },
     { label: "Sponsorships", href: "/sponsors" },
     { label: "Instagram", href: SOCIAL.instagram, external: true },
+    { label: "LinkedIn", href: SOCIAL.linkedin, external: true },
     { label: "Linktree", href: SOCIAL.linktree, external: true },
   ],
 };

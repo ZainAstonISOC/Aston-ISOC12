@@ -3,12 +3,12 @@ import Link from "next/link";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
-import { fetchLivePrayerTimes, PRAYER_LINKS } from "@/data/prayer";
+import { fetchLivePrayerTimes } from "@/data/prayer";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Prayer Times",
-  description: "Live daily prayer times for Birmingham Fajr, Dhuhr, Asr, Maghrib, Isha. Campus prayer rooms and Jumu'ah info.",
+  description: "Live daily prayer times for Birmingham. Campus prayer rooms and Jumu'ah info.",
 };
 export const revalidate = 3600;
 
@@ -17,11 +17,9 @@ const DM = "'DM Sans', sans-serif";
 
 export default async function PrayerTimesPage() {
   const times = await fetchLivePrayerTimes();
-  const today = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
   return (
     <div style={{ minHeight: "100vh", paddingTop: "5rem" }}>
-      {/* Page hero */}
       <div className="page-hero">
         <div className="container">
           <Breadcrumb crumbs={[{ label: "Prayer Times" }]} />
@@ -35,11 +33,9 @@ export default async function PrayerTimesPage() {
 
       <section className="section section--tight">
         <div className="container">
-          <Reveal>
-            <PrayerTimesDisplay times={times} />
-          </Reveal>
+          <Reveal><PrayerTimesDisplay times={times} /></Reveal>
           <Reveal delay={80}>
-            <p className="form-note center mt-3" style={{ fontFamily: DM, color: "#8d86a3", textAlign: "center", fontSize: "0.82rem" }}>
+            <p style={{ fontFamily: DM, color: "#8d86a3", textAlign: "center", fontSize: "0.82rem", marginTop: "1rem" }}>
               Calculation method: Muslim World League (MWL). Always confirm with your local mosque for exact congregation times.
             </p>
           </Reveal>
@@ -64,7 +60,7 @@ export default async function PrayerTimesPage() {
                   {[
                     { k: "Location", v: "Aston Students' Union Hall (SU Hall)" },
                     { k: "Khutbah", v: "13:30 (doors open 13:15)" },
-                    { k: "Prayer", v: "~14:00 (after khutbah)" },
+                    { k: "Prayer",  v: "~14:00 (after khutbah)" },
                     { k: "Sisters", v: "Dedicated section side entrance" },
                   ].map(row => (
                     <p key={row.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
@@ -88,10 +84,10 @@ export default async function PrayerTimesPage() {
                 <h3 style={{ fontFamily: PF, color: "#fff" }}>Prayer Room Locations</h3>
                 <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem", marginTop: "0.75rem" }}>
                   {[
-                    { k: "Brothers", v: "Multi-Faith Chaplaincy, Main Building (ground floor)" },
-                    { k: "Sisters", v: "Dedicated sisters' prayer room, Aston Business School G05" },
-                    { k: "Wudu", v: "Available adjacent to both prayer rooms" },
-                    { k: "Open", v: "All day during campus opening hours" },
+                    { k: "Brothers Prayer Room", v: "Main Building, MB 163 Back of the Students' Union, Ground Floor" },
+                    { k: "Sisters Prayer Room",  v: "Main Building, MB 183 Back of the Students' Union, Ground Floor" },
+                    { k: "Wudu",                 v: "Available adjacent to both prayer rooms" },
+                    { k: "Open",                 v: "All day during campus opening hours" },
                   ].map(item => (
                     <li key={item.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
                       <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.4rem" }}>{item.k}:</span>{item.v}
@@ -104,10 +100,9 @@ export default async function PrayerTimesPage() {
         </div>
       </section>
 
-      {/* Good to know */}
       <section className="section section--tight">
         <div className="container">
-          <div className="flourish reveal" style={{ marginBottom: "2.5rem" }}>
+          <div className="flourish" style={{ marginBottom: "2.5rem" }}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
               <path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/>
             </svg>
@@ -118,9 +113,9 @@ export default async function PrayerTimesPage() {
           </div>
           <div className="grid cols-3">
             {[
-              { title: "Everyone is welcome", desc: "You don't need to be a member to use the prayer rooms. New Muslims and non-Muslims curious to learn are always welcome too." },
-              { title: "Bring nothing but yourself", desc: "Prayer mats and Qur'ans are provided. There's space to leave bags and shoes, and wudu areas are right next door." },
-              { title: "Find us if you're lost", desc: "Message us on Instagram or WhatsApp and a committee member will happily walk you to the prayer room or Jumu'ah." },
+              { title: "Everyone is welcome", desc: "You don't need to be a member to use the prayer rooms. New Muslims and non-Muslims are always welcome." },
+              { title: "Bring nothing but yourself", desc: "Prayer mats and Qur'ans are provided. Wudu areas are right next door." },
+              { title: "Find us if you're lost", desc: "Message us on Instagram or WhatsApp and a committee member will walk you to the prayer room." },
             ].map((item, i) => (
               <Reveal key={item.title} delay={i * 80}>
                 <article className="card feature">
@@ -138,11 +133,9 @@ export default async function PrayerTimesPage() {
           <Reveal>
             <div className="cta-band">
               <h2 style={{ fontFamily: PF }}>Want prayer times in your pocket?</h2>
-              <p className="lede" style={{ margin: "0 auto 2rem" }}>
-                Join our WhatsApp broadcast for daily times, iqamah reminders and Jumu&apos;ah updates straight to your phone.
-              </p>
+              <p className="lede" style={{ margin: "0 auto 2rem" }}>Join our WhatsApp broadcast for daily times, iqamah reminders and Jumu&apos;ah updates.</p>
               <div className="cta-band__actions">
-                <a className="btn btn-gold btn-lg" href="https://wa.me" target="_blank" rel="noopener noreferrer">Join WhatsApp</a>
+                <a className="btn btn-gold btn-lg" href={SOCIAL.linktree} target="_blank" rel="noopener noreferrer">Join WhatsApp</a>
                 <Link className="btn btn-ghost btn-lg" href="/join">Become a Member</Link>
               </div>
             </div>

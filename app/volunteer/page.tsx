@@ -49,7 +49,7 @@ export default function VolunteerPage() {
               Express Interest via Instagram
             </a>
             <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn-outline-gold" style={{ fontSize: "0.75rem" }}>
-              Join ISOC First
+              Register with ISOC First
             </a>
           </div>
         </div>

@@ -12,7 +12,7 @@ export default function Navbar() {
   const [dropdown, setDropdown] = useState<string | null>(null);
   const [scrolled,  setScrolled]  = useState(false);
 
-  // Mobile state — fully independent
+  // Mobile state fully independent
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
 
@@ -97,7 +97,7 @@ export default function Navbar() {
             </Link>
 
             {/* ════════════════════════════════════════════
-                DESKTOP NAV — hidden on mobile (lg:flex)
+                DESKTOP NAV hidden on mobile (lg:flex)
                 ════════════════════════════════════════════ */}
             <nav
               className="hidden lg:flex"
@@ -129,7 +129,7 @@ export default function Navbar() {
                         </svg>
                       </button>
 
-                      {/* Hover bridge — invisible, fills gap between trigger and panel */}
+                      {/* Hover bridge invisible, fills gap between trigger and panel */}
                       {dropdown === item.label && (
                         <div style={{
                           position: "absolute", top: "100%", left: "50%",
@@ -251,7 +251,7 @@ export default function Navbar() {
             </div>
 
             {/* ════════════════════════════════════════════
-                MOBILE BURGER — hidden on desktop (lg:hidden)
+                MOBILE BURGER hidden on desktop (lg:hidden)
                 ════════════════════════════════════════════ */}
             <button
               type="button"
@@ -291,7 +291,7 @@ export default function Navbar() {
       </header>
 
       {/* ════════════════════════════════════════════════════
-          MOBILE NAVIGATION — completely independent from desktop
+          MOBILE NAVIGATION completely independent from desktop
           ════════════════════════════════════════════════════ */}
 
       {/* Backdrop */}
@@ -357,7 +357,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Nav links — collapsible sections */}
+        {/* Nav links collapsible sections */}
         <nav style={{ flex: 1, padding: "1.25rem 1rem", display: "flex", flexDirection: "column", gap: "0.15rem" }}>
           {navItems.map(item => {
             const open = openSection === item.label;
@@ -473,7 +473,7 @@ export default function Navbar() {
           </Link>
           <Link href="/join" onClick={() => setMobileOpen(false)} className="btn btn-gold"
             style={{ textAlign: "center", borderRadius: "999px", padding: "0.85rem", fontSize: "0.88rem" }}>
-            Join ISOC — £5
+            Join ISOC
           </Link>
         </div>
       </div>

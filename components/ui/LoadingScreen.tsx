@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element -- intentional: stacked raw <img> layers power the chromatic-aberration / slice glitch effect */
 
 /* ════════════════════════════════════════════════════════════
-   Aston ISOC — Intro Loading Screen
+   Aston ISOC Intro Loading Screen
    Old emblem glitches / fractures and re-forms into the new mark.
    Deep-purple #130d28 backdrop matching the site background.
    Plays once per browser session.
@@ -23,7 +23,7 @@ const FADE_OUT     = 4450;   // whole screen begins to lift
 type Logo = "old" | "new";
 
 export default function LoadingScreen() {
-  // Rendered immediately (SSR) so the loader is the FIRST thing painted —
+  // Rendered immediately (SSR) so the loader is the FIRST thing painted -
   // it covers the page before any website content can flash through.
   const [show, setShow]               = useState(true);
   const [logo, setLogo]               = useState<Logo>("old");
@@ -46,7 +46,7 @@ export default function LoadingScreen() {
     const push = (fn: () => void, ms: number) => timers.current.push(setTimeout(fn, ms));
 
     if (prefersReduced) {
-      // Calm cross-fade — no glitch.
+      // Calm cross-fade no glitch.
       push(() => setLogo("new"), 1700);
       push(() => { setShow(false); markLoaded(); }, 3400);
     } else {
