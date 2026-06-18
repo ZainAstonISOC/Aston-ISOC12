@@ -61,7 +61,7 @@ export const blogPosts: BlogPost[] = [
     title: "Aston ISOC Charity Impact Report 2024/25",
     excerpt:
       "How your donations made a difference this year a full breakdown of every campaign, every pound raised, and every life impacted.",
-    content: `This year, Aston ISOC raised over £200,000 for charity. From Palestine emergency relief to local Birmingham food banks, every campaign reflected our commitment to being a community that gives back.\n\nThis report documents every initiative, the organisations we partnered with, and the measurable impact your generosity created.`,
+    content: `This year, Aston ISOC raised over £100,000 for charity last year. From Palestine emergency relief to local Birmingham food banks, every campaign reflected our commitment to being a community that gives back.\n\nThis report documents every initiative, the organisations we partnered with, and the measurable impact your generosity created.`,
     author: "Aston ISOC Advocacy Team",
     date: "2025-06-01",
     category: "Charity",

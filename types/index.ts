@@ -67,6 +67,7 @@ export interface Lecture {
   youtubeUrl?: string;
   spotifyUrl?: string;
   category: "khutbah" | "lecture" | "halaqa" | "podcast" | "event";
+  isPlaylist?: boolean;
   description: string;
   thumbnailUrl?: string;
 }

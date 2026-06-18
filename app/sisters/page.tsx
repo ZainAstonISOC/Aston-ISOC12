@@ -34,7 +34,11 @@ export default function SistersPage() {
             A dedicated, welcoming space for Muslim sisters at Aston. Our Sisters&apos; Section runs its own events, halaqa circles, mentorship programmes, and has a warm, supportive community led by Aminah &amp; Yusra.
           </p>
           <div className="flex gap-3 flex-wrap">
-            <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ borderColor: "rgba(249,168,212,0.4)", color: "#f9a8d4" }}>Join Sisters WhatsApp</a>
+            {WHATSAPP.sistersFreshers ? (
+              <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ borderColor: "rgba(249,168,212,0.4)", color: "#f9a8d4" }}>Join Sisters WhatsApp</a>
+            ) : (
+              <span className="btn btn-outline-gold" style={{ borderColor: "rgba(249,168,212,0.25)", color: "rgba(249,168,212,0.6)", cursor: "default" }}>Sisters WhatsApp Coming Soon</span>
+            )}
             <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Join ISOC</a>
           </div>
         </div>

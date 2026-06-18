@@ -20,7 +20,7 @@ export default function CharityPage() {
       <Reveal>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-16">
           {[
-            { value: "£200k+", label: "Raised 2024/25" },
+            { value: "£100k+", label: "Raised last year" },
             { value: `${active.length}`, label: "Active Campaigns" },
             { value: "6+", label: "Partner Orgs" },
             { value: "100%", label: "Transparent" },

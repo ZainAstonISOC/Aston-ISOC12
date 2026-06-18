@@ -23,6 +23,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/contact`,                                       changeFrequency: "monthly",  priority: 0.7 },
     { url: `${BASE}/sponsors`,                                      changeFrequency: "monthly",  priority: 0.6 },
     { url: `${BASE}/careers`,                                       changeFrequency: "weekly",   priority: 0.7 },
+    { url: `${BASE}/zakat`,                                         changeFrequency: "monthly",  priority: 0.7 },
+    { url: `${BASE}/privacy`,                                       changeFrequency: "yearly",   priority: 0.3 },
+    { url: `${BASE}/data-policy`,                                   changeFrequency: "yearly",   priority: 0.3 },
   ];
 
   const eventRoutes: MetadataRoute.Sitemap = events.map((e) => ({

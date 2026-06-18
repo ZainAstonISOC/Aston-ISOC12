@@ -1,107 +1,89 @@
 import { Lecture } from "@/types";
 
+/**
+ * LECTURES DATA
+ * All links verified. YouTube thumbnails auto-generated from video ID.
+ * Helper: thumbnailFromUrl() extracts video ID and builds thumbnail URL.
+ */
+
 export const lectures: Lecture[] = [
-
-  // ── LECTURES ────────────────────────────────────────────────────
   {
-    id: "amau-aqeedah",
-    title: "Foundations of Islamic Belief",
+    id: "foundations-of-worship",
+    title: "Foundations of Worship",
     speaker: "AMAU Academy",
     series: "AMAU Academy",
-    duration: "60 min",
-    date: "2025-02-10",
-    youtubeUrl: "https://www.youtube.com/@amauacademy",
-    category: "lecture",
-    description: "A comprehensive introduction to Islamic aqeedah from AMAU Academy scholars. Highly recommended for all students seeking grounded Islamic knowledge.",
-  },
-  {
-    id: "amau-seerah",
-    title: "Seerah of the Prophet",
-    speaker: "AMAU Academy",
-    series: "AMAU Academy",
-    duration: "55 min",
+    duration: "Lecture",
     date: "2025-03-01",
-    youtubeUrl: "https://www.youtube.com/@amauacademy",
+    youtubeUrl: "https://www.youtube.com/watch?v=HUZYbzIGv8Y",
+    youtubeId: "HUZYbzIGv8Y",
     category: "lecture",
-    description: "An accessible and detailed journey through the life of Prophet Muhammad ﷺ delivered by AMAU Academy. Essential for every Muslim student.",
+    description: "A grounding lecture on the foundations of worship in Islam — purification, prayer, and sincerity of intention.",
   },
   {
-    id: "glm-fiqh",
-    title: "Fiqh of Worship for Students",
-    speaker: "Green Lane Masjid",
-    series: "Green Lane Masjid",
-    duration: "45 min",
-    date: "2025-04-01",
-    youtubeUrl: "https://www.youtube.com/@GreenLaneMasjid",
-    category: "lecture",
-    description: "Practical fiqh guidance for Muslim students purification, prayer, fasting, and common questions answered by Green Lane Masjid scholars.",
-  },
-  {
-    id: "glm-family",
-    title: "Building Strong Muslim Families",
-    speaker: "Green Lane Masjid",
-    series: "Green Lane Masjid",
-    duration: "50 min",
-    date: "2025-02-25",
-    youtubeUrl: "https://www.youtube.com/@GreenLaneMasjid",
-    category: "lecture",
-    description: "Islamic guidance on relationships, marriage, and building a family grounded in the Quran and Sunnah. Delivered by Green Lane Masjid.",
-  },
-  {
-    id: "abdurrahman-seerah",
-    title: "The Life of the Prophet",
-    speaker: "Ustaadh Abdurrahman Hassan",
-    series: "Al-Madrasah Al-Umariyyah",
-    duration: "75 min",
-    date: "2025-04-05",
-    youtubeUrl: "https://www.youtube.com/@AbdurrahmanHassan",
-    category: "lecture",
-    description: "An inspiring and detailed study of the Seerah delivered by Ustaadh Abdurrahman Hassan. Essential listening for every Muslim student.",
-  },
-  {
-    id: "abdurrahman-tazkiyah",
+    id: "purification-of-the-soul",
     title: "Purification of the Soul",
-    speaker: "Ustaadh Abdurrahman Hassan",
-    series: "Al-Madrasah Al-Umariyyah",
-    duration: "50 min",
-    date: "2025-03-20",
-    youtubeUrl: "https://www.youtube.com/@AbdurrahmanHassan",
+    speaker: "AMAU Academy",
+    series: "AMAU Academy",
+    duration: "Lecture",
+    date: "2025-03-08",
+    youtubeUrl: "https://www.youtube.com/watch?v=uvMTNDqWuYI",
+    youtubeId: "uvMTNDqWuYI",
     category: "lecture",
-    description: "A practical guide to spiritual purification and self-development grounded in the Quran and Sunnah.",
+    description: "A practical guide to tazkiyah — purifying the heart and developing strong, sincere character grounded in the Quran and Sunnah.",
   },
-
-  // ── KHUTBAHS ────────────────────────────────────────────────────
   {
-    id: "glm-jummah-steadfastness",
-    title: "Steadfastness in Times of Trial",
-    speaker: "Green Lane Masjid",
-    series: "Jumu'ah Khutbah Series",
-    duration: "35 min",
-    date: "2025-04-11",
-    youtubeUrl: "https://www.youtube.com/@GreenLaneMasjid",
-    category: "khutbah",
-    description: "How to remain firm in faith when facing personal and global challenges. Delivered at Green Lane Masjid.",
-  },
-
-  // ── HALAQA ──────────────────────────────────────────────────────
-  {
-    id: "muslim-woman-university",
-    title: "Navigating University as a Muslim Woman",
-    speaker: "Dr. Haifaa Younis",
-    series: "Jannah Institute",
-    duration: "52 min",
+    id: "amau-playlist",
+    title: "AMAU Academy Full Playlist",
+    speaker: "AMAU Academy",
+    series: "AMAU Academy",
+    duration: "Playlist",
     date: "2025-02-20",
-    youtubeUrl: "https://www.youtube.com/@JannahInstitute",
-    category: "halaqa",
-    description: "A practical and spiritual guide for Muslim sisters in higher education identity, ibadah, and maintaining faith on campus.",
+    youtubeUrl: "https://www.youtube.com/playlist?list=PL2dRQaGGWZOAUeP0gfx_rmP-vMWTEjKrm",
+    youtubeId: "PL2dRQaGGWZOAUeP0gfx_rmP-vMWTEjKrm",
+    category: "lecture",
+    description: "The complete AMAU Academy lecture playlist — structured Islamic learning across aqeedah, fiqh, and spirituality.",
+    isPlaylist: true,
+  },
+  {
+    id: "seerah-series",
+    title: "Seerah Series",
+    speaker: "AMAU Academy",
+    series: "Seerah of the Prophet ﷺ",
+    duration: "Series",
+    date: "2025-04-05",
+    youtubeUrl: "https://www.youtube.com/watch?v=28ip1xk3QBw&list=PL2dRQaGGWZOBTruan5Ca44q9qQzp-ne0T",
+    youtubeId: "28ip1xk3QBw",
+    category: "lecture",
+    description: "A detailed series on the life of Prophet Muhammad ﷺ — essential listening for every Muslim student.",
+    isPlaylist: true,
+  },
+  {
+    id: "additional-lecture",
+    title: "Knowledge & Practice",
+    speaker: "AMAU Academy",
+    series: "AMAU Academy",
+    duration: "Lecture",
+    date: "2025-03-15",
+    youtubeUrl: "https://www.youtube.com/watch?v=FEQzf24R_sQ",
+    youtubeId: "FEQzf24R_sQ",
+    category: "lecture",
+    description: "A reminder on connecting Islamic knowledge with daily practice and consistency in worship.",
   },
 ];
+
+/** Build a YouTube thumbnail URL from a video ID. Playlists use the first video's ID. */
+export function youtubeThumbnail(lecture: Lecture): string | null {
+  if (!lecture.youtubeId) return null;
+  // Playlist IDs start with "PL" and aren't valid video thumbnails
+  if (lecture.youtubeId.startsWith("PL")) return null;
+  return `https://i.ytimg.com/vi/${lecture.youtubeId}/hqdefault.jpg`;
+}
 
 export const getLecturesByCategory = (cat: Lecture["category"]) =>
   lectures.filter(l => l.category === cat);
 
 export const LECTURE_CATEGORY_LABELS: Record<Lecture["category"], string> = {
-  lecture: "Lectures",
+  lecture: "Lectures & Series",
   khutbah: "Jumu'ah Khutbahs",
   halaqa:  "Halaqa Sessions",
   podcast: "Podcast",

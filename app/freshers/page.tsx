@@ -19,7 +19,7 @@ const HALAL_FOOD = [
 
 const GUIDE = [
   { icon: "💳", title: "Join ISOC",       desc: "Full year membership via Aston SU",       href: MEMBERSHIP.join,               external: true },
-  { icon: "👩", title: "Sisters WhatsApp",   desc: "Sisters Freshers Group 2025/26",           href: WHATSAPP.sistersFreshers,      external: true },
+  { icon: "👩", title: "Sisters WhatsApp",   desc: WHATSAPP.sistersFreshers ? "Sisters Freshers Group" : "Coming Soon",  href: WHATSAPP.sistersFreshers || SOCIAL.instagram, external: true },
   { icon: "👨", title: "Brothers WhatsApp",  desc: "Brothers Freshers Group 2025/26",          href: WHATSAPP.brothersFreshers,     external: true },
   { icon: "🕌", title: "Prayer Times",       desc: "Live Birmingham prayer times",             href: "/prayer-times",               external: false },
   { icon: "📅", title: "Events Calendar",    desc: "What's on this term",                      href: "/events",                     external: false },

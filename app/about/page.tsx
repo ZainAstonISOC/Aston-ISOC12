@@ -11,7 +11,7 @@ const STATS = [
   { value: "1,000+", label: "Active Members" },
   { value: "29", label: "Committee Members" },
   { value: "50+", label: "Events Per Semester" },
-  { value: "£200k+", label: "Raised for Charity" },
+  { value: "£100k+", label: "Raised for Charity Last Year" },
 ];
 
 const MISSION = [

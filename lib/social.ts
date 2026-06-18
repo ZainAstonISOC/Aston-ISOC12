@@ -10,8 +10,8 @@ export const SOCIAL = {
 } as const;
 
 export const WHATSAPP = {
-  brothersFreshers: "https://chat.whatsapp.com/IpvSQMLlCFk9jZ40fP3Dww",
-  sistersFreshers:  "https://chat.whatsapp.com/G8Y7Xu2VpTk1DMdv1eZnY7",
+  brothersFreshers: "https://chat.whatsapp.com/H59AtdMxGSyDRZHjeks0a3",
+  sistersFreshers:  "", // Coming Soon — link to be provided
   community:        "https://linktr.ee/astonisoc",
 } as const;
 

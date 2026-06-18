@@ -39,7 +39,7 @@ export default function JoinPage() {
           <div className="relative z-10">
             <p className="eyebrow mb-4">How to Join</p>
             <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(4rem,10vw,7rem)", fontWeight: 300, color: "#d8af72", lineHeight: 1 }}>£5</div>
-            <p className="mt-2 mb-2 text-sm tracking-widest uppercase" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>Full Academic Year</p><p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: "var(--muted)", marginBottom: "1.5rem", maxWidth: "36ch", margin: "0.5rem auto 1.5rem" }}>Registration is just £5 through Aston SU — a one-off admin fee that covers the whole year.</p>
+            <p className="mt-2 mb-2 text-sm tracking-widest uppercase" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>Full Academic Year</p><p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: "var(--muted)", marginBottom: "1.5rem", maxWidth: "36ch", margin: "0.5rem auto 1.5rem" }}>Registration is just £5 through Aston SU, a one-off admin fee that covers the whole year.</p>
             <p className="mb-6 text-sm" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", maxWidth: "34ch", margin: "0 auto 1.5rem" }}>Membership is purchased through Aston SU. Buying your membership is how you officially join ISOC.</p>
             <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Buy Membership Join ISOC →</a>
           </div>

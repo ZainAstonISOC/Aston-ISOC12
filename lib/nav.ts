@@ -32,6 +32,7 @@ export const navItems: NavItem[] = [
       { label: "Resources", href: "/resources" },
       { label: "Lectures & Podcasts", href: "/lectures" },
       { label: "Careers", href: "/careers" },
+      { label: "Zakat Calculator", href: "/zakat" },
     ]
   },
   {
@@ -71,6 +72,11 @@ export const footerLinks = {
     { label: "Instagram", href: SOCIAL.instagram, external: true },
     { label: "LinkedIn", href: SOCIAL.linkedin, external: true },
     { label: "Linktree", href: SOCIAL.linktree, external: true },
+  ],
+  Legal: [
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Data Collection", href: "/data-policy" },
+    { label: "Zakat Calculator", href: "/zakat" },
   ],
 };
 

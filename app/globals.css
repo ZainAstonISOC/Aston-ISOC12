@@ -695,3 +695,17 @@ p.eyebrow, .eyebrow { display: inline-flex; }
 /* --- Absolute positioned glow orbs: never cause scrollbar --- */
 .glow-orb { overflow: hidden; will-change: transform; }
 div.relative.overflow-hidden { overflow: hidden; }
+
+/* --- Find Us Online cards --- */
+.find-us-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -20px rgba(0,0,0,0.6);
+}
+@media (max-width: 520px) {
+  .find-us-grid { grid-template-columns: 1fr !important; }
+}
+
+/* --- Zakat calculator responsive --- */
+@media (max-width: 720px) {
+  .zakat-grid { grid-template-columns: 1fr !important; }
+}

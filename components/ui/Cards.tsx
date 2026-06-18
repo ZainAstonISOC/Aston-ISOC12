@@ -191,40 +191,65 @@ export function ResourceItem({ resource }: { resource: Resource }) {
 /* ── LECTURE CARD ────────────────────────────────────────────────────────── */
 export function LectureCard({ lecture }: { lecture: Lecture }) {
   const [hovered, setHovered] = useState(false);
-  // Use the best available URL never fall back to a non-functional link
+  const [imgError, setImgError] = useState(false);
   const url = lecture.youtubeUrl ?? lecture.spotifyUrl ?? null;
+
+  // Build thumbnail URL from video ID (playlists fall back to gradient)
+  const thumb = lecture.youtubeId && !lecture.youtubeId.startsWith("PL")
+    ? `https://i.ytimg.com/vi/${lecture.youtubeId}/hqdefault.jpg`
+    : null;
 
   const inner = (
     <div className="card link"
       style={{
-        padding: 0, overflow: "hidden",
+        padding: 0, overflow: "hidden", height: "100%",
+        display: "flex", flexDirection: "column",
         borderColor: hovered ? "rgba(216,175,114,0.38)" : undefined,
         transform: hovered ? "translateY(-4px)" : undefined,
         boxShadow: hovered ? "0 16px 40px -20px rgba(0,0,0,0.7)" : undefined,
       }}>
-      {/* Thumbnail area */}
+      {/* Thumbnail */}
       <div style={{
         aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center",
         background: "linear-gradient(150deg, rgba(216,175,114,0.12), rgba(31,21,71,0.5))",
         position: "relative", overflow: "hidden",
       }}>
-        <div className="absolute inset-0 geo-pattern" style={{ opacity: 0.2 }} />
+        {thumb && !imgError ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={thumb} alt={lecture.title} onError={() => setImgError(true)}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13,9,30,0.55), transparent 55%)" }} />
+          </>
+        ) : (
+          <div className="absolute inset-0 geo-pattern" style={{ opacity: 0.2 }} />
+        )}
+        {/* Play button */}
         <div style={{
-          width: 52, height: 52, borderRadius: "50%",
-          background: hovered ? "rgba(216,175,114,0.22)" : "rgba(216,175,114,0.12)",
-          border: `1px solid ${hovered ? "rgba(216,175,114,0.5)" : "rgba(216,175,114,0.3)"}`,
+          position: "absolute",
+          width: 54, height: 54, borderRadius: "50%",
+          background: hovered ? "rgba(216,175,114,0.95)" : "rgba(19,13,40,0.78)",
+          border: `1.5px solid ${hovered ? "#d8af72" : "rgba(216,175,114,0.6)"}`,
           display: "grid", placeItems: "center",
-          color: "#d8af72", fontSize: "1.1rem",
-          transition: "all 0.25s",
-          transform: hovered ? "scale(1.1)" : "scale(1)",
-          position: "relative", zIndex: 1,
-        }}>
-          ▶
-        </div>
+          color: hovered ? "#130d28" : "#d8af72", fontSize: "1.15rem",
+          transition: "all 0.25s", transform: hovered ? "scale(1.08)" : "scale(1)",
+          paddingLeft: "3px",
+        }}>▶</div>
+        {lecture.isPlaylist && (
+          <span style={{
+            position: "absolute", top: "0.6rem", right: "0.6rem",
+            background: "rgba(13,9,30,0.85)", color: "#d8af72",
+            fontFamily: DM, fontSize: "0.6rem", fontWeight: 700,
+            letterSpacing: "0.08em", textTransform: "uppercase",
+            padding: "0.3rem 0.6rem", borderRadius: "999px",
+            border: "1px solid rgba(216,175,114,0.3)",
+          }}>Playlist</span>
+        )}
       </div>
-      <div style={{ padding: "1.4rem" }}>
-        <span className="badge badge-muted" style={{ marginBottom: "0.75rem", display: "inline-block", textTransform: "capitalize" }}>
-          {lecture.category}
+      {/* Body */}
+      <div style={{ padding: "1.4rem", display: "flex", flexDirection: "column", flex: 1 }}>
+        <span className="badge badge-muted" style={{ marginBottom: "0.75rem", display: "inline-block", textTransform: "capitalize", alignSelf: "flex-start" }}>
+          {lecture.duration}
         </span>
         <h3 style={{ fontFamily: PF, fontSize: "1.05rem", fontWeight: 500, color: "#fff", marginBottom: "0.4rem", lineHeight: 1.3 }}>
           {lecture.title}
@@ -232,25 +257,21 @@ export function LectureCard({ lecture }: { lecture: Lecture }) {
         <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted)", marginBottom: "0.25rem", fontWeight: 500 }}>
           {lecture.speaker}
         </p>
-        <p style={{ fontFamily: DM, fontSize: "0.75rem", color: "var(--muted-2)", marginBottom: "0.85rem" }}>
-          {lecture.series} · {lecture.duration}
-        </p>
-        <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)", lineHeight: 1.65 }} className="line-clamp-2">
+        <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)", lineHeight: 1.65, marginBottom: "1rem", flex: 1 }} className="line-clamp-2">
           {lecture.description}
         </p>
         {url && (
-          <p style={{ fontFamily: DM, fontSize: "0.72rem", fontWeight: 700, color: hovered ? "#d8af72" : "var(--muted-2)", letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "1rem", transition: "color 0.2s" }}>
-            Watch on YouTube ↗
+          <p style={{ fontFamily: DM, fontSize: "0.72rem", fontWeight: 700, color: hovered ? "#d8af72" : "var(--muted-2)", letterSpacing: "0.08em", textTransform: "uppercase", transition: "color 0.2s" }}>
+            {lecture.isPlaylist ? "View Playlist" : "Watch on YouTube"} ↗
           </p>
         )}
       </div>
     </div>
   );
 
-  if (!url) return <div style={{ display: "block" }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>{inner}</div>;
+  if (!url) return <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>{inner}</div>;
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer"
-      style={{ display: "block", textDecoration: "none" }}
+    <a href={url} target="_blank" rel="noopener noreferrer" style={{ display: "block", textDecoration: "none", height: "100%" }}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       {inner}
     </a>

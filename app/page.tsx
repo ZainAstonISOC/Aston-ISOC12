@@ -90,7 +90,7 @@ export default async function HomePage() {
               {[
                 { n: "1,000+", label: "Members" },
                 { n: "5×", label: "Daily prayers on campus" },
-                { n: "£200k+", label: "Raised for charity" },
+                { n: "£100k+", label: "Raised for charity last year" },
                 { n: "50+", label: "Events each semester" },
               ].map(s => (
                 <div key={s.label}>
