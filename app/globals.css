@@ -585,6 +585,11 @@ p { color: var(--muted); line-height: 1.78; }
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }
 .reveal.visible { opacity: 1; transform: none; }
+/* If scripting is unavailable the observer never runs, so the content must not
+   depend on it to become visible. */
+@media (scripting: none) {
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }

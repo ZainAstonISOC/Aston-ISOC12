@@ -88,12 +88,14 @@ export default async function CareersPage() {
         </div>
       </Reveal>
 
-      {/* ── The board ──────────────────────────────────────────────────────── */}
-      <Reveal delay={60}>
-        <div style={{ marginTop: "clamp(2.5rem, 6vw, 4rem)" }}>
-          <OpportunityBoard opportunities={opportunities} />
-        </div>
-      </Reveal>
+      {/* ── The board ────────────────────────────────────────────────────────
+          Deliberately NOT wrapped in <Reveal>. This block is ~12,000px tall and
+          grows with every listing; making the primary content of the page
+          depend on a scroll observer firing is a single point of failure, and
+          it already failed once in production. It renders immediately. */}
+      <div style={{ marginTop: "clamp(2.5rem, 6vw, 4rem)" }}>
+        <OpportunityBoard opportunities={opportunities} />
+      </div>
 
       {/* ── What we track — asymmetric editorial band ───────────────────────── */}
       <Reveal delay={80}>
