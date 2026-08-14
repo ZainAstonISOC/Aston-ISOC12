@@ -29,30 +29,29 @@ const BASE = "https://api.adzuna.com/v1/api/jobs/gb/search/1";
 const MAX_DAYS_OLD = 30;
 
 /**
- * Terms that reliably pull in roles our members are not searching a *student
- * careers board* for. Adzuna applies this as an OR-exclude across the ad text.
+ * IMPORTANT: Adzuna's `what_exclude` is a space-separated list of INDIVIDUAL
+ * WORDS, not phrases, and it matches the whole advert. An earlier version
+ * passed "support worker" and "care assistant" here, which excluded every ad
+ * containing "support", "worker", "care" or "assistant" — that is most of the
+ * market, and the board silently fell back to curated entries only.
+ *
+ * So: only distinctive single words belong here. Anything ambiguous is handled
+ * by TITLE_REJECT below, where we can match real phrases.
  */
 const EXCLUDE_TERMS = [
-  "teaching assistant",
-  "sen",
-  "semh",
   "nursery",
   "childcare",
   "carer",
-  "care assistant",
-  "support worker",
-  "cleaner",
-  "driver",
-  "warehouse",
-  "chef",
-  "waiter",
-  "security officer",
+  "semh",
   "hgv",
+  "cleaner",
+  "waiter",
 ].join(" ");
 
-/** Titles we drop outright, whatever the category says. */
+/** Phrases we drop outright, matched against the job title. */
 const TITLE_REJECT = [
   "teaching assistant",
+  "teaching",
   "nursery",
   "care assistant",
   "support worker",
@@ -60,6 +59,35 @@ const TITLE_REJECT = [
   "hgv",
   "behaviour mentor",
   "cover supervisor",
+  "tutor",
+];
+
+/**
+ * A keyword search for "graduate" also matches ads that merely ask for "a
+ * graduate of an engineering degree", which surfaced senior roles. Requiring an
+ * early-careers marker in the title fixes that; SENIOR_MARKERS catches the rest.
+ */
+const EARLY_CAREERS_MARKERS = [
+  "graduate",
+  "trainee",
+  "intern",
+  "placement",
+  "apprentice",
+  "junior",
+  "entry level",
+  "entry-level",
+  "school leaver",
+];
+
+const SENIOR_MARKERS = [
+  "senior",
+  "lead ",
+  "principal",
+  "head of",
+  "manager",
+  "director",
+  "specialist",
+  "architect",
 ];
 
 /**
@@ -80,12 +108,29 @@ const AGENCY_BLOCKLIST = [
   "brook street",
   "office angels",
   "smart teachers",
-  "academics ltd",
   "tradewind",
   "protocol education",
   "supply desk",
   "vision for education",
 ];
+
+/** No employer may take over the board — agencies repost the same role repeatedly. */
+const MAX_PER_EMPLOYER = 2;
+
+/** Word-boundary match, so "Reed" does not also block "Reed Smith" or "Screed". */
+function matchesAgency(employer: string): boolean {
+  const e = employer.toLowerCase();
+  return AGENCY_BLOCKLIST.some(a => new RegExp(`\\b${a}\\b`).test(e));
+}
+
+/** Collapses "SF Partners", "SF Partners Ltd" and "SF Partners Admin" onto one key. */
+function employerKey(employer: string): string {
+  return employer
+    .toLowerCase()
+    .replace(/\b(ltd|limited|llp|plc|uk|group|admin|recruitment|recruit)\b/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .slice(0, 12);
+}
 
 /**
  * Each query becomes one API call. `category` is Adzuna's own taxonomy, which
@@ -100,8 +145,9 @@ const QUERIES: {
   { what: "graduate scheme", category: "graduate-jobs", label: "graduate", industry: "All sectors" },
   { what: "graduate", category: "it-jobs", label: "graduate", industry: "Engineering & Technology" },
   { what: "graduate", category: "accounting-finance-jobs", label: "graduate", industry: "Finance & Professional Services" },
-  { what: "summer internship", category: "graduate-jobs", label: "internship", industry: "All sectors" },
-  { what: "industrial placement year", category: "graduate-jobs", label: "placement", industry: "All sectors" },
+  { what: "graduate", category: "engineering-jobs", label: "graduate", industry: "Engineering & Technology" },
+  { what: "internship", category: "graduate-jobs", label: "internship", industry: "All sectors" },
+  { what: "placement", category: "graduate-jobs", label: "placement", industry: "All sectors" },
   { what: "degree apprenticeship", label: "apprenticeship", industry: "All sectors" },
 ];
 
@@ -136,14 +182,16 @@ function cleanDescription(raw: string | undefined): string {
 
 /** True when a result is agency filler rather than a real early-careers role. */
 function isNoise(result: AdzunaResult): boolean {
-  const employer = (result.company?.display_name ?? "").toLowerCase();
-  if (!employer || employer === "employer not stated") return true;
-  if (AGENCY_BLOCKLIST.some(a => employer.includes(a))) return true;
+  const employer = (result.company?.display_name ?? "").trim();
+  // Anonymous postings are almost always agencies.
+  if (!employer) return true;
+  if (matchesAgency(employer)) return true;
 
-  // A second pass on the title. Adzuna's what_exclude matches the whole ad, so
-  // a role can survive it on a passing mention and still be wrong for us.
   const title = (result.title ?? "").toLowerCase();
-  return TITLE_REJECT.some(t => title.includes(t));
+  if (TITLE_REJECT.some(t => title.includes(t))) return true;
+  if (SENIOR_MARKERS.some(t => title.includes(t))) return true;
+  // Must actually be an early-careers role.
+  return !EARLY_CAREERS_MARKERS.some(t => title.includes(t));
 }
 
 async function runQuery(
@@ -207,6 +255,16 @@ export const adzunaProvider: OpportunityProvider = {
     if (!appId || !appKey) return [];
 
     const batches = await Promise.allSettled(QUERIES.map(q => runQuery(q, appId, appKey)));
-    return batches.flatMap(b => (b.status === "fulfilled" ? b.value : []));
+    const found = batches.flatMap(b => (b.status === "fulfilled" ? b.value : []));
+
+    // Cap each employer so one bulk poster cannot dominate the board.
+    const perEmployer = new Map<string, number>();
+    return found.filter(o => {
+      const key = employerKey(o.employer);
+      const seen = perEmployer.get(key) ?? 0;
+      if (seen >= MAX_PER_EMPLOYER) return false;
+      perEmployer.set(key, seen + 1);
+      return true;
+    });
   },
 };

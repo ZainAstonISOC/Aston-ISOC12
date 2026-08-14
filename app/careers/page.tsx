@@ -80,7 +80,9 @@ export default async function CareersPage() {
                 lineHeight: 1.6,
               }}
             >
-              Sources: {liveSources.map(s => s.label).join(", ")}. Updated hourly.
+              {/* Counts are shown deliberately: a provider that returns nothing
+                  used to look identical to one that was working. */}
+              Sources: {liveSources.map(s => `${s.label} (${s.count})`).join(", ")}. Updated hourly.
             </p>
           </div>
         </div>

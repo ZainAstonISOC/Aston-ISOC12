@@ -15,9 +15,20 @@ export interface OpportunityBoardData {
   sources: ProviderStatus[];
 }
 
-/** Two entries are the same job if the employer and title match, whatever the source. */
+/**
+ * Two entries are the same job if the employer and title match, whatever the
+ * source. Employer suffixes are stripped so "SF Partners", "SF Partners Ltd"
+ * and "SF Partners Admin" collapse together, and bracketed reference numbers
+ * are dropped from titles for the same reason.
+ */
 function dedupeKey(o: Opportunity): string {
-  return `${o.employer.toLowerCase().trim()}::${o.title.toLowerCase().trim()}`;
+  const employer = o.employer
+    .toLowerCase()
+    .replace(/\b(ltd|limited|llp|plc|uk|group|admin|recruitment|recruit)\b/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .slice(0, 12);
+  const title = o.title.toLowerCase().replace(/\(.*?\)/g, "").replace(/\s+/g, " ").trim();
+  return `${employer}::${title}`;
 }
 
 function sortForBoard(a: Opportunity, b: Opportunity): number {
@@ -46,6 +57,24 @@ export async function getOpportunityBoard(): Promise<OpportunityBoardData> {
 
   const settled = await Promise.allSettled(enabled.map(p => p.load()));
 
+  const seen = new Set<string>();
+  const opportunities = settled
+    .flatMap(r => (r.status === "fulfilled" ? r.value : []))
+    .filter(o => {
+      const key = dedupeKey(o);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort(sortForBoard);
+
+  // Counted after dedupe, so the number shown on the page is the number of
+  // rows actually rendered from that source.
+  const shownBySource = new Map<string, number>();
+  for (const o of opportunities) {
+    shownBySource.set(o.source, (shownBySource.get(o.source) ?? 0) + 1);
+  }
+
   const sources: ProviderStatus[] = PROVIDERS.map(provider => {
     const index = enabled.indexOf(provider);
     if (index === -1) {
@@ -61,19 +90,13 @@ export async function getOpportunityBoard(): Promise<OpportunityBoardData> {
         error: result.reason instanceof Error ? result.reason.message : "Unknown provider error",
       };
     }
-    return { id: provider.id, label: provider.label, enabled: true, count: result.value.length };
+    return {
+      id: provider.id,
+      label: provider.label,
+      enabled: true,
+      count: shownBySource.get(provider.id) ?? 0,
+    };
   });
-
-  const seen = new Set<string>();
-  const opportunities = settled
-    .flatMap(r => (r.status === "fulfilled" ? r.value : []))
-    .filter(o => {
-      const key = dedupeKey(o);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    })
-    .sort(sortForBoard);
 
   return { opportunities, sources };
 }
