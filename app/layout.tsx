@@ -3,9 +3,10 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://astonisoc.com"),
+  metadataBase: new URL(SITE_URL),
   title: { default: "Aston ISOC", template: "%s | Aston ISOC" },
   description: "Aston University Islamic Society Faith, Community, Excellence. Serving Muslim students at Aston University, Birmingham.",
   keywords: ["Aston ISOC", "Islamic Society", "Aston University", "Muslim students", "Birmingham"],

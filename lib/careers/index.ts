@@ -21,8 +21,16 @@ function dedupeKey(o: Opportunity): string {
 }
 
 function sortForBoard(a: Opportunity, b: Opportunity): number {
-  // Featured first, then soonest real deadline, then most recently posted.
+  // Featured first.
   if (Boolean(a.featured) !== Boolean(b.featured)) return a.featured ? -1 : 1;
+
+  // Then committee-vetted entries above aggregator results. Without this,
+  // aggregated jobs carry today's date and bury everything the committee chose.
+  const aCurated = a.source === "curated";
+  const bCurated = b.source === "curated";
+  if (aCurated !== bCurated) return aCurated ? -1 : 1;
+
+  // Then soonest real deadline, then most recently posted.
   if (a.deadline && b.deadline) return a.deadline.localeCompare(b.deadline);
   if (a.deadline) return -1;
   if (b.deadline) return 1;

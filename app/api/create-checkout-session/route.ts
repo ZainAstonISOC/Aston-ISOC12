@@ -14,11 +14,12 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { SITE_URL } from "@/lib/site";
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 // Referenced by the documented Stripe integration below, not yet wired up.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const APP_URL           = process.env.NEXT_PUBLIC_APP_URL ?? "https://astonisoc.com";
+const APP_URL           = process.env.NEXT_PUBLIC_APP_URL ?? SITE_URL;
 
 export async function POST(req: NextRequest) {
   const { amount, frequency } = await req.json();

@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
 import { events } from "@/data/events";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://astonisoc.com";
+const BASE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
