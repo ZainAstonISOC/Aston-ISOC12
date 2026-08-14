@@ -28,7 +28,7 @@ export default function ResourcesPage() {
           <Reveal delay={si * 30}>
             <div className="flex items-center gap-3 mb-5">
               <span className="gold-rule" style={{ margin: 0 }} />
-              <p className="label">{RESOURCE_CATEGORY_LABELS[cat]}</p>
+              <h2 className="label" style={{ marginBottom: 0 }}>{RESOURCE_CATEGORY_LABELS[cat]}</h2>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               {resources.filter(r => r.category === cat).map(r => <ResourceItem key={r.id} resource={r} />)}

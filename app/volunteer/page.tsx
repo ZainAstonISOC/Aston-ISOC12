@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
-import { volunteerCampaigns, getActiveCampaigns } from "@/data/volunteers";
+import Icon, { type IconName } from "@/components/ui/Icon";
+import { getActiveCampaigns } from "@/data/volunteers";
 import { SOCIAL, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -14,24 +13,24 @@ export const metadata: Metadata = {
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
-const BENEFITS = [
-  { icon: "🌱", title: "Real Leadership", desc: "Build genuine leadership skills managing events and people experience valued by employers." },
-  { icon: "🤝", title: "Deep Community", desc: "Form meaningful friendships through shared purpose and working together for something greater." },
-  { icon: "📈", title: "CV & Portfolio", desc: "Event management, fundraising, and campaign coordination all strengthen your professional profile." },
-  { icon: "🏆", title: "Recognition", desc: "Recognised volunteer certificates and references from the ISOC committee for outstanding volunteers." },
-  { icon: "🌍", title: "Real Impact", desc: "Your hours translate directly into community events, funds raised, and lives touched measurably." },
-  { icon: "✨", title: "Spiritual Reward", desc: "Volunteering for the sake of Allah is among the most rewarding actions a Muslim can take." },
+const BENEFITS: { icon: IconName; title: string; desc: string }[] = [
+  { icon: "seedling", title: "Real Leadership", desc: "Build genuine leadership skills managing events and people experience valued by employers." },
+  { icon: "handshake", title: "Deep Community", desc: "Form meaningful friendships through shared purpose and working together for something greater." },
+  { icon: "chart", title: "CV & Portfolio", desc: "Event management, fundraising, and campaign coordination all strengthen your professional profile." },
+  { icon: "trophy", title: "Recognition", desc: "Recognised volunteer certificates and references from the ISOC committee for outstanding volunteers." },
+  { icon: "globe", title: "Real Impact", desc: "Your hours translate directly into community events, funds raised, and lives touched measurably." },
+  { icon: "sparkle", title: "Spiritual Reward", desc: "Volunteering for the sake of Allah is among the most rewarding actions a Muslim can take." },
 ];
 
 export default function VolunteerPage() {
   const campaigns = getActiveCampaigns();
 
   return (
-    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
+    <div style={{ background: "transparent", minHeight: "100vh" }}>
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden py-24 px-4"
-        style={{ background: "linear-gradient(160deg, rgba(99,91,255,0.08) 0%, rgba(13,16,37,0.98) 55%)" }}>
+      <div className="interior-hero"
+        style={{ background: "linear-gradient(160deg, rgba(99,91,255,0.08) 0%, rgba(19,13,40,0.98) 55%)" }}>
         <div className="glow-orb glow-purple absolute" style={{ width: 700, height: 700, top: -150, right: -100 }} />
         <div className="glow-orb glow-gold absolute" style={{ width: 400, height: 400, bottom: -50, left: "30%" }} />
         <div className="container relative z-10">
@@ -41,7 +40,7 @@ export default function VolunteerPage() {
             We Need<br /><em style={{ color: "#d8af72" }}>You.</em>
           </h1>
           <span className="gold-rule" />
-          <p className="max-w-xl leading-relaxed mb-10" style={{ color: "#A8A8B3", fontFamily: DM, fontSize: "1.05rem" }}>
+          <p className="max-w-xl leading-relaxed mb-10" style={{ color: "var(--muted)", fontFamily: DM, fontSize: "1.05rem" }}>
             Aston ISOC runs on the dedication of volunteers. Whether it&apos;s Ramadan, Discover Islam Week, or Charity Week your time, energy and passion directly shape the experience of hundreds of Muslim students.
           </p>
           <div className="flex gap-3 flex-wrap">
@@ -73,19 +72,19 @@ export default function VolunteerPage() {
                 className="h-full flex flex-col p-8 volunteer-card"
                 style={{
                   background: c.colour,
-                  border: "1px solid rgba(201,162,39,0.15)",
+                  border: "1px solid rgba(216,175,114,0.15)",
                   borderRadius: "1.375rem",
                 }}
               >
                 {/* Status badge */}
                 <div className="flex items-center justify-between mb-5">
-                  <span className="text-3xl">{c.icon}</span>
+                  <span className="icon-badge" style={{ marginBottom: 0 }}><Icon name={c.icon} /></span>
                   <span
                     className="badge"
                     style={{
-                      background: c.status === "active" ? "rgba(52,211,153,0.12)" : "rgba(201,162,39,0.12)",
-                      color: c.status === "active" ? "#6ee7b7" : "#EDD882",
-                      border: `1px solid ${c.status === "active" ? "rgba(52,211,153,0.25)" : "rgba(201,162,39,0.25)"}`,
+                      background: c.status === "active" ? "rgba(52,211,153,0.12)" : "rgba(216,175,114,0.12)",
+                      color: c.status === "active" ? "#6ee7b7" : "var(--gold-soft)",
+                      border: `1px solid ${c.status === "active" ? "rgba(52,211,153,0.25)" : "rgba(216,175,114,0.25)"}`,
                     }}
                   >
                     {c.status === "active" ? "Recruiting Now" : "Coming Soon"}
@@ -98,13 +97,13 @@ export default function VolunteerPage() {
                 <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "#d8af72", fontFamily: DM }}>
                   {c.tagline}
                 </p>
-                <p className="text-sm leading-relaxed mb-6 flex-1" style={{ color: "#A8A8B3", fontFamily: DM }}>
+                <p className="text-sm leading-relaxed mb-6 flex-1" style={{ color: "var(--muted)", fontFamily: DM }}>
                   {c.description}
                 </p>
 
                 {/* Roles */}
                 <div className="mb-5">
-                  <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "#6B6B80", fontFamily: DM }}>
+                  <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "var(--muted-2)", fontFamily: DM }}>
                     Roles Available
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -115,16 +114,22 @@ export default function VolunteerPage() {
                 </div>
 
                 {/* Meta */}
-                <div className="space-y-1.5 mb-6 text-xs" style={{ color: "#6B6B80", fontFamily: DM }}>
-                  <p>⏰ {c.commitment}</p>
-                  <p>✦ {c.impact}</p>
+                <div className="space-y-1.5 mb-6 text-xs" style={{ color: "var(--muted-2)", fontFamily: DM }}>
+                  <p style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                    <Icon name="clock" size={14} style={{ flexShrink: 0, marginTop: 2, color: "var(--gold)" }} />
+                    {c.commitment}
+                  </p>
+                  <p style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                    <Icon name="sparkle" size={14} style={{ flexShrink: 0, marginTop: 2, color: "var(--gold)" }} />
+                    {c.impact}
+                  </p>
                 </div>
 
                 <a
                   href={c.signupUrl ?? SOCIAL.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-gold w-full justify-center"
+                  className="btn btn-gold w-full justify-center"
                   style={{ fontSize: "0.72rem" }}
                 >
                   {c.status === "active" ? "Sign Up Now" : "Register Interest"}
@@ -150,13 +155,13 @@ export default function VolunteerPage() {
                 className="p-6 hover-l1"
                 style={{
                   background: "var(--surface)",
-                  border: "1px solid rgba(201,162,39,0.1)",
+                  border: "1px solid rgba(216,175,114,0.1)",
                   borderRadius: "1.125rem",
                 }}
               >
-                <span className="text-2xl block mb-4">{b.icon}</span>
+                <span className="icon-badge"><Icon name={b.icon} /></span>
                 <h3 style={{ fontFamily: PF, fontSize: "1.1rem", fontWeight: 500, color: "#fff", marginBottom: "0.5rem" }}>{b.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#6B6B80", fontFamily: DM }}>{b.desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--muted-2)", fontFamily: DM }}>{b.desc}</p>
               </div>
             </Reveal>
           ))}
@@ -166,8 +171,8 @@ export default function VolunteerPage() {
         <Reveal>
           <div className="p-10 relative overflow-hidden mb-20"
             style={{
-              background: "linear-gradient(135deg, rgba(201,162,39,0.06) 0%, rgba(21,25,55,0.95) 100%)",
-              border: "1px solid rgba(201,162,39,0.18)",
+              background: "linear-gradient(135deg, rgba(216,175,114,0.06) 0%, rgba(21,25,55,0.95) 100%)",
+              border: "1px solid rgba(216,175,114,0.18)",
               borderRadius: "1.5rem",
             }}>
             <div className="absolute inset-0 geo-pattern opacity-20" />
@@ -180,9 +185,9 @@ export default function VolunteerPage() {
                   { n: "03", title: "Get Involved", desc: "The relevant campaign lead will be in touch with onboarding details and your first shift.", href: "/contact", external: false, cta: "Contact Page →" },
                 ].map((s) => (
                   <div key={s.n}>
-                    <p style={{ fontFamily: PF, fontSize: "3rem", fontWeight: 400, color: "rgba(201,162,39,0.18)", lineHeight: 1, marginBottom: "0.75rem" }}>{s.n}</p>
+                    <p style={{ fontFamily: PF, fontSize: "3rem", fontWeight: 400, color: "rgba(216,175,114,0.18)", lineHeight: 1, marginBottom: "0.75rem" }}>{s.n}</p>
                     <h3 style={{ fontFamily: PF, fontSize: "1.1rem", fontWeight: 500, color: "#fff", marginBottom: "0.5rem" }}>{s.title}</h3>
-                    <p className="text-sm leading-relaxed mb-4" style={{ color: "#A8A8B3", fontFamily: DM }}>{s.desc}</p>
+                    <p className="text-sm leading-relaxed mb-4" style={{ color: "var(--muted)", fontFamily: DM }}>{s.desc}</p>
                     <a
                       href={s.href}
                       target={s.external ? "_blank" : undefined}
@@ -205,7 +210,7 @@ export default function VolunteerPage() {
             <p style={{ fontFamily: PF, fontSize: "clamp(1.2rem,2.5vw,1.6rem)", fontStyle: "italic", color: "#d8af72", opacity: 0.7, marginBottom: "0.5rem" }}>
               &ldquo;The best of people are those most beneficial to people.&rdquo;
             </p>
-            <p className="text-xs tracking-widest uppercase" style={{ color: "#6B6B80", fontFamily: DM }}>
+            <p className="text-xs tracking-widest uppercase" style={{ color: "var(--muted-2)", fontFamily: DM }}>
               Prophet Muhammad ﷺ · Al-Mu&apos;jam al-Awsat
             </p>
           </div>

@@ -1,3 +1,5 @@
+import type { IconName } from "@/components/ui/Icon";
+
 /**
  * DEPARTMENT OVERVIEW CONTENT
  * Rich descriptions for each ISOC department — mission, objectives, initiatives.
@@ -7,7 +9,7 @@
 export interface Department {
   key: string;
   name: string;
-  icon: string;
+  icon: IconName;
   tagline: string;
   mission: string;
   objectives: string[];
@@ -18,7 +20,7 @@ export const departments: Department[] = [
   {
     key: "social_media",
     name: "Socials",
-    icon: "🤝",
+    icon: "handshake",
     tagline: "Where the community comes together",
     mission: "To bring Muslims and non-Muslims together, build lasting friendships, and create a home for students who are away from home.",
     objectives: [
@@ -37,7 +39,7 @@ export const departments: Department[] = [
   {
     key: "jummah",
     name: "Jumu'ah",
-    icon: "🕌",
+    icon: "mosque",
     tagline: "The heart of our week",
     mission: "To deliver a welcoming and spiritually uplifting Jumu'ah experience that builds community, belonging, and a stronger connection to faith on campus.",
     objectives: [
@@ -58,7 +60,7 @@ export const departments: Department[] = [
   {
     key: "advocacy",
     name: "Advocacy",
-    icon: "📣",
+    icon: "mic",
     tagline: "Standing for our community and beyond",
     mission: "To represent and serve the Muslim student body, raise awareness of the issues that matter, and channel the community's energy into meaningful service, both locally and globally.",
     objectives: [
@@ -78,7 +80,7 @@ export const departments: Department[] = [
   {
     key: "education",
     name: "Education",
-    icon: "📖",
+    icon: "book",
     tagline: "Knowledge that lasts a lifetime",
     mission: "To deliver consistent, structured Islamic education that nurtures understanding, encourages participation, and builds a community of learners.",
     objectives: [
@@ -97,7 +99,7 @@ export const departments: Department[] = [
   {
     key: "academic",
     name: "Academic Development",
-    icon: "🎓",
+    icon: "compass",
     tagline: "Faith and ambition, together",
     mission: "To equip students for professional success through career development, mentorship, and an introduction to ethical, Islamic approaches to finance and work.",
     objectives: [

@@ -4,7 +4,6 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { donationCampaigns } from "@/data/donations";
-import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Charity Initiatives" };
 const PF = "'Playfair Display', Georgia, serif";
@@ -34,7 +33,7 @@ export default function CharityPage() {
       </Reveal>
 
       <Reveal>
-        <p className="eyebrow mb-6">Active Campaigns</p>
+        <h2 className="eyebrow mb-6">Active Campaigns</h2>
         <div className="space-y-4 mb-14">
           {active.map(c => (
             <div key={c.id} className="p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5"

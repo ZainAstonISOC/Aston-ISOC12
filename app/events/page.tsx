@@ -13,6 +13,7 @@ export default function EventsPage() {
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Events" }]} />
       <PageHeader label="What's On" title="Upcoming Events" subtitle="From weekly prayers to annual conferences every ISOC event in one place." />
+      <h2 className="visually-hidden">All events</h2>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {events.map((e, i) => (
           <Reveal key={e.id} delay={i * 50}>

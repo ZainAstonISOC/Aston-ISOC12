@@ -21,7 +21,7 @@ export default function CommitteeAccordion({ sections }: { sections: Section[] }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-      {sections.map((section, si) => {
+      {sections.map((section) => {
         const isOpen = open.includes(section.key);
         const isCoreCommittee = section.key === "executive";
 
@@ -68,7 +68,7 @@ export default function CommitteeAccordion({ sections }: { sections: Section[] }
                     {isCoreCommittee ? "Core Committee" : section.label}
                   </p>
                   {!isOpen && (
-                    <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#8d86a3" }}>
+                    <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)" }}>
                       {section.members.map(m => m.name.split(" ")[0]).join(", ")}
                     </p>
                   )}
@@ -129,7 +129,7 @@ export default function CommitteeAccordion({ sections }: { sections: Section[] }
                       <p style={{ fontFamily: DM, fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#d8af72", marginBottom: "0.5rem" }}>
                         {member.role}
                       </p>
-                      <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "#8d86a3", lineHeight: 1.6 }}>
+                      <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "var(--muted-2)", lineHeight: 1.6 }}>
                         {member.bio}
                       </p>
                     </div>

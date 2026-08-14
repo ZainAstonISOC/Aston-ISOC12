@@ -4,10 +4,10 @@ import { getFeaturedEvents } from "@/data/events";
 import { fetchLivePrayerTimes } from "@/data/prayer";
 import { getActiveCampaigns } from "@/data/donations";
 import { getBySection } from "@/data/committee";
-import { volunteerCampaigns } from "@/data/volunteers";
 import { EventCard, MemberCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
+import InstagramFeed from "@/components/ui/InstagramFeed";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -31,7 +31,6 @@ export default async function HomePage() {
     allExec.find(m => m.id === "head-brother"),
     allExec.find(m => m.id === "head-sister"),
   ].filter(Boolean) as typeof allExec;
-  const volunteerCamps = volunteerCampaigns.filter(c => c.status !== "archived").slice(0, 3);
 
   return (
     <div>
@@ -95,7 +94,7 @@ export default async function HomePage() {
               ].map(s => (
                 <div key={s.label}>
                   <b style={{ fontFamily: PF, fontSize: "clamp(1.8rem,3vw,2.4rem)", color: "#fff", display: "block" }}>{s.n}</b>
-                  <span style={{ fontFamily: DM, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "#8d86a3" }}>{s.label}</span>
+                  <span style={{ fontFamily: DM, fontSize: "0.8rem", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted-2)" }}>{s.label}</span>
                 </div>
               ))}
             </div>
@@ -114,7 +113,7 @@ export default async function HomePage() {
             <PrayerTimesDisplay times={prayers} />
           </Reveal>
           <Reveal delay={120}>
-            <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "#8d86a3", textAlign: "center", marginTop: "1.2rem" }}>
+            <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "var(--muted-2)", textAlign: "center", marginTop: "1.2rem" }}>
               Jumu&apos;ah every Friday · Aston Students&apos; Union Hall (SU Hall) · Khutbah 13:30
             </p>
           </Reveal>
@@ -169,7 +168,7 @@ export default async function HomePage() {
           </div>
           <Reveal delay={120}>
             <div style={{ marginTop: "1.5rem", padding: "1rem 1.5rem", borderRadius: "12px", border: "1px solid rgba(216,175,114,0.12)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
-              <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#8d86a3" }}>More events announced on Instagram</p>
+              <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)" }}>More events announced on Instagram</p>
               <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>@astonisoc →</a>
             </div>
           </Reveal>
@@ -183,7 +182,7 @@ export default async function HomePage() {
             <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>Community</p></Reveal>
             <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Sisters &amp; Brothers</h2></Reveal>
             <Reveal delay={120}>
-              <p className="lede" style={{ marginInline: "auto", fontStyle: "italic", color: "#8d86a3", fontFamily: PF, fontSize: "0.95rem" }}>
+              <p className="lede" style={{ marginInline: "auto", fontStyle: "italic", color: "var(--muted-2)", fontFamily: PF, fontSize: "0.95rem" }}>
                 &ldquo;The believers are like one body in their mutual love.&rdquo; Prophet Muhammad ﷺ
               </p>
             </Reveal>
@@ -249,7 +248,7 @@ export default async function HomePage() {
                 <Reveal><p className="eyebrow">Sadaqah</p></Reveal>
                 <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Active Campaigns</h2></Reveal>
                 <Reveal delay={100}>
-                  <p style={{ fontFamily: PF, fontStyle: "italic", color: "#8d86a3", fontSize: "0.92rem" }}>
+                  <p style={{ fontFamily: PF, fontStyle: "italic", color: "var(--muted-2)", fontSize: "0.92rem" }}>
                     &ldquo;Charity does not decrease wealth.&rdquo; Prophet Muhammad ﷺ
                   </p>
                 </Reveal>
@@ -262,8 +261,8 @@ export default async function HomePage() {
                   <div className="card">
                     {c.isFeatured && <span className="pill" style={{ marginBottom: "1rem", display: "inline-block" }}>Featured Campaign</span>}
                     <h3 style={{ fontFamily: PF, fontSize: "1.4rem", color: "#fff", marginBottom: "0.75rem" }}>{c.name}</h3>
-                    <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "#8d86a3", lineHeight: 1.75, marginBottom: "1.5rem" }}>{c.description.slice(0, 150)}…</p>
-                    {c.organisation && <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#8d86a3", marginBottom: "1.25rem" }}>Via {c.organisation}</p>}
+                    <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.75, marginBottom: "1.5rem" }}>{c.description.slice(0, 150)}…</p>
+                    {c.organisation && <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)", marginBottom: "1.25rem" }}>Via {c.organisation}</p>}
                     <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Donate Now</a>
                   </div>
                 </Reveal>
@@ -293,28 +292,43 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ══ ECOSYSTEM ════════════════════════════════════════════════════ */}
+      {/* ══ INSTAGRAM ════════════════════════════════════════════════════ */}
       <section className="section section--tight">
         <div className="container">
-          <div className="section-head center" style={{ marginBottom: "2.5rem" }}>
-            <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>Stay Connected</p></Reveal>
-            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Find us online</h2></Reveal>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
+            <div>
+              <Reveal><p className="eyebrow">Straight from the account</p></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Latest on Instagram</h2></Reveal>
+            </div>
+            <Reveal>
+              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                Follow @astonisoc
+              </a>
+            </Reveal>
           </div>
-          <div className="grid cols-3">
-            {[
-              { icon: "📸", label: "Instagram", sub: "@astonisoc primary channel", href: SOCIAL.instagram },
-              { icon: "💬", label: "WhatsApp", sub: "Community announcements", href: WHATSAPP.community },
-              { icon: "🔗", label: "Linktree", sub: "All official links", href: SOCIAL.linktree },
-            ].map((s, i) => (
-              <Reveal key={s.label} delay={i * 80}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="card link" style={{ textAlign: "center" }}>
-                  <span style={{ fontSize: "2rem", display: "block", marginBottom: "0.75rem" }}>{s.icon}</span>
-                  <h3 style={{ fontFamily: PF, fontSize: "1.15rem", color: "#fff", marginBottom: "0.3rem" }}>{s.label}</h3>
-                  <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "#8d86a3" }}>{s.sub}</p>
-                </a>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={100}>
+            <InstagramFeed />
+          </Reveal>
+
+          {/* Slim "elsewhere" strip — the other channels without three matching tiles */}
+          <Reveal delay={140}>
+            <div style={{
+              marginTop: "1.5rem", padding: "1rem 1.5rem", borderRadius: "12px",
+              border: "1px solid rgba(216,175,114,0.12)",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              flexWrap: "wrap", gap: "0.75rem",
+            }}>
+              <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)" }}>
+                Also on WhatsApp for announcements, and Linktree for every official link.
+              </p>
+              <span style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
+                <a href={WHATSAPP.community} target="_blank" rel="noopener noreferrer"
+                  style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>WhatsApp →</a>
+                <a href={SOCIAL.linktree} target="_blank" rel="noopener noreferrer"
+                  style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>Linktree →</a>
+              </span>
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -25,9 +25,11 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https://i.ytimg.com https://*.ytimg.com",
+              // Instagram media is served from Meta's CDNs
+              "img-src 'self' data: https://i.ytimg.com https://*.ytimg.com https://*.cdninstagram.com https://*.fbcdn.net",
               "connect-src 'self' https://api.aladhan.com",
-              "frame-src https://www.youtube.com https://buy.stripe.com",
+              // TellSafe hosts the embedded community feedback form
+              "frame-src https://www.youtube.com https://buy.stripe.com https://www.tellsafe.app",
               "form-action 'self' https://buy.stripe.com",
               "frame-ancestors 'self'",
               "base-uri 'self'",

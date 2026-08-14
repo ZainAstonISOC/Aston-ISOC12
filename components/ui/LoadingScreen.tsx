@@ -32,10 +32,17 @@ export default function LoadingScreen() {
   const [reduced, setReduced]         = useState(false);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
+  // Declared above the effect that calls it — a function declaration after its
+  // use inside an effect is a temporal-dead-zone hazard.
+  const markLoaded = () => { try { sessionStorage.setItem("isoc_loaded", "1"); } catch { /* ok */ } };
+
   useEffect(() => {
     // Returning this session → drop the loader instantly (CSS in <head> already hid it).
     let alreadyLoaded = false;
     try { alreadyLoaded = !!sessionStorage.getItem("isoc_loaded"); } catch { /* no storage */ }
+    // sessionStorage is unreadable during SSR, so this genuinely cannot move
+    // into the useState initialiser without a hydration mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (alreadyLoaded) { setShow(false); return; }
 
     const prefersReduced =
@@ -57,10 +64,9 @@ export default function LoadingScreen() {
       push(() => { setShow(false); markLoaded(); }, FADE_OUT);
     }
 
-    return () => { timers.current.forEach(clearTimeout); timers.current = []; };
+    const captured = timers.current;
+    return () => { captured.forEach(clearTimeout); timers.current = []; };
   }, []);
-
-  const markLoaded = () => { try { sessionStorage.setItem("isoc_loaded", "1"); } catch { /* ok */ } };
 
   return (
     <>

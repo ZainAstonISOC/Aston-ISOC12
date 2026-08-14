@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Event, BlogPost, CommitteeMember, Resource, Lecture } from "@/types";
+import Icon from "./Icon";
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
@@ -67,9 +68,15 @@ export function EventCard({ event }: { event: Event }) {
         <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.7, marginBottom: "1rem" }} className="line-clamp-2">
           {event.description}
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-          <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)" }}>⏰ {event.time}</span>
-          <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)" }}>📍 {event.location}</span>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+          <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)", display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <Icon name="clock" size={14} style={{ color: "#d8af72", flexShrink: 0 }} />
+            {event.time}
+          </span>
+          <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)", display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+            <Icon name="pin" size={14} style={{ color: "#d8af72", flexShrink: 0, marginTop: 3 }} />
+            {event.location}
+          </span>
         </div>
         <div style={{
           marginTop: "1.2rem", paddingTop: "1rem",

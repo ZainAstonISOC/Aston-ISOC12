@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { getSisterEvents } from "@/data/events";
+import Icon, { type IconName } from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Sisters' Section", description: "Aston ISOC Sisters' Section dedicated events, halaqa circles, and a welcoming community for Muslim sisters at Aston." };
 
-const PROGRAMMES = [
-  { icon: "📖", title: "Weekly Halaqa", desc: "Sisters-only Islamic study circle exploring Seerah, Qur'an, and contemporary topics. Every Tuesday at 12:00." },
-  { icon: "☕", title: "Monthly Brunch", desc: "Casual sisters' social brunch a relaxed space to connect and build genuine friendships." },
-  { icon: "🌸", title: "Wellbeing Circle", desc: "A safe, private space to discuss mental health, faith, and university life." },
-  { icon: "💼", title: "Careers Mentorship", desc: "Connecting sisters with Muslim women professionals for mentorship and networking." },
-  { icon: "🤲", title: "Charity Projects", desc: "Sisters-led fundraising and community service initiatives throughout the year." },
-  { icon: "📱", title: "Private WhatsApp", desc: "Sisters-only announcements and community group join via the link below." },
+const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
+  { icon: "book", title: "Weekly Halaqa", desc: "Sisters-only Islamic study circle exploring Seerah, Qur'an, and contemporary topics. Every Tuesday at 12:00." },
+  { icon: "coffee", title: "Monthly Brunch", desc: "Casual sisters' social brunch a relaxed space to connect and build genuine friendships." },
+  { icon: "heart", title: "Wellbeing Circle", desc: "A safe, private space to discuss mental health, faith, and university life." },
+  { icon: "briefcase", title: "Careers Mentorship", desc: "Connecting sisters with Muslim women professionals for mentorship and networking." },
+  { icon: "hands", title: "Charity Projects", desc: "Sisters-led fundraising and community service initiatives throughout the year." },
+  { icon: "phone", title: "Private WhatsApp", desc: "Sisters-only announcements and community group join via the link below." },
 ];
 
 export default function SistersPage() {
   const sistersEvents = getSisterEvents().slice(0, 3);
   return (
-    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
-      <div className="relative overflow-hidden py-20 px-4" style={{ background: "linear-gradient(160deg, rgba(244,114,182,0.06) 0%, rgba(7,17,29,0.98) 60%)" }}>
+    <div style={{ background: "transparent", minHeight: "100vh" }}>
+      <div className="interior-hero" style={{ background: "linear-gradient(160deg, rgba(244,114,182,0.06) 0%, rgba(19,13,40,0.98) 60%)" }}>
         <div className="container relative z-10">
           <Breadcrumb crumbs={[{ label: "Sisters' Section" }]} />
           <p className="eyebrow mb-4" style={{ color: "rgba(249,168,212,0.7)" }}>For Sisters</p>
@@ -45,11 +45,13 @@ export default function SistersPage() {
       </div>
       <div className="container py-16">
         <Reveal>
-          <p className="eyebrow mb-6">Programmes</p>
+          <h2 className="eyebrow mb-6">Programmes</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
             {PROGRAMMES.map((item) => (
               <div key={item.title} className="card p-6">
-                <span className="text-2xl block mb-3">{item.icon}</span>
+                <span className="icon-badge" style={{ color: "#f9a8d4", borderColor: "rgba(244,114,182,0.28)", background: "linear-gradient(135deg, rgba(244,114,182,0.16), rgba(244,114,182,0.04))" }}>
+                  <Icon name={item.icon} />
+                </span>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
               </div>

@@ -3,7 +3,7 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader, LectureCard } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { lectures, LECTURE_CATEGORY_LABELS, getLecturesByCategory } from "@/data/lectures";
+import { LECTURE_CATEGORY_LABELS, getLecturesByCategory } from "@/data/lectures";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Lectures & Podcasts", description: "Recorded talks, Jumu'ah khutbahs, halaqa sessions, and the ISOC podcast." };
@@ -24,7 +24,7 @@ export default function LecturesPage() {
           <section key={cat} className="mb-14">
             <Reveal delay={si * 40}>
               <div className="mb-6" style={{ borderBottom: "1px solid rgba(216,175,114,0.08)", paddingBottom: "0.75rem" }}>
-                <p className="label">{LECTURE_CATEGORY_LABELS[cat]}</p>
+                <h2 className="label" style={{ marginBottom: 0 }}>{LECTURE_CATEGORY_LABELS[cat]}</h2>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {items.map((l) => <LectureCard key={l.id} lecture={l} />)}

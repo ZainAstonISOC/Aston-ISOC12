@@ -4,7 +4,6 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { SOCIAL, CONTACT } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",

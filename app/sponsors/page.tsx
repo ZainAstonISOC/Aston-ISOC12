@@ -25,7 +25,7 @@ export default function SponsorsPage() {
           <section key={tier} className="mb-14">
             <Reveal delay={si * 50}>
               <div className="mb-5" style={{ borderBottom: "1px solid rgba(216,175,114,0.08)", paddingBottom: "0.75rem" }}>
-                <p className="eyebrow">{TIER_LABELS[tier]}</p>
+                <h2 className="eyebrow">{TIER_LABELS[tier]}</h2>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {list.map(s => (

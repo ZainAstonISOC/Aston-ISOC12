@@ -5,5 +5,5 @@ export * from "./resources";
 export * from "./lectures";
 export * from "./donations";
 export * from "./sponsors";
-export * from "./careers";
+export * from "./opportunities";
 export * from "./prayer";

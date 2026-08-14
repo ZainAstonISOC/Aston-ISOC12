@@ -16,6 +16,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+// Referenced by the documented Stripe integration below, not yet wired up.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const APP_URL           = process.env.NEXT_PUBLIC_APP_URL ?? "https://astonisoc.com";
 
 export async function POST(req: NextRequest) {

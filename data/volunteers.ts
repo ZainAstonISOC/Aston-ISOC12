@@ -1,3 +1,5 @@
+import type { IconName } from "@/components/ui/Icon";
+
 /**
  * VOLUNTEER OPPORTUNITIES DATA
  * Add new campaigns here the volunteer page updates automatically.
@@ -14,7 +16,7 @@ export interface VolunteerCampaign {
   impact: string;
   signupUrl?: string;   // link to form add when available
   colour: string;       // accent colour for card
-  icon: string;
+  icon: IconName;
 }
 
 export const volunteerCampaigns: VolunteerCampaign[] = [
@@ -28,8 +30,8 @@ export const volunteerCampaigns: VolunteerCampaign[] = [
     roles: ["Iftaar Coordinator", "Charity Fundraiser", "Logistics Volunteer", "Sisters' Lead", "Brothers' Lead", "Social Media Volunteer"],
     commitment: "4–8 hours/week during Ramadan",
     impact: "Serves 200+ students with community iftaars and raises £10,000+ for charity",
-    colour: "rgba(201,162,39,0.12)",
-    icon: "🌙",
+    colour: "rgba(216,175,114,0.12)",
+    icon: "moon",
   },
   {
     id: "diw",
@@ -42,7 +44,7 @@ export const volunteerCampaigns: VolunteerCampaign[] = [
     commitment: "3–6 hours/day during DIW week",
     impact: "Reaches 500+ non-Muslim students annually and generates meaningful conversations",
     colour: "rgba(99,91,255,0.1)",
-    icon: "🤝",
+    icon: "handshake",
   },
   {
     id: "charity-week",
@@ -55,7 +57,7 @@ export const volunteerCampaigns: VolunteerCampaign[] = [
     commitment: "5–10 hours during Charity Week",
     impact: "Part of the national campaign that raises millions annually for humanitarian causes",
     colour: "rgba(52,211,153,0.1)",
-    icon: "🌍",
+    icon: "globe",
   },
 ];
 

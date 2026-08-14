@@ -6,6 +6,7 @@ import { committeeMembers, SECTION_LABELS, SECTION_ORDER } from "@/data/committe
 import { SOCIAL } from "@/lib/social";
 import MemberCard from "@/components/ui/MemberCard";
 import { departments } from "@/data/departments";
+import Icon from "@/components/ui/Icon";
 
 export const metadata: Metadata = { title: "Committee Team", description: "Meet the Aston ISOC 2026/27 committee." };
 
@@ -26,7 +27,7 @@ export default function CommitteePage() {
     .filter(s => s.members.length > 0);
 
   return (
-    <div style={{ minHeight: "100vh", paddingTop: "5rem" }}>
+    <div style={{ minHeight: "100vh" }}>
       <div className="page-hero">
         <div className="container">
           <Breadcrumb crumbs={[{ label: "About", href: "/about" }, { label: "Committee" }]} />
@@ -95,9 +96,10 @@ export default function CommitteePage() {
                   <div style={{ display: "flex", alignItems: "flex-start", gap: "1.25rem", flexWrap: "wrap" }}>
                     <div style={{
                       width: 56, height: 56, borderRadius: "16px", flexShrink: 0,
-                      background: "rgba(216,175,114,0.1)", border: "1px solid rgba(216,175,114,0.25)",
-                      display: "grid", placeItems: "center", fontSize: "1.6rem",
-                    }}>{d.icon}</div>
+                      background: "linear-gradient(135deg, rgba(216,175,114,0.18), rgba(216,175,114,0.05))",
+                      border: "1px solid rgba(216,175,114,0.25)",
+                      display: "grid", placeItems: "center", color: "#d8af72",
+                    }}><Icon name={d.icon} size={24} /></div>
                     <div style={{ flex: 1, minWidth: "min(100%, 280px)" }}>
                       <h3 style={{ fontFamily: PF, fontSize: "1.4rem", fontWeight: 500, color: "#fff", marginBottom: "0.1rem" }}>{d.name}</h3>
                       <p style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#d8af72", marginBottom: "0.85rem" }}>{d.tagline}</p>

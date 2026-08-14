@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
+import Icon from "@/components/ui/Icon";
 import { getEventById, events } from "@/data/events";
 import { SOCIAL } from "@/lib/social";
 
@@ -40,7 +41,10 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
               <p className="text-xs tracking-widest uppercase" style={{ color: "var(--muted-2)", fontFamily: DM }}>
                 {d.toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
               </p>
-              <p className="text-xs mt-0.5" style={{ color: "#d8af72", fontFamily: DM }}>⏰ {event.time}</p>
+              <p className="text-xs mt-0.5" style={{ color: "#d8af72", fontFamily: DM, display: "flex", gap: "0.4rem", alignItems: "center", justifyContent: "center" }}>
+                <Icon name="clock" size={13} style={{ flexShrink: 0 }} />
+                {event.time}
+              </p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2 mb-5">
@@ -50,9 +54,15 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
           </div>
           <h1 style={{ fontFamily: PF, fontSize: "clamp(2rem,4.5vw,3.2rem)", fontWeight: 500, color: "#fff", marginBottom: "1rem", lineHeight: 1.08 }}>{event.title}</h1>
           <span className="gold-rule" />
-          <p className="text-sm mb-2" style={{ color: "var(--muted)", fontFamily: DM }}>📍 {event.location}</p>
+          <p className="text-sm mb-2" style={{ color: "var(--muted)", fontFamily: DM, display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+            <Icon name="pin" size={15} style={{ color: "#d8af72", flexShrink: 0, marginTop: 3 }} />
+            {event.location}
+          </p>
           {event.isRecurring && event.recurringNote && (
-            <p className="text-sm mb-6" style={{ color: "#d8af72", fontFamily: DM }}>🔁 {event.recurringNote}</p>
+            <p className="text-sm mb-6" style={{ color: "#d8af72", fontFamily: DM, display: "flex", gap: "0.5rem", alignItems: "center" }}>
+              <Icon name="repeat" size={15} style={{ flexShrink: 0 }} />
+              {event.recurringNote}
+            </p>
           )}
           <p className="text-base leading-relaxed mb-10" style={{ color: "var(--muted)", fontFamily: DM, lineHeight: 1.85 }}>{event.description}</p>
           <div className="flex gap-3 flex-wrap">

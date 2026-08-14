@@ -3,6 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
+import Icon, { type IconName } from "@/components/ui/Icon";
 import { getFeaturedEvents } from "@/data/events";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
@@ -17,21 +18,21 @@ const HALAL_FOOD = [
   { name: "Birmingham City Centre",type: "Various",           distance: "15 min walk", notes: "Extensive halal dining" },
 ];
 
-const GUIDE = [
-  { icon: "💳", title: "Join ISOC",       desc: "Full year membership via Aston SU",       href: MEMBERSHIP.join,               external: true },
-  { icon: "👩", title: "Sisters WhatsApp",   desc: WHATSAPP.sistersFreshers ? "Sisters Freshers Group" : "Coming Soon",  href: WHATSAPP.sistersFreshers || SOCIAL.instagram, external: true },
-  { icon: "👨", title: "Brothers WhatsApp",  desc: "Brothers Freshers Group 2025/26",          href: WHATSAPP.brothersFreshers,     external: true },
-  { icon: "🕌", title: "Prayer Times",       desc: "Live Birmingham prayer times",             href: "/prayer-times",               external: false },
-  { icon: "📅", title: "Events Calendar",    desc: "What's on this term",                      href: "/events",                     external: false },
-  { icon: "📸", title: "Instagram",          desc: "@astonisoc all the latest",              href: SOCIAL.instagram,              external: true },
+const GUIDE: { icon: IconName; title: string; desc: string; href: string; external: boolean }[] = [
+  { icon: "card",      title: "Join ISOC",          desc: "Full year membership via Aston SU",       href: MEMBERSHIP.join,               external: true },
+  { icon: "users",     title: "Sisters WhatsApp",   desc: WHATSAPP.sistersFreshers ? "Sisters Freshers Group" : "Coming Soon",  href: WHATSAPP.sistersFreshers || SOCIAL.instagram, external: true },
+  { icon: "users",     title: "Brothers WhatsApp",  desc: "Brothers Freshers Group 2025/26",          href: WHATSAPP.brothersFreshers,     external: true },
+  { icon: "mosque",    title: "Prayer Times",       desc: "Live Birmingham prayer times",             href: "/prayer-times",               external: false },
+  { icon: "calendar",  title: "Events Calendar",    desc: "What's on this term",                      href: "/events",                     external: false },
+  { icon: "instagram", title: "Instagram",          desc: "@astonisoc all the latest",              href: SOCIAL.instagram,              external: true },
 ];
 
 export default function FreshersPage() {
   const featuredEvents = getFeaturedEvents();
   return (
-    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
-      <div className="relative overflow-hidden py-20 px-4"
-        style={{ background: "linear-gradient(160deg, rgba(216,175,114,0.07) 0%, rgba(7,17,29,0.98) 60%)" }}>
+    <div style={{ background: "transparent", minHeight: "100vh" }}>
+      <div className="interior-hero"
+        style={{ background: "linear-gradient(160deg, rgba(216,175,114,0.07) 0%, rgba(19,13,40,0.98) 60%)" }}>
         <div className="container relative z-10">
           <Breadcrumb crumbs={[{ label: "Freshers Hub" }]} />
           <p className="eyebrow mb-4">Welcome to Aston</p>
@@ -49,7 +50,7 @@ export default function FreshersPage() {
 
       <div className="container py-16">
         <Reveal>
-          <p className="eyebrow mb-6">Freshers Week 2026</p>
+          <h2 className="eyebrow mb-6">Freshers Week 2026</h2>
           <div className="grid sm:grid-cols-3 gap-4 mb-16">
             {[
               { title: "Freshers Fair Location", desc: "ISOC stall location, stand number and map to follow." },
@@ -70,7 +71,7 @@ export default function FreshersPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
             {GUIDE.map(item => (
               <Link key={item.title} href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined} className="block p-5 card">
-                <span className="text-2xl block mb-3">{item.icon}</span>
+                <span className="icon-badge"><Icon name={item.icon} /></span>
                 <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{item.title}</p>
                 <p className="text-xs" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
               </Link>

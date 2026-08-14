@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import DonationWidget from "@/components/ui/DonationWidget";
 import { getActiveCampaigns } from "@/data/donations";
-import { SOCIAL, DONATIONS } from "@/lib/social";
+import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Donate", description: "Support Aston ISOC one-time, weekly Jumu'ah giving, or monthly supporter programme." };
 

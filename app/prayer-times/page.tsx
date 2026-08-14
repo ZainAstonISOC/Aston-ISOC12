@@ -19,7 +19,7 @@ export default async function PrayerTimesPage() {
   const times = await fetchLivePrayerTimes();
 
   return (
-    <div style={{ minHeight: "100vh", paddingTop: "5rem" }}>
+    <div style={{ minHeight: "100vh" }}>
       <div className="page-hero">
         <div className="container">
           <Breadcrumb crumbs={[{ label: "Prayer Times" }]} />
@@ -35,7 +35,7 @@ export default async function PrayerTimesPage() {
         <div className="container">
           <Reveal><PrayerTimesDisplay times={times} /></Reveal>
           <Reveal delay={80}>
-            <p style={{ fontFamily: DM, color: "#8d86a3", textAlign: "center", fontSize: "0.82rem", marginTop: "1rem" }}>
+            <p style={{ fontFamily: DM, color: "var(--muted-2)", textAlign: "center", fontSize: "0.82rem", marginTop: "1rem" }}>
               Calculation method: Muslim World League (MWL). Always confirm with your local mosque for exact congregation times.
             </p>
           </Reveal>
@@ -52,7 +52,7 @@ export default async function PrayerTimesPage() {
                     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
                   </svg>
                 </div>
-                <h3 style={{ fontFamily: PF, color: "#fff" }}>Jumu&apos;ah Prayer</h3>
+                <h2 style={{ fontFamily: PF, color: "#fff", fontSize: "clamp(1.3rem, 2.4vw, 1.7rem)" }}>Jumu&apos;ah Prayer</h2>
                 <p style={{ fontFamily: DM, marginTop: "0.5rem", marginBottom: "1rem" }}>
                   Friday congregational prayer is held every week during term time at the Aston Students&apos; Union Hall (SU Hall).
                 </p>
@@ -63,12 +63,12 @@ export default async function PrayerTimesPage() {
                     { k: "Prayer",  v: "~14:00 (after khutbah)" },
                     { k: "Sisters", v: "Dedicated section side entrance" },
                   ].map(row => (
-                    <p key={row.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
+                    <p key={row.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted-2)" }}>
                       <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.5rem" }}>{row.k}:</span>{row.v}
                     </p>
                   ))}
                 </div>
-                <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "#8d86a3", marginTop: "1rem" }}>
+                <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)", marginTop: "1rem" }}>
                   Confirm on <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ color: "#d8af72" }}>@astonisoc</a> during exam periods.
                 </p>
               </article>
@@ -81,7 +81,7 @@ export default async function PrayerTimesPage() {
                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
                   </svg>
                 </div>
-                <h3 style={{ fontFamily: PF, color: "#fff" }}>Prayer Room Locations</h3>
+                <h2 style={{ fontFamily: PF, color: "#fff", fontSize: "clamp(1.3rem, 2.4vw, 1.7rem)" }}>Prayer Room Locations</h2>
                 <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.9rem", marginTop: "0.75rem" }}>
                   {[
                     { k: "Brothers Prayer Room", v: "Main Building, MB 163 Back of the Students' Union, Ground Floor" },
@@ -89,7 +89,7 @@ export default async function PrayerTimesPage() {
                     { k: "Wudu",                 v: "Available adjacent to both prayer rooms" },
                     { k: "Open",                 v: "All day during campus opening hours" },
                   ].map(item => (
-                    <li key={item.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "#8d86a3" }}>
+                    <li key={item.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted-2)" }}>
                       <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.4rem" }}>{item.k}:</span>{item.v}
                     </li>
                   ))}
@@ -108,7 +108,7 @@ export default async function PrayerTimesPage() {
             </svg>
           </div>
           <div className="section-head center">
-            <Reveal><p className="eyebrow">Good to know</p></Reveal>
+            <Reveal><h2 className="eyebrow">Good to know</h2></Reveal>
             <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Praying on campus for the first time?</h2></Reveal>
           </div>
           <div className="grid cols-3">

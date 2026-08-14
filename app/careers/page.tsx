@@ -2,140 +2,269 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
-import { PageHeader, CtaBanner } from "@/components/ui/Cards";
+import { CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { getActiveCareers, getFeaturedCareers, CAREER_TYPE_LABELS } from "@/data/careers";
-import { SOCIAL, MEMBERSHIP } from "@/lib/social";
+import OpportunityBoard from "@/components/careers/OpportunityBoard";
+import { getOpportunityBoard, CATEGORY_LABELS, CATEGORY_ORDER } from "@/lib/careers";
+import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
-  title: "Careers & Networking",
-  description: "Internships, placements, graduate programmes, and networking for Muslim students at Aston University.",
+  title: "Careers & Opportunities",
+  description:
+    "Internships, placement years, graduate roles, spring weeks, apprenticeships, Islamic finance and volunteering — searchable and filtered, for Aston ISOC members.",
 };
+
+// Providers cache for an hour; the page follows the same rhythm.
+export const revalidate = 3600;
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
-const TYPE_STYLE: Record<string, React.CSSProperties> = {
-  graduate:    { background: "rgba(99,102,241,0.1)",  color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.25)" },
-  placement:   { background: "rgba(167,139,250,0.1)", color: "#c4b5fd", border: "1px solid rgba(167,139,250,0.2)" },
-  internship:  { background: "rgba(52,211,153,0.1)",  color: "#6ee7b7", border: "1px solid rgba(52,211,153,0.2)" },
-  networking:  { background: "rgba(251,191,36,0.1)",  color: "#fde68a", border: "1px solid rgba(251,191,36,0.2)" },
-  workshop:    { background: "rgba(251,146,60,0.1)",  color: "#fdba74", border: "1px solid rgba(251,146,60,0.2)" },
-  mentoring:   { background: "rgba(216,175,114,0.1)", color: "#d8af72", border: "1px solid rgba(216,175,114,0.2)" },
-};
+export default async function CareersPage() {
+  const { opportunities, sources } = await getOpportunityBoard();
 
-export default function CareersPage() {
-  const active   = getActiveCareers();
-  const featured = getFeaturedCareers();
+  const liveSources = sources.filter(s => s.enabled && !s.error);
+  const categoriesCovered = new Set(opportunities.map(o => o.category));
+  const featuredCount = opportunities.filter(o => o.featured).length;
 
   return (
     <PageShell>
-      <Breadcrumb crumbs={[{ label: "Careers & Networking" }]} />
-      <PageHeader label="Opportunities"
-        title="Careers & Networking"
-        subtitle="Internships, placements, graduate programmes, and networking events curated for Aston ISOC members." />
+      <Breadcrumb crumbs={[{ label: "Careers & Opportunities" }]} />
 
-      {/* Featured */}
-      {featured.length > 0 && (
-        <Reveal>
-          <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>Featured Opportunities</p>
-          <div className="grid cols-3" style={{ marginBottom: "3.5rem" }}>
-            {featured.map((job, i) => (
-              <Reveal key={job.id} delay={i * 80}>
-                <div className="card" style={{ height: "100%" }}>
-                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-                    <span className="badge" style={TYPE_STYLE[job.type] ?? {}}>
-                      {CAREER_TYPE_LABELS[job.type]}
-                    </span>
-                    {job.islamicFinance && (
-                      <span className="badge badge-gold">Islamic Finance</span>
-                    )}
-                  </div>
-                  <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.15rem", marginBottom: "0.3rem" }}>{job.title}</h3>
-                  <p style={{ fontFamily: DM, fontSize: "0.8rem", fontWeight: 600, color: "var(--gold)", marginBottom: "0.75rem" }}>{job.organisation}</p>
-                  <p style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.75, marginBottom: "1.2rem", flex: 1 }}>{job.description}</p>
-                  {job.deadline && (
-                    <p style={{ fontFamily: DM, fontSize: "0.75rem", color: "var(--muted-2)", marginBottom: "1rem" }}>
-                      Deadline: {job.deadline}
-                    </p>
-                  )}
-                  {job.applyUrl && (
-                    <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold" style={{ fontSize: "0.78rem", padding: "0.65rem 1.2rem" }}>
-                      Learn More
-                    </a>
-                  )}
-                </div>
-              </Reveal>
-            ))}
+      {/* ── Hero: headline left, live counters right ───────────────────────── */}
+      <Reveal>
+        <div className="careers-hero">
+          <div>
+            <p className="eyebrow">Opportunities</p>
+            <h1 style={{ fontFamily: PF, fontWeight: 600, color: "#fff", maxWidth: "13ch" }}>
+              Careers, without the <em style={{ color: "var(--gold)", fontStyle: "italic" }}>guesswork</em>.
+            </h1>
+            <div className="gold-rule" />
+            <p className="lede" style={{ fontFamily: DM }}>
+              Spring weeks, placements, graduate schemes, apprenticeships and Islamic finance
+              routes — gathered in one place, searchable, and checked by the committee rather
+              than scraped and forgotten.
+            </p>
           </div>
-        </Reveal>
-      )}
 
-      {/* All active */}
-      <Reveal delay={80}>
-        <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>All Opportunities</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "3.5rem" }}>
-          {active.map((job, i) => (
-            <Reveal key={job.id} delay={i * 40}>
-              <div className="card" style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap" }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.6rem" }}>
-                    <span className="badge" style={TYPE_STYLE[job.type] ?? {}}>
-                      {CAREER_TYPE_LABELS[job.type]}
-                    </span>
-                    <span className="badge badge-muted">{job.sector}</span>
-                    {job.islamicFinance && <span className="badge badge-gold">Islamic Finance</span>}
-                  </div>
-                  <h3 style={{ fontFamily: PF, fontSize: "1.1rem", color: "#fff", marginBottom: "0.2rem" }}>{job.title}</h3>
-                  <p style={{ fontFamily: DM, fontSize: "0.8rem", fontWeight: 600, color: "var(--gold)", marginBottom: "0.5rem" }}>{job.organisation}</p>
-                  <p style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.7 }}>{job.description}</p>
-                  {job.deadline && (
-                    <p style={{ fontFamily: DM, fontSize: "0.75rem", color: "var(--muted-2)", marginTop: "0.5rem" }}>Deadline: {job.deadline}</p>
-                  )}
-                </div>
-                {job.applyUrl && (
-                  <a href={job.applyUrl} target="_blank" rel="noopener noreferrer"
-                    className="btn btn-outline-gold" style={{ fontSize: "0.75rem", padding: "0.65rem 1.2rem", flexShrink: 0 }}>
-                    Apply
-                  </a>
-                )}
+          <div className="careers-hero__stats">
+            {[
+              { n: String(opportunities.length), l: "Opportunities listed" },
+              { n: String(categoriesCovered.size), l: "Categories covered" },
+              { n: String(featuredCount), l: "Committee picks" },
+            ].map(s => (
+              <div key={s.l}>
+                <b style={{ fontFamily: PF, fontSize: "clamp(1.9rem, 3vw, 2.5rem)", color: "#fff", display: "block", lineHeight: 1 }}>
+                  {s.n}
+                </b>
+                <span
+                  style={{
+                    fontFamily: DM,
+                    fontSize: "0.74rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--muted-2)",
+                  }}
+                >
+                  {s.l}
+                </span>
               </div>
-            </Reveal>
-          ))}
+            ))}
+            <p
+              style={{
+                fontFamily: DM,
+                fontSize: "0.76rem",
+                color: "var(--muted-2)",
+                borderTop: "1px solid var(--line-soft)",
+                paddingTop: "0.9rem",
+                lineHeight: 1.6,
+              }}
+            >
+              Sources: {liveSources.map(s => s.label).join(", ")}. Updated hourly.
+            </p>
+          </div>
         </div>
       </Reveal>
 
-      {/* Tips */}
+      {/* ── The board ──────────────────────────────────────────────────────── */}
+      <Reveal delay={60}>
+        <div style={{ marginTop: "clamp(2.5rem, 6vw, 4rem)" }}>
+          <OpportunityBoard opportunities={opportunities} />
+        </div>
+      </Reveal>
+
+      {/* ── What we track — asymmetric editorial band ───────────────────────── */}
+      <Reveal delay={80}>
+        <section style={{ marginTop: "clamp(3.5rem, 8vw, 6rem)" }}>
+          <div className="careers-cover">
+            <div>
+              <p className="eyebrow">What we track</p>
+              <h2 style={{ fontFamily: PF, color: "#fff", maxWidth: "15ch", marginBottom: "1rem" }}>
+                Ten routes into work, not one
+              </h2>
+              <p style={{ fontFamily: DM, fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, maxWidth: "48ch" }}>
+                Most students only hear about graduate schemes, and hear about them too late.
+                First-year spring weeks, insight days and degree apprenticeships close months
+                before finalists start looking — so the board covers the whole ladder.
+              </p>
+            </div>
+            <ul className="careers-cover__list">
+              {CATEGORY_ORDER.map(c => (
+                <li key={c} className={categoriesCovered.has(c) ? "is-live" : ""}>
+                  <span>{CATEGORY_LABELS[c]}</span>
+                  {categoriesCovered.has(c) && (
+                    <span className="careers-cover__count">
+                      {opportunities.filter(o => o.category === c).length}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </Reveal>
+
+      {/* ── Advice — staggered, deliberately not a 3-up card row ────────────── */}
       <Reveal delay={100}>
-        <div className="card" style={{ marginBottom: "3rem" }}>
-          <p className="eyebrow">Career Tips</p>
-          <h3 style={{ fontFamily: PF, color: "#fff", marginBottom: "1.2rem" }}>Making the most of your time at Aston</h3>
-          <div className="grid cols-3">
+        <section style={{ marginTop: "clamp(3.5rem, 8vw, 5.5rem)" }}>
+          <p className="eyebrow">Getting ahead</p>
+          <h2 style={{ fontFamily: PF, color: "#fff", maxWidth: "18ch", marginBottom: "2.5rem" }}>
+            Three things that change the outcome
+          </h2>
+          <div className="careers-advice">
             {[
-              { n: "01", t: "Join the mentoring programme", d: "Get matched with a senior student or alumni in your field through ISOC." },
-              { n: "02", t: "LinkedIn from year one", d: "Build your professional network early. Connect with committee members and alumni." },
-              { n: "03", t: "Islamic finance is growing", d: "The UK Islamic finance sector is expanding. ISOC can connect you with organisations." },
-            ].map(tip => (
-              <div key={tip.n}>
-                <p style={{ fontFamily: PF, fontSize: "2.5rem", color: "rgba(216,175,114,0.2)", lineHeight: 1, marginBottom: "0.5rem" }}>{tip.n}</p>
-                <h4 style={{ fontFamily: PF, color: "#fff", fontSize: "1.05rem", marginBottom: "0.4rem" }}>{tip.t}</h4>
-                <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.7 }}>{tip.d}</p>
-              </div>
+              {
+                n: "01",
+                t: "Apply a year earlier than feels right",
+                d: "Spring weeks are for first years. Summer internships are for penultimate years. If you wait until you feel ready, the window has usually closed.",
+              },
+              {
+                n: "02",
+                t: "Use the schemes built for you",
+                d: "SEO London and upReach exist specifically to get students from under-represented backgrounds into competitive industries. They are free, and they work.",
+              },
+              {
+                n: "03",
+                t: "Ask the person two years ahead of you",
+                d: "The ISOC mentoring programme pairs you with someone who has already done the application you are about to start. It costs nothing but a message.",
+              },
+            ].map((tip, i) => (
+              <article key={tip.n} style={{ marginTop: `${i * 1.6}rem` }}>
+                <p style={{ fontFamily: PF, fontSize: "2.6rem", lineHeight: 1, color: "rgba(216,175,114,0.22)", marginBottom: "0.7rem" }}>
+                  {tip.n}
+                </p>
+                <h3 style={{ fontFamily: PF, fontSize: "1.12rem", color: "#fff", marginBottom: "0.5rem", lineHeight: 1.35 }}>
+                  {tip.t}
+                </h3>
+                <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted)", lineHeight: 1.75 }}>{tip.d}</p>
+              </article>
             ))}
           </div>
-        </div>
+        </section>
+      </Reveal>
+
+      {/* ── Honesty note ───────────────────────────────────────────────────── */}
+      <Reveal delay={110}>
+        <p
+          style={{
+            fontFamily: DM,
+            fontSize: "0.8rem",
+            color: "var(--muted-2)",
+            lineHeight: 1.7,
+            marginTop: "clamp(2.5rem, 6vw, 3.5rem)",
+            paddingTop: "1.25rem",
+            borderTop: "1px solid var(--line-soft)",
+            maxWidth: "70ch",
+          }}
+        >
+          Aston ISOC is not the employer for any role listed here and does not handle applications.
+          Always check closing dates and eligibility on the employer&apos;s own page — schemes change
+          their dates year to year. Spotted something out of date?{" "}
+          <Link href="/feedback" style={{ color: "var(--gold)" }}>
+            Tell us
+          </Link>
+          .
+        </p>
       </Reveal>
 
       <Reveal>
-        <CtaBanner
-          title="Have an opportunity to share?"
-          description="If you know of a placement, internship, or networking event that would benefit Aston ISOC members, let us know and we will add it here."
-          primaryLabel="Contact us on Instagram"
-          primaryHref={SOCIAL.instagram}
-          secondaryLabel="Join ISOC"
-          secondaryHref={MEMBERSHIP.join}
-        />
+        <div style={{ marginTop: "clamp(3rem, 7vw, 4.5rem)" }}>
+          <CtaBanner
+            title="Know an opportunity we're missing?"
+            description="If your employer runs a placement, spring week or graduate scheme, send it over and we will add it to the board for the next student who looks."
+            primaryLabel="Suggest an opportunity"
+            primaryHref="/feedback"
+            secondaryLabel="Message us on Instagram"
+            secondaryHref={SOCIAL.instagram}
+          />
+        </div>
       </Reveal>
+
+      <style>{`
+        .careers-hero {
+          display: grid;
+          grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+          gap: clamp(2rem, 6vw, 4.5rem);
+          align-items: start;
+        }
+        .careers-hero__stats {
+          display: flex;
+          flex-direction: column;
+          gap: 1.4rem;
+          border-left: 1px solid var(--line);
+          padding-left: clamp(1.25rem, 3vw, 2rem);
+          margin-top: 0.5rem;
+        }
+
+        .careers-cover {
+          display: grid;
+          grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+          gap: clamp(2rem, 5vw, 4rem);
+          align-items: center;
+          padding: clamp(1.9rem, 4vw, 3rem);
+          border: 1px solid var(--line);
+          border-radius: var(--radius);
+          background: linear-gradient(150deg, rgba(216,175,114,0.06), rgba(19,13,40,0.45));
+        }
+        .careers-cover__list { list-style: none; padding: 0; margin: 0; }
+        .careers-cover__list li {
+          display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+          padding: 0.62rem 0;
+          border-bottom: 1px solid var(--line-soft);
+          font-family: ${DM}; font-size: 0.9rem; color: var(--muted-2);
+        }
+        .careers-cover__list li:last-child { border-bottom: none; }
+        .careers-cover__list li.is-live { color: var(--text); }
+        .careers-cover__count {
+          font-family: ${PF}; font-size: 0.95rem; color: var(--gold);
+        }
+
+        .careers-advice {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: clamp(1.75rem, 4vw, 3rem);
+          align-items: start;
+        }
+
+        @media (max-width: 900px) {
+          .careers-hero { grid-template-columns: minmax(0, 1fr); }
+          .careers-hero__stats {
+            border-left: none;
+            border-top: 1px solid var(--line);
+            padding-left: 0;
+            padding-top: 1.75rem;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 2rem;
+          }
+          .careers-hero__stats p { flex-basis: 100%; }
+          .careers-cover { grid-template-columns: minmax(0, 1fr); }
+        }
+        @media (max-width: 760px) {
+          .careers-advice { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+          .careers-advice > * { margin-top: 0 !important; }
+        }
+      `}</style>
     </PageShell>
   );
 }

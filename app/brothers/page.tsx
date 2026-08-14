@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { getBrotherEvents } from "@/data/events";
-import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
+import Icon, { type IconName } from "@/components/ui/Icon";
+import { WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Brothers' Section" };
 
-const PROGRAMMES = [
-  { icon: "⚽", title: "Football & Sports", desc: "Weekly football sessions, inter-university tournaments, and gym meetups throughout the year." },
-  { icon: "📖", title: "Brothers' Halaqa", desc: "Weekly study circle Seerah, current affairs, and Qur'an. Every Monday at 18:00." },
-  { icon: "🎙️", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today faith, identity, and purpose." },
-  { icon: "💼", title: "Careers Network", desc: "Connecting brothers with Muslim professionals, employers, and industry mentors." },
-  { icon: "🤝", title: "Mentorship", desc: "Senior brothers mentor fresher students through their first year at Aston." },
-  { icon: "📱", title: "Brothers' WhatsApp", desc: "Private brotherhood group for announcements, community and organising meetups." },
+const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
+  { icon: "football", title: "Football & Sports", desc: "Weekly football sessions, inter-university tournaments, and gym meetups throughout the year." },
+  { icon: "book", title: "Brothers' Halaqa", desc: "Weekly study circle Seerah, current affairs, and Qur'an. Every Monday at 18:00." },
+  { icon: "mic", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today faith, identity, and purpose." },
+  { icon: "briefcase", title: "Careers Network", desc: "Connecting brothers with Muslim professionals, employers, and industry mentors." },
+  { icon: "handshake", title: "Mentorship", desc: "Senior brothers mentor fresher students through their first year at Aston." },
+  { icon: "phone", title: "Brothers' WhatsApp", desc: "Private brotherhood group for announcements, community and organising meetups." },
 ];
 
 export default function BrothersPage() {
   const brothersEvents = getBrotherEvents().slice(0, 3);
   return (
-    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: "5rem" }}>
-      <div className="relative overflow-hidden py-20 px-4" style={{ background: "linear-gradient(160deg, rgba(99,102,241,0.06) 0%, rgba(7,17,29,0.98) 60%)" }}>
+    <div style={{ background: "transparent", minHeight: "100vh" }}>
+      <div className="interior-hero" style={{ background: "linear-gradient(160deg, rgba(99,102,241,0.06) 0%, rgba(19,13,40,0.98) 60%)" }}>
         <div className="container relative z-10">
           <Breadcrumb crumbs={[{ label: "Brothers' Section" }]} />
           <p className="eyebrow mb-4" style={{ color: "rgba(165,180,252,0.7)" }}>For Brothers</p>
@@ -41,11 +41,13 @@ export default function BrothersPage() {
       </div>
       <div className="container py-16">
         <Reveal>
-          <p className="eyebrow mb-6">Programmes</p>
+          <h2 className="eyebrow mb-6">Programmes</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
             {PROGRAMMES.map((item) => (
               <div key={item.title} className="card p-6">
-                <span className="text-2xl block mb-3">{item.icon}</span>
+                <span className="icon-badge" style={{ color: "#a5b4fc", borderColor: "rgba(129,140,248,0.28)", background: "linear-gradient(135deg, rgba(129,140,248,0.16), rgba(129,140,248,0.04))" }}>
+                  <Icon name={item.icon} />
+                </span>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", color: "#fff", marginBottom: "0.5rem" }}>{item.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{item.desc}</p>
               </div>

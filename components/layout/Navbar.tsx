@@ -16,7 +16,9 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
 
-  // Scroll listener
+  // Scroll listener. The initial call syncs state with a scroll position that
+  // may already be non-zero (deep link, refresh mid-page, back navigation) —
+  // window.scrollY is not readable during render, so it has to happen here.
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 24);
     h();
@@ -24,8 +26,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
-  // Close everything on route change
+  // Close everything on route change. Resetting here rather than in each link's
+  // handler keeps the menus closed for back/forward and programmatic navigation too.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDropdown(null);
     setMobileOpen(false);
     setOpenSection(null);
@@ -381,7 +385,7 @@ export default function Navbar() {
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "0.95rem",
                       fontWeight: active || open ? 600 : 400,
-                      color: active || open ? "#d8af72" : "#e8e3f0",
+                      color: active || open ? "#d8af72" : "var(--text)",
                       background: open ? "rgba(216,175,114,0.08)" : "transparent",
                       border: "none", cursor: "pointer", textAlign: "left",
                       borderBottom: "1px solid rgba(255,255,255,0.04)",
@@ -405,7 +409,7 @@ export default function Navbar() {
                       fontFamily: "'DM Sans', sans-serif",
                       fontSize: "0.95rem",
                       fontWeight: active ? 600 : 400,
-                      color: active ? "#d8af72" : "#e8e3f0",
+                      color: active ? "#d8af72" : "var(--text)",
                       background: active ? "rgba(216,175,114,0.1)" : "transparent",
                       textDecoration: "none",
                       borderBottom: "1px solid rgba(255,255,255,0.04)",

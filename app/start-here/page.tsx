@@ -4,15 +4,16 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
+import Icon, { type IconName } from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Start Here", description: "New to Aston ISOC? New Muslim? Fresher? This is your starting point." };
 
-const PATHWAYS = [
-  { icon: "🌱", title: "I'm a Fresher", desc: "Just arrived at Aston? Find your community, prayer facilities, halal food, and your first events.", href: "/freshers", cta: "Freshers Hub →", accent: "rgba(216,175,114,0.12)", border: "rgba(216,175,114,0.25)" },
-  { icon: "🕌", title: "Returning Muslim", desc: "Reconnect with your faith and community through halaqas, events, and WhatsApp groups.", href: "/events", cta: "See Events →", accent: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)" },
-  { icon: "🌙", title: "New Muslim", desc: "Alhamdulillah. We have dedicated support, resources, and a welcoming community for you.", href: "/resources", cta: "New Muslim Resources →", accent: "rgba(52,211,153,0.08)", border: "rgba(52,211,153,0.2)" },
-  { icon: "🤝", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn no pressure.", href: "/resources", cta: "Explore Resources →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)" },
+const PATHWAYS: { icon: IconName; title: string; desc: string; href: string; cta: string; accent: string; border: string; tint: string }[] = [
+  { icon: "seedling", title: "I'm a Fresher", desc: "Just arrived at Aston? Find your community, prayer facilities, halal food, and your first events.", href: "/freshers", cta: "Freshers Hub →", accent: "rgba(216,175,114,0.12)", border: "rgba(216,175,114,0.25)", tint: "#d8af72" },
+  { icon: "mosque", title: "Returning Muslim", desc: "Reconnect with your faith and community through halaqas, events, and WhatsApp groups.", href: "/events", cta: "See Events →", accent: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)", tint: "#a5b4fc" },
+  { icon: "moon", title: "New Muslim", desc: "Alhamdulillah. We have dedicated support, resources, and a welcoming community for you.", href: "/resources", cta: "New Muslim Resources →", accent: "rgba(52,211,153,0.08)", border: "rgba(52,211,153,0.2)", tint: "#6ee7b7" },
+  { icon: "handshake", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn no pressure.", href: "/resources", cta: "Explore Resources →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)", tint: "#ddd6fe" },
 ];
 
 const STEPS = [
@@ -37,11 +38,13 @@ export default function StartHerePage() {
       <PageHeader label="Welcome" title="Start Here" subtitle="Whether you're a fresher, new Muslim, returning to faith, or simply curious this is your starting point." />
 
       <Reveal>
-        <p className="eyebrow mb-6">Where Do You Want to Start?</p>
+        <h2 className="eyebrow mb-6">Where Do You Want to Start?</h2>
         <div className="grid sm:grid-cols-2 gap-4 mb-20">
           {PATHWAYS.map(p => (
-            <div key={p.title} className="p-7" style={{ background: p.accent, border: `1px solid ${p.border}`, borderRadius: "1.25rem" }}>
-              <span className="text-3xl block mb-4">{p.icon}</span>
+            <div key={p.title} className="p-7" style={{ background: p.accent, border: `1px solid ${p.border}`, borderRadius: "var(--radius)" }}>
+              <span className="icon-badge" style={{ color: p.tint, borderColor: p.border, background: `linear-gradient(135deg, ${p.accent}, transparent)` }}>
+                <Icon name={p.icon} />
+              </span>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.35rem", color: "#fff", marginBottom: "0.5rem" }}>{p.title}</h3>
               <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>{p.desc}</p>
               <Link href={p.href} className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{p.cta}</Link>

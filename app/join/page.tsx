@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
@@ -38,7 +37,11 @@ export default function JoinPage() {
           <div className="absolute inset-0 geo-pattern opacity-20" />
           <div className="relative z-10">
             <p className="eyebrow mb-4">How to Join</p>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(4rem,10vw,7rem)", fontWeight: 300, color: "#d8af72", lineHeight: 1 }}>£5</div>
+            {/* The page had no h1 at all — the £5 figure carried it visually. */}
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 4vw, 2.6rem)", fontWeight: 600, color: "#fff", marginBottom: "0.5rem" }}>
+              Join Aston ISOC
+            </h1>
+            <div aria-hidden="true" style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(4rem,10vw,7rem)", fontWeight: 300, color: "#d8af72", lineHeight: 1 }}>£5</div>
             <p className="mt-2 mb-2 text-sm tracking-widest uppercase" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>Full Academic Year</p><p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: "var(--muted)", marginBottom: "1.5rem", maxWidth: "36ch", margin: "0.5rem auto 1.5rem" }}>Registration is just £5 through Aston SU, a one-off admin fee that covers the whole year.</p>
             <p className="mb-6 text-sm" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", maxWidth: "34ch", margin: "0 auto 1.5rem" }}>Membership is purchased through Aston SU. Buying your membership is how you officially join ISOC.</p>
             <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Buy Membership Join ISOC →</a>
@@ -48,7 +51,7 @@ export default function JoinPage() {
 
       <Reveal delay={100}>
         <div className="mb-20">
-          <p className="eyebrow mb-6">What&apos;s Included</p>
+          <h2 className="eyebrow mb-6">What&apos;s Included</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {BENEFITS.map(b => (
               <div key={b} className="flex items-start gap-3 p-4 card">
@@ -73,7 +76,7 @@ export default function JoinPage() {
       </Reveal>
 
       <Reveal delay={140}>
-        <p className="eyebrow mb-8">How to Join</p>
+        <h2 className="eyebrow mb-8">How to Join</h2>
         <div className="space-y-4 mb-20">
           {STEPS.map(s => (
             <div key={s.n} className="flex items-start gap-6 p-6 card">

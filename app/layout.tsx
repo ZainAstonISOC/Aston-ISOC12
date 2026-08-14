@@ -17,7 +17,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // `suppressHydrationWarning`: the head script below stamps data-isoc-loaded
+    // on <html> before React hydrates, which is a deliberate mismatch.
+    // `data-scroll-behavior`: opts smooth scrolling out of route transitions.
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Flag returning-this-session visitors before paint so the intro loader is hidden instantly (no flash) */}
         <script

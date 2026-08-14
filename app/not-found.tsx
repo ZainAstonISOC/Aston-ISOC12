@@ -14,7 +14,7 @@ export default function NotFound() {
       <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2rem,5vw,3rem)", fontWeight: 300, color: "#fff", marginBottom: "1rem" }}>
         Page Not Found
       </h1>
-      <p className="mb-10 max-w-sm" style={{ color: "#9CA3AF", fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", lineHeight: 1.7 }}>
+      <p className="mb-10 max-w-sm" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", lineHeight: 1.7 }}>
         The page you&apos;re looking for doesn&apos;t exist. Let&apos;s get you back on track.
       </p>
       <div className="flex gap-3 flex-wrap justify-center">

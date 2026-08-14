@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { PrayerTime } from "@/types";
 
-const PRAYER_NAMES = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
 const ARABIC = ["الفجر","الشروق","الظهر","العصر","المغرب","العشاء"];
 
 function pad(n: number) { return String(n).padStart(2,"0"); }
@@ -28,7 +27,7 @@ function getCurrentPrayerIndex(times: PrayerTime[]): number {
 function getCountdown(nextTime: string): string {
   const now = new Date();
   const [h, m] = nextTime.split(":").map(Number);
-  let target = new Date();
+  const target = new Date();
   target.setHours(h, m, 0, 0);
   if (target <= now) target.setDate(target.getDate() + 1);
   const diff = target.getTime() - now.getTime();
@@ -68,12 +67,12 @@ export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] }) {
       <div className="prayer-board__top">
         <div>
           <span className="pill live">Live · Birmingham</span>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", color: "#8d86a3", marginTop: "0.5rem" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", color: "var(--muted-2)", marginTop: "0.5rem" }}>
             Auto-updates daily · Muslim World League method
           </p>
         </div>
         <div style={{ textAlign: "right" }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "#8d86a3", marginBottom: "0.3rem" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-2)", marginBottom: "0.3rem" }}>
             Next prayer
           </p>
           <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#d8af72", fontWeight: 600 }}>
@@ -96,7 +95,7 @@ export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] }) {
             <div className="ar">{ARABIC[i]}</div>
             <div className="time">{p.time}</div>
             {p.iqamaTime && p.name !== "Sunrise" && (
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: i === nextIdx ? "rgba(216,175,114,0.7)" : "#6B6B80", marginTop: "0.3rem" }}>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: i === nextIdx ? "rgba(216,175,114,0.7)" : "var(--muted-2)", marginTop: "0.3rem" }}>
                 {p.iqamaTime}
               </div>
             )}

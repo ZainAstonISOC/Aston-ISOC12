@@ -38,15 +38,15 @@ export default function Footer() {
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#d8af72" }}>Islamic Society</span>
               </div>
             </Link>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: "#8d86a3", maxWidth: "28ch", lineHeight: 1.7 }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: "var(--muted-2)", maxWidth: "28ch", lineHeight: 1.7 }}>
               A home away from home for every Muslim student at Aston University, Birmingham.
             </p>
             <div style={{ display: "flex", gap: "0.6rem", marginTop: "1.3rem" }}>
               {socials.map(s => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                  style={{ display: "grid", placeItems: "center", width: 40, height: 40, borderRadius: 11, border: "1px solid rgba(216,175,114,0.15)", color: "#8d86a3", transition: "all 0.18s" }}
+                  style={{ display: "grid", placeItems: "center", width: 40, height: 40, borderRadius: 11, border: "1px solid rgba(216,175,114,0.15)", color: "var(--muted-2)", transition: "all 0.18s" }}
                   onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.color="#d8af72"; el.style.borderColor="rgba(216,175,114,0.5)"; el.style.transform="translateY(-2px)"; }}
-                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.color="#8d86a3"; el.style.borderColor="rgba(216,175,114,0.15)"; el.style.transform="translateY(0)"; }}>
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.color="var(--muted-2)"; el.style.borderColor="rgba(216,175,114,0.15)"; el.style.transform="translateY(0)"; }}>
                   {s.svg}
                 </a>
               ))}
@@ -55,9 +55,10 @@ export default function Footer() {
 
           {Object.entries(footerLinks).map(([group, links]) => (
             <div key={group}>
-              <h4 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#d8af72", marginBottom: "1.2rem", fontWeight: 600 }}>
+              {/* h3, not h4 — pages end on h2 or h3, so h4 here skipped a level */}
+              <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "#d8af72", marginBottom: "1.2rem", fontWeight: 600 }}>
                 {group}
-              </h4>
+              </h3>
               <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.7rem" }}>
                 {links.map(link => (
                   <li key={link.href}>
@@ -75,12 +76,12 @@ export default function Footer() {
           <p style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic", color: "#d8af72", opacity: 0.55, fontSize: "0.95rem" }}>
             &ldquo;And hold firmly to the rope of Allah all together and do not become divided.&rdquo;
           </p>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#8d86a3", marginTop: "0.4rem" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted-2)", marginTop: "0.4rem" }}>
             Surah Al-Imran · 3:103
           </p>
         </div>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center", fontSize: "0.85rem", color: "#8d86a3", fontFamily: "'DM Sans', sans-serif" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center", fontSize: "0.85rem", color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>
           <span>© {new Date().getFullYear()} Aston University Islamic Society. All rights reserved.</span>
           <span>Affiliated with Aston Students&apos; Union · Built with iḥsān</span>
         </div>

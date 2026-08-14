@@ -15,6 +15,16 @@ export const WHATSAPP = {
   community:        "https://linktr.ee/astonisoc",
 } as const;
 
+/**
+ * TellSafe — anonymous community feedback platform.
+ * `url` is the org page members submit through; change the slug here if the
+ * society moves to its own TellSafe organisation and everything follows.
+ */
+export const TELLSAFE = {
+  url:    "https://www.tellsafe.app/feedback",
+  origin: "https://www.tellsafe.app",
+} as const;
+
 export const MEMBERSHIP = {
   join:         "https://www.astonsu.com/society/isoc/",
   discountCard: "https://www.notion.so/Aston-ISoc-Discount-Card-25-26-26a5bc9019fd8036b676d31825b1cdb6",

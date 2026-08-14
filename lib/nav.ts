@@ -31,7 +31,7 @@ export const navItems: NavItem[] = [
     label: "Learn", href: "/resources", children: [
       { label: "Resources", href: "/resources" },
       { label: "Lectures & Podcasts", href: "/lectures" },
-      { label: "Careers", href: "/careers" },
+      { label: "Careers & Opportunities", href: "/careers" },
       { label: "Zakat Calculator", href: "/zakat" },
     ]
   },
@@ -41,7 +41,12 @@ export const navItems: NavItem[] = [
       { label: "Donate", href: "/donate" },
     ]
   },
-  { label: "Contact", href: "/contact" },
+  {
+    label: "Contact", href: "/contact", children: [
+      { label: "Contact Us", href: "/contact" },
+      { label: "Share Feedback", href: "/feedback" },
+    ]
+  },
 ];
 
 export const footerLinks = {
@@ -58,7 +63,7 @@ export const footerLinks = {
     { label: "Prayer Times", href: "/prayer-times" },
     { label: "Lectures & Podcasts", href: "/lectures" },
     { label: "Resources", href: "/resources" },
-    { label: "Careers & Networking", href: "/careers" },
+    { label: "Careers & Opportunities", href: "/careers" },
   ],
   "Get Involved": [
     { label: "Events", href: "/events" },
@@ -68,6 +73,7 @@ export const footerLinks = {
   ],
   Connect: [
     { label: "Contact Us", href: "/contact" },
+    { label: "Share Feedback", href: "/feedback" },
     { label: "Sponsorships", href: "/sponsors" },
     { label: "Instagram", href: SOCIAL.instagram, external: true },
     { label: "LinkedIn", href: SOCIAL.linkedin, external: true },
