@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath, updateTag } from "next/cache";
 import {
   SESSION_COOKIE,
-  adminConfigured,
+  adminConfigProblem,
   createSessionToken,
   passwordMatches,
   requireAdmin,
@@ -37,9 +37,8 @@ async function clientIp(): Promise<string> {
 }
 
 export async function login(_prev: LoginState, form: FormData): Promise<LoginState> {
-  if (!adminConfigured()) {
-    return { error: "The admin area isn't set up yet. ADMIN_PASSWORD and ADMIN_SESSION_SECRET need adding in Vercel." };
-  }
+  const configProblem = adminConfigProblem();
+  if (configProblem) return { error: configProblem };
 
   const key = `login:${await clientIp()}`;
   const attempts = await hitCounter(key, WINDOW_SECONDS);

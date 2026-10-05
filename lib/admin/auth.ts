@@ -31,6 +31,23 @@ export function adminConfigured(): boolean {
   return config() !== null;
 }
 
+/**
+ * Why the admin area is unavailable, in words a committee member can act on.
+ * Reports only whether each variable is present and the secret's length —
+ * never any value. Returns null when everything is in order.
+ */
+export function adminConfigProblem(): string | null {
+  const password = process.env.ADMIN_PASSWORD;
+  const secret = process.env.ADMIN_SESSION_SECRET;
+  const where = process.env.VERCEL_ENV ? ` (this is the ${process.env.VERCEL_ENV} environment)` : "";
+  const problems: string[] = [];
+  if (!password) problems.push("ADMIN_PASSWORD is missing");
+  if (!secret) problems.push("ADMIN_SESSION_SECRET is missing");
+  else if (secret.length < 32) problems.push(`ADMIN_SESSION_SECRET is only ${secret.length} characters — it needs at least 32 (use: openssl rand -hex 32)`);
+  if (!problems.length) return null;
+  return `The admin area isn't set up yet${where}: ${problems.join("; ")}. In Vercel → Settings → Environment Variables, make sure both are ticked for this environment, then redeploy — variables only apply to deployments made after they're saved.`;
+}
+
 const sha256 = (s: string) => createHash("sha256").update(s).digest();
 const b64url = (b: Buffer | string) => Buffer.from(b).toString("base64url");
 
