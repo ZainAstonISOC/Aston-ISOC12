@@ -23,6 +23,7 @@ import { EVENTS_TAG } from "@/lib/events";
 import { getBuiltinEvents } from "@/data/events";
 import { JUMUAH_TAG, MAX_JAMAATS, getJumuah } from "@/lib/jumuah";
 import { saveSetting } from "@/lib/events/store";
+import { LumaImportError, fetchLumaEvent } from "@/lib/luma";
 
 /* ── Login / logout ───────────────────────────────────────────────────── */
 
@@ -199,4 +200,26 @@ export async function saveJumuah(_prev: JumuahFormState, form: FormData): Promis
   updateTag(JUMUAH_TAG);
   refreshEventPages();
   redirect("/admin?jumuah=saved");
+}
+
+/* ── Import from Luma ─────────────────────────────────────────────────── */
+
+export interface LumaImportState {
+  error?: string;
+  values?: EventFormValues;
+  /** Changes on every successful import so the event form remounts with the new values. */
+  stamp?: number;
+}
+
+/** Reads a Luma event page and returns form values. Saves nothing. */
+export async function importFromLuma(_prev: LumaImportState, form: FormData): Promise<LumaImportState> {
+  await requireAdmin();
+  try {
+    const values = await fetchLumaEvent(String(form.get("lumaUrl") ?? ""));
+    return { values, stamp: Date.now() };
+  } catch (err) {
+    if (err instanceof LumaImportError) return { error: err.message };
+    console.error("[admin] luma import failed:", err);
+    return { error: "Couldn't import that event. Fill the form in by hand instead." };
+  }
 }

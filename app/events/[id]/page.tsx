@@ -105,7 +105,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
             {!isPast &&
               (event.registrationUrl ? (
                 <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
-                  Register for This Event
+                  {/^https:\/\/(www\.)?(luma\.com|lu\.ma)\//.test(event.registrationUrl) ? "Register on Luma" : "Register for This Event"}
                 </a>
               ) : (
                 <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-gold">

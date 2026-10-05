@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
-import EventForm from "@/components/admin/EventForm";
+import NewEventWithImport from "@/components/admin/NewEventWithImport";
 import { requireAdmin } from "@/lib/admin/auth";
 
 export const metadata: Metadata = { title: "New event" };
@@ -15,7 +15,7 @@ export default async function NewEventPage() {
         <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2rem, 5vw, 2.6rem)", marginBottom: "2rem" }}>
           New event
         </h1>
-        <EventForm />
+        <NewEventWithImport />
       </div>
     </PageShell>
   );
