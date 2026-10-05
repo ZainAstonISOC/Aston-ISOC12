@@ -149,8 +149,14 @@ export function cleanTranslation(html: string): string {
     .trim();
 }
 
+/**
+ * Most reciters come back as paths on verses.quran.com; some (al-Husary) as
+ * protocol-relative URLs on mirrors.quranicaudio.com. Both hosts are in the CSP.
+ */
 export function audioUrl(path: string): string {
-  return /^https?:\/\//.test(path) ? path : `${AUDIO_BASE}${path.replace(/^\/+/, "")}`;
+  if (/^https?:\/\//.test(path)) return path;
+  if (path.startsWith("//")) return `https:${path}`;
+  return `${AUDIO_BASE}${path.replace(/^\/+/, "")}`;
 }
 
 // ── Endpoints ────────────────────────────────────────────────────────────

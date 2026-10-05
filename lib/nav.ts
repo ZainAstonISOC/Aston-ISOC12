@@ -29,8 +29,9 @@ export const navItems: NavItem[] = [
   { label: "Events", href: "/events" },
   {
     label: "Learn", href: "/resources", children: [
-      { label: "Resources", href: "/resources" },
+      { label: "Read the Qur'an", href: "/quran" },
       { label: "Daily Ayah", href: "/ayah" },
+      { label: "Resources", href: "/resources" },
       { label: "Lectures & Podcasts", href: "/lectures" },
       { label: "Careers & Opportunities", href: "/careers" },
       { label: "Zakat Calculator", href: "/zakat" },
@@ -62,6 +63,7 @@ export const footerLinks = {
   ],
   "Faith & Learn": [
     { label: "Prayer Times", href: "/prayer-times" },
+    { label: "Read the Qur'an", href: "/quran" },
     { label: "Daily Ayah", href: "/ayah" },
     { label: "Lectures & Podcasts", href: "/lectures" },
     { label: "Resources", href: "/resources" },

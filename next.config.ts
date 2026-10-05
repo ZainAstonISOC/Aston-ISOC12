@@ -52,9 +52,10 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               // Instagram media is served from Meta's CDNs
               "img-src 'self' data: https://i.ytimg.com https://*.ytimg.com https://*.cdninstagram.com https://*.fbcdn.net",
-              // Recitation audio is fetched from quran.com's CDN and kept for offline use
-              "connect-src 'self' https://api.aladhan.com https://verses.quran.com",
-              "media-src 'self' blob: data: https://verses.quran.com",
+              // Recitation audio comes from quran.com's CDN (and its quranicaudio
+              // mirror for some reciters) and is kept for offline use
+              "connect-src 'self' https://api.aladhan.com https://verses.quran.com https://mirrors.quranicaudio.com",
+              "media-src 'self' blob: data: https://verses.quran.com https://mirrors.quranicaudio.com",
               "worker-src 'self'",
               // TellSafe hosts the embedded community feedback form
               "frame-src https://www.youtube.com https://buy.stripe.com https://www.tellsafe.app",

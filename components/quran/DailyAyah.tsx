@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import AyahText from "./AyahText";
 import { useRecitation } from "./useRecitation";
@@ -70,7 +71,7 @@ export default function DailyAyah({
 
   const share = async () => {
     const text = `${ayah.verses.map((v) => v.en).join(" ")}\n${formatRef(ayah.ref)} · Surah ${ayah.surah}`;
-    const url = `${location.origin}/ayah`;
+    const url = `${location.origin}${passageHref(ayah.ref)}`;
     try {
       if (navigator.share) {
         await navigator.share({ title: "Daily Ayah · Aston ISOC", text, url });
@@ -128,6 +129,9 @@ export default function DailyAyah({
         <button type="button" className="btn btn-ghost" onClick={share}>
           Share
         </button>
+        <Link href={contextHref(ayah.ref)} className="btn btn-ghost">
+          Read in context
+        </Link>
       </div>
 
       <p
@@ -140,6 +144,18 @@ export default function DailyAyah({
       </p>
     </div>
   );
+}
+
+/** "94:5-6" → "/quran/94/5-6", the shareable page for exactly this passage. */
+function passageHref(ref: string) {
+  const [s, a] = ref.split(":");
+  return `/quran/${s}/${a}`;
+}
+
+/** "94:5-6" → "/quran/94#ayah-5", the passage inside its surah. */
+function contextHref(ref: string) {
+  const [s, a] = ref.split(":");
+  return `/quran/${s}#ayah-${a.split("-")[0]}`;
 }
 
 function PlayIcon() {

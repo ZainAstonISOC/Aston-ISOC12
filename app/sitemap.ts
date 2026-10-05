@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/sisters`,                                       changeFrequency: "weekly",   priority: 0.8 },
     { url: `${BASE}/brothers`,                                      changeFrequency: "weekly",   priority: 0.8 },
     { url: `${BASE}/volunteer`,                                     changeFrequency: "monthly",  priority: 0.8 },
+    { url: `${BASE}/quran`,                                         changeFrequency: "monthly",  priority: 0.8 },
     { url: `${BASE}/ayah`,                                          changeFrequency: "daily",    priority: 0.8 },
     { url: `${BASE}/resources`,                                     changeFrequency: "monthly",  priority: 0.7 },
     { url: `${BASE}/lectures`,                                      changeFrequency: "monthly",  priority: 0.7 },
@@ -38,5 +39,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...eventRoutes];
+  // One entry per surah; the per-ayah pages are reachable from them.
+  const surahRoutes: MetadataRoute.Sitemap = Array.from({ length: 114 }, (_, i) => ({
+    url: `${BASE}/quran/${i + 1}`,
+    changeFrequency: "yearly" as const,
+    priority: 0.5,
+  }));
+
+  return [...staticRoutes, ...eventRoutes, ...surahRoutes];
 }
