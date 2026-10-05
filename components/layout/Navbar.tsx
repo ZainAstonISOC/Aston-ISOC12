@@ -101,10 +101,11 @@ export default function Navbar() {
             </Link>
 
             {/* ════════════════════════════════════════════
-                DESKTOP NAV hidden on mobile (lg:flex)
+                DESKTOP NAV from 1280px (xl). The full menu plus Donate/Join
+                needs ~1230px; at lg (1024) it overflowed and cut off Join ISOC.
                 ════════════════════════════════════════════ */}
             <nav
-              className="hidden lg:flex"
+              className="hidden xl:flex"
               style={{ alignItems: "center", gap: 0 }}
             >
               {navItems.map(item => (
@@ -233,7 +234,7 @@ export default function Navbar() {
             </nav>
 
             {/* ── Desktop CTAs ── */}
-            <div className="hidden lg:flex" style={{ alignItems: "center", gap: "0.45rem", flexShrink: 0 }}>
+            <div className="hidden xl:flex" style={{ alignItems: "center", gap: "0.45rem", flexShrink: 0 }}>
               <Link href="/donate"
                 style={{
                   display: "flex", alignItems: "center",
@@ -255,7 +256,7 @@ export default function Navbar() {
             </div>
 
             {/* ════════════════════════════════════════════
-                MOBILE BURGER hidden on desktop (lg:hidden)
+                MENU BUTTON below 1280px (xl:hidden)
                 ════════════════════════════════════════════ */}
             <button
               type="button"
@@ -263,9 +264,10 @@ export default function Navbar() {
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-drawer"
-              className="lg:hidden"
+              // Display comes from the classes: an inline display here would beat
+              // lg:hidden and show the burger beside the full desktop menu.
+              className="flex flex-col xl:hidden"
               style={{
-                display: "flex", flexDirection: "column",
                 justifyContent: "center", alignItems: "center",
                 width: 42, height: 42, gap: 5,
                 borderRadius: "12px",

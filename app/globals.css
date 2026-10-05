@@ -62,8 +62,13 @@
 }
 
 /* ---------- Reset ---------- */
-*, *::before, *::after { box-sizing: border-box; }
-* { margin: 0; }
+/* In the base layer, not unlayered: an unlayered `* { margin: 0 }` outranks
+   every Tailwind utility, so mb-6, mt-2, space-y-4 and the rest all
+   computed to 0 and sections on many pages sat flush against each other. */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+}
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
@@ -134,7 +139,10 @@ h1, h2, h3, h4, h5 {
   line-height: 1.12;
   letter-spacing: -0.01em;
   color: #fff;
+  /* Even line lengths: no single word stranded on a heading's last line. */
+  text-wrap: balance;
 }
+p { text-wrap: pretty; }
 /* One ladder, each step ~1.25× the last, so headings never collide in size. */
 h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); }
 h2 { font-size: clamp(2rem, 4vw, 3rem); }
@@ -483,6 +491,9 @@ p { color: var(--muted); line-height: 1.78; }
 /* ---------- CTA band ---------- */
 .cta-band { position: relative; border-radius: var(--radius-lg); padding: clamp(2.6rem, 6vw, 4.5rem); text-align: center; overflow: hidden; background: linear-gradient(150deg, var(--bg-3), var(--bg) 70%); border: 1px solid var(--line); box-shadow: var(--shadow-lg); }
 .cta-band h2 { max-width: 20ch; margin: 0 auto 1rem; }
+/* Left-aligned variant: the heading must not keep the centring margins. */
+.cta-band--left { text-align: left; }
+.cta-band--left h2 { margin-inline: 0; }
 .cta-band .lede { margin: 0 auto 2rem; }
 .cta-band__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
@@ -989,3 +1000,19 @@ div.relative.overflow-hidden { overflow: hidden; }
 }
 .surah-card__num span { transform: rotate(-45deg); }
 .surah-card__ar { margin-left: auto; font-size: 1.35rem; color: var(--gold-soft); }
+
+/* ---------- Equal-height rows ----------
+   Grid cells are usually <Reveal> wrappers. The wrapper stretches to the
+   row's height but the card inside it did not, so cards side by side ended at
+   different heights. Make the wrapper a column and let its child fill it. */
+.grid > .reveal { display: flex; flex-direction: column; }
+.grid > .reveal > * { flex: 1 1 auto; }
+.surah-grid > li { display: flex; }
+.surah-grid > li > .surah-card { flex: 1 1 auto; }
+
+/* A card whose call to action sits on its bottom edge, so buttons line up
+   across a row whatever the length of the text above them. */
+.card--stack { display: flex; flex-direction: column; }
+.card--stack > .pill,
+.card--stack > .btn { align-self: flex-start; }
+.card--stack > .card__push { margin-top: auto; }

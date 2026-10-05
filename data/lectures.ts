@@ -2,23 +2,13 @@ import { Lecture } from "@/types";
 
 /**
  * LECTURES DATA
- * All links verified. YouTube thumbnails auto-generated from video ID.
+ * YouTube thumbnails are built from the video ID. "Foundations of Worship"
+ * (HUZYbzIGv8Y) was removed on 2026-10-05: the video is no longer public on
+ * YouTube, so its card showed a grey placeholder and a dead link.
  * Helper: thumbnailFromUrl() extracts video ID and builds thumbnail URL.
  */
 
 export const lectures: Lecture[] = [
-  {
-    id: "foundations-of-worship",
-    title: "Foundations of Worship",
-    speaker: "AMAU Academy",
-    series: "AMAU Academy",
-    duration: "Lecture",
-    date: "2025-03-01",
-    youtubeUrl: "https://www.youtube.com/watch?v=HUZYbzIGv8Y",
-    youtubeId: "HUZYbzIGv8Y",
-    category: "lecture",
-    description: "A grounding lecture on the foundations of worship in Islam — purification, prayer, and sincerity of intention.",
-  },
   {
     id: "purification-of-the-soul",
     title: "Purification of the Soul",

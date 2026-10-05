@@ -205,22 +205,22 @@ export default async function HomePage() {
           </div>
           <div className="grid cols-2">
             <Reveal>
-              <div className="card hover-sisters" style={{ borderColor: "rgba(244,114,182,0.15)" }}>
+              <div className="card card--stack hover-sisters" style={{ borderColor: "rgba(244,114,182,0.15)" }}>
                 <p className="eyebrow" style={{ color: "rgba(249,168,212,0.8)" }}>For Sisters</p>
                 <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Sisters&apos; <em style={{ color: "#f9a8d4" }}>Section</em></h3>
                 <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Weekly halaqa, dedicated events, mentorship, and a strong sisterhood led by Aminah &amp; Yusra.</p>
-                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                <div className="card__push" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                   <Link href="/sisters" className="btn btn-ghost" style={{ borderColor: "rgba(249,168,212,0.3)", color: "#f9a8d4" }}>Sisters&apos; Section</Link>
                   <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
                 </div>
               </div>
             </Reveal>
             <Reveal delay={100}>
-              <div className="card hover-brothers" style={{ borderColor: "rgba(129,140,248,0.15)" }}>
+              <div className="card card--stack hover-brothers" style={{ borderColor: "rgba(129,140,248,0.15)" }}>
                 <p className="eyebrow" style={{ color: "rgba(165,180,252,0.8)" }}>For Brothers</p>
                 <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Brothers&apos; <em style={{ color: "#a5b4fc" }}>Section</em></h3>
                 <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Brotherhood events, sports, circles, and networking led by Abdikarim &amp; Shahz.</p>
-                <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+                <div className="card__push" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                   <Link href="/brothers" className="btn btn-ghost" style={{ borderColor: "rgba(165,180,252,0.3)", color: "#a5b4fc" }}>Brothers&apos; Section</Link>
                   <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
                 </div>
@@ -234,7 +234,7 @@ export default async function HomePage() {
       <section className="section section--tight">
         <div className="container">
           <Reveal>
-            <div className="cta-band" style={{ textAlign: "left", padding: "clamp(2rem,4vw,3rem)" }}>
+            <div className="cta-band cta-band--left" style={{ padding: "clamp(2rem,4vw,3rem)" }}>
               <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
                 <div style={{ maxWidth: "56ch" }}>
                   <p className="eyebrow">Get Involved</p>
@@ -274,12 +274,12 @@ export default async function HomePage() {
             <div className="grid cols-2">
               {campaigns.slice(0, 2).map((c, i) => (
                 <Reveal key={c.id} delay={i * 80}>
-                  <div className="card">
+                  <div className="card card--stack">
                     {c.isFeatured && <span className="pill" style={{ marginBottom: "1rem", display: "inline-block" }}>Featured Campaign</span>}
                     <h3 style={{ fontFamily: PF, fontSize: "1.4rem", color: "#fff", marginBottom: "0.75rem" }}>{c.name}</h3>
                     <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.75, marginBottom: "1.5rem" }}>{c.description.slice(0, 150)}…</p>
                     {c.organisation && <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)", marginBottom: "1.25rem" }}>Via {c.organisation}</p>}
-                    <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Donate Now</a>
+                    <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold card__push">Donate Now</a>
                   </div>
                 </Reveal>
               ))}

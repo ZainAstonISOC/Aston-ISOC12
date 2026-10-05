@@ -32,9 +32,14 @@ export function EventCard({ event }: { event: Event }) {
   const month = formatEventDate(event.date, { month: "short" }).toUpperCase();
 
   return (
-    <Link href={`/events/${event.id}`} style={{ display: "block", textDecoration: "none" }}>
+    // Link and card both fill the grid cell, and the footer sits on the bottom
+    // edge, so every card in a row is the same height with "View Details" level.
+    <Link href={`/events/${event.id}`} style={{ display: "flex", flexDirection: "column", height: "100%", textDecoration: "none" }}>
       <div className="card link"
         style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
           borderColor: hovered ? "rgba(216,175,114,0.4)" : undefined,
           transform: hovered ? "translateY(-5px)" : "translateY(0)",
           boxShadow: hovered ? "0 24px 60px -24px rgba(0,0,0,0.7)" : undefined,
@@ -56,7 +61,7 @@ export function EventCard({ event }: { event: Event }) {
             {event.isRecurring && <span className="badge badge-muted">Recurring</span>}
           </div>
         </div>
-        <h3 style={{ fontFamily: PF, fontSize: "1.25rem", fontWeight: 500, color: "#fff", marginBottom: "0.6rem", lineHeight: 1.2 }}>
+        <h3 className="line-clamp-2" title={event.title} style={{ fontFamily: PF, fontSize: "1.25rem", fontWeight: 500, color: "#fff", marginBottom: "0.6rem", lineHeight: 1.2 }}>
           {event.title}
         </h3>
         {event.recurringNote && (
@@ -65,7 +70,7 @@ export function EventCard({ event }: { event: Event }) {
         <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.7, marginBottom: "1rem" }} className="line-clamp-2">
           {event.description}
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "1.2rem" }}>
           <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)", display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <Icon name="clock" size={14} style={{ color: "#d8af72", flexShrink: 0 }} />
             {event.endTime ? `${event.time}–${event.endTime}` : event.time}
@@ -76,7 +81,7 @@ export function EventCard({ event }: { event: Event }) {
           </span>
         </div>
         <div style={{
-          marginTop: "1.2rem", paddingTop: "1rem",
+          marginTop: "auto", paddingTop: "1rem",
           borderTop: "1px solid rgba(216,175,114,0.1)",
           display: "flex", alignItems: "center", gap: "0.4rem",
           opacity: hovered ? 1 : 0.4, transition: "opacity 0.25s",
