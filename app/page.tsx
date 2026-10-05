@@ -8,6 +8,7 @@ import { EventCard, MemberCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import InstagramFeed from "@/components/ui/InstagramFeed";
+import AyahOfTheDay from "@/components/quran/AyahOfTheDay";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -116,6 +117,19 @@ export default async function HomePage() {
             <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "var(--muted-2)", textAlign: "center", marginTop: "1.2rem" }}>
               Jumu&apos;ah every Friday · Aston Students&apos; Union Hall (SU Hall) · Khutbah 13:30
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ══ DAILY AYAH ═════════════════════════════════════════════════════ */}
+      <section className="section section--tight">
+        <div className="container">
+          <Reveal>
+            <p className="eyebrow" style={{ justifyContent: "center", display: "flex" }}>Daily Ayah</p>
+            <h2 style={{ fontFamily: PF, textAlign: "center", marginBottom: "2rem" }}>Today&apos;s ayah</h2>
+          </Reveal>
+          <Reveal delay={80}>
+            <AyahOfTheDay />
           </Reveal>
         </div>
       </section>

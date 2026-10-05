@@ -20,6 +20,7 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     shortcuts: [
       { name: "Prayer times", url: "/prayer-times" },
+      { name: "Daily Ayah", url: "/ayah" },
       { name: "Events", url: "/events" },
       { name: "Share feedback", url: "/feedback" },
     ],

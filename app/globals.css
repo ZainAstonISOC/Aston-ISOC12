@@ -759,3 +759,51 @@ div.relative.overflow-hidden { overflow: hidden; }
 @media (max-width: 720px) {
   .zakat-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ---------- Qur'an ---------- */
+.quran-ar {
+  color: var(--text);
+  line-height: 2.15;
+  word-spacing: 0.06em;
+  /* Long Uthmani lines must never force sideways scroll on a phone. */
+  overflow-wrap: anywhere;
+}
+.ayah-mark {
+  color: var(--gold);
+  margin-inline: 0.15em;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+.ayah-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, rgba(31,21,71,0.75), rgba(19,13,40,0.45));
+  box-shadow: var(--shadow);
+  padding: clamp(1.6rem, 5vw, 3.2rem);
+}
+.ayah-translation {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--muted);
+  font-size: clamp(1rem, 2.2vw, 1.12rem);
+  line-height: 1.8;
+  max-width: 62ch;
+  margin-inline: auto;
+}
+/* The Listen button fills left to right as the recitation runs. */
+.listen-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.listen-btn__fill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform-origin: left;
+  background: rgba(255,255,255,0.28);
+  transition: transform 0.25s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .listen-btn__fill { transition: none; }
+}

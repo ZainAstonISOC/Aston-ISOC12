@@ -25,6 +25,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
+        // The Daily Ayah service worker must never be served stale.
+        source: "/sw.js",
+        headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }],
+      },
+      {
         source: "/:path*",
         headers: [
           // Prevent clickjacking
@@ -47,7 +52,10 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               // Instagram media is served from Meta's CDNs
               "img-src 'self' data: https://i.ytimg.com https://*.ytimg.com https://*.cdninstagram.com https://*.fbcdn.net",
-              "connect-src 'self' https://api.aladhan.com",
+              // Recitation audio is fetched from quran.com's CDN and kept for offline use
+              "connect-src 'self' https://api.aladhan.com https://verses.quran.com",
+              "media-src 'self' blob: data: https://verses.quran.com",
+              "worker-src 'self'",
               // TellSafe hosts the embedded community feedback form
               "frame-src https://www.youtube.com https://buy.stripe.com https://www.tellsafe.app",
               "form-action 'self' https://buy.stripe.com",

@@ -30,6 +30,7 @@ export const navItems: NavItem[] = [
   {
     label: "Learn", href: "/resources", children: [
       { label: "Resources", href: "/resources" },
+      { label: "Daily Ayah", href: "/ayah" },
       { label: "Lectures & Podcasts", href: "/lectures" },
       { label: "Careers & Opportunities", href: "/careers" },
       { label: "Zakat Calculator", href: "/zakat" },
@@ -61,6 +62,7 @@ export const footerLinks = {
   ],
   "Faith & Learn": [
     { label: "Prayer Times", href: "/prayer-times" },
+    { label: "Daily Ayah", href: "/ayah" },
     { label: "Lectures & Podcasts", href: "/lectures" },
     { label: "Resources", href: "/resources" },
     { label: "Careers & Opportunities", href: "/careers" },
