@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 
-export const metadata: Metadata = { title: "Thank You Donation Confirmed" };
+export const metadata: Metadata = { title: "Thank You Donation Confirmed", robots: { index: false, follow: true } };
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 

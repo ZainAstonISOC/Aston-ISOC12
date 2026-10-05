@@ -5,7 +5,7 @@ import Reveal from "@/components/ui/Reveal";
 import { SOCIAL, WHATSAPP, MEMBERSHIP, CONTACT } from "@/lib/social";
 import { volunteerCampaigns } from "@/data/volunteers";
 
-export const metadata: Metadata = { title: "Contact & Get Involved" };
+export const metadata: Metadata = { title: "Contact & Get Involved", description: "Get in touch with the Aston ISOC committee — Instagram, WhatsApp, LinkedIn, or the contact form." };
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";

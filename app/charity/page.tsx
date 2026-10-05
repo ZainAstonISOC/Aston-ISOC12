@@ -5,7 +5,7 @@ import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { donationCampaigns } from "@/data/donations";
 
-export const metadata: Metadata = { title: "Charity Initiatives" };
+export const metadata: Metadata = { title: "Charity Initiatives", description: "Aston ISOC charity campaigns, Charity Week, Ramadan fundraising and the causes we support." };
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 

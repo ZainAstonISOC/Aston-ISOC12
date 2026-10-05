@@ -28,7 +28,8 @@ export const committeeMembers: CommitteeMember[] = [
   // SOCIALS
   { id: "socials-head",        name: "Ahmad Gebriel",  role: "Head of Socials",           year: "2026/27", bio: "Manages ISOC social events, community engagement, and content creation across all platforms.", section: "social_media" },
   { id: "socials-brothers-1",  name: "Fayez",          role: "Socials Brothers Officer",  year: "2026/27", bio: "Creates brothers-focused social content, organises community events, and drives engagement.", section: "social_media" },
-  { id: "socials-brothers-2",  name: "Al Juwainy",        role: "Socials Brothers Officer",  year: "2026/27", bio: "Produces video content, supports social events, and manages brothers community campaigns.", section: "social_media" },
+  { id: "socials-brothers-2",  name: "Al Juwainy",     role: "Socials Brothers Officer",  year: "2026/27", bio: "Produces video content, supports social events, and manages brothers community campaigns.", section: "social_media" },
+  { id: "socials-brothers-3",  name: "Rahfay",         role: "Socials Brothers Officer",  year: "2026/27", bio: "Helps run brothers social events and content, building engagement across the ISOC community.", section: "social_media" },
   { id: "socials-sisters-1",   name: "Hibah",          role: "Socials Sisters Officer",   year: "2026/27", bio: "Manages sisters social presence, creates community content, and organises sisters engagement activities.", section: "social_media" },
   { id: "socials-sisters-2",   name: "Shafiya",        role: "Socials Sisters Officer",   year: "2026/27", bio: "Supports sisters social content creation and community engagement.", section: "social_media" },
 

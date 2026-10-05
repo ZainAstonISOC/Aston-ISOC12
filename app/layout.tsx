@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { SITE_URL } from "@/lib/site";
+import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -12,8 +13,34 @@ export const metadata: Metadata = {
   keywords: ["Aston ISOC", "Islamic Society", "Aston University", "Muslim students", "Birmingham"],
   authors: [{ name: "Aston ISOC" }],
   openGraph: { type: "website", locale: "en_GB", siteName: "Aston ISOC" },
-  twitter: { card: "summary_large_image", site: "@astonisoc" },
+  // No `site` handle: @astonisoc on X is not a confirmed society account, and
+  // attributing every shared link to a stranger's profile is worse than none.
+  twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
+};
+
+// Colours the browser chrome / status bar on mobile to match the site.
+export const viewport: Viewport = {
+  themeColor: "#130d28",
+};
+
+// Tells Google who the society is, so the domain can earn a knowledge panel
+// with the logo and the official social profiles.
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Aston University Islamic Society",
+  alternateName: "Aston ISOC",
+  url: SITE_URL,
+  logo: `${SITE_URL}/icon.png`,
+  sameAs: [SOCIAL.instagram, SOCIAL.linkedin, SOCIAL.linktree],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Aston Triangle",
+    addressLocality: "Birmingham",
+    postalCode: "B4 7ET",
+    addressCountry: "GB",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -37,6 +64,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
+        />
         <LoadingScreen />
         <Navbar />
         <main>{children}</main>

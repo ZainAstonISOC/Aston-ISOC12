@@ -11,6 +11,16 @@ function initials(name: string) {
   return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
 }
 
+/**
+ * First name for the collapsed preview — but keep a leading particle with the
+ * word after it, so "Al Juwainy" does not collapse to just "Al".
+ */
+function shortName(name: string): string {
+  const [first, second] = name.trim().split(/\s+/);
+  if (second && (first.length <= 2 || /^(al|el|abu|bin|ibn)$/i.test(first))) return `${first} ${second}`;
+  return first;
+}
+
 export default function CommitteeAccordion({ sections }: { sections: Section[] }) {
   // Core committee open by default, all others closed
   const [open, setOpen] = useState<string[]>(["executive"]);
@@ -38,7 +48,10 @@ export default function CommitteeAccordion({ sections }: { sections: Section[] }
           >
             {/* Header */}
             <button
+              type="button"
               onClick={() => toggle(section.key)}
+              aria-expanded={isOpen}
+              aria-controls={`committee-${section.key}`}
               style={{
                 width: "100%",
                 display: "flex",
@@ -69,14 +82,14 @@ export default function CommitteeAccordion({ sections }: { sections: Section[] }
                   </p>
                   {!isOpen && (
                     <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)" }}>
-                      {section.members.map(m => m.name.split(" ")[0]).join(", ")}
+                      {section.members.map(m => shortName(m.name)).join(", ")}
                     </p>
                   )}
                 </div>
               </div>
               <svg
                 width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="#d8af72" strokeWidth="2" strokeLinecap="round"
+                stroke="#d8af72" strokeWidth="2" strokeLinecap="round" aria-hidden="true"
                 style={{ flexShrink: 0, transition: "transform 0.3s", transform: isOpen ? "rotate(180deg)" : "none" }}
               >
                 <path d="M6 9l6 6 6-6"/>
@@ -85,7 +98,7 @@ export default function CommitteeAccordion({ sections }: { sections: Section[] }
 
             {/* Content */}
             {isOpen && (
-              <div style={{ padding: "0 1.75rem 1.75rem" }}>
+              <div id={`committee-${section.key}`} style={{ padding: "0 1.75rem 1.75rem" }}>
                 <div style={{ height: "1px", background: "rgba(216,175,114,0.1)", marginBottom: "1.5rem" }} />
                 <div style={{
                   display: "grid",

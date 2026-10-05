@@ -6,7 +6,7 @@ import Reveal from "@/components/ui/Reveal";
 import { sponsors } from "@/data/sponsors";
 import { SOCIAL } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Sponsorships & Partners" };
+export const metadata: Metadata = { title: "Sponsorships & Partners", description: "Partner with Aston ISOC — reach a large, active Muslim student community at Aston University, Birmingham." };
 
 const TIERS = ["gold","silver","bronze","community"] as const;
 const TIER_LABELS = { gold: "Gold Partners", silver: "Silver Partners", bronze: "Bronze Partners", community: "Community Partners" };

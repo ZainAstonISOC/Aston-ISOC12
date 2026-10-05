@@ -1,6 +1,26 @@
 import type { NextConfig } from "next";
+import { SITE_URL, VERCEL_PRODUCTION_HOST } from "./lib/site";
 
 const nextConfig: NextConfig = {
+  // Once NEXT_PUBLIC_SITE_URL points at the custom domain, anyone landing on the
+  // old vercel.app production address is sent to the same path on the domain.
+  // Matches the production host exactly, so preview deployments are untouched.
+  // 307 rather than 308 on purpose: browsers cache a 308 forever, so if the
+  // domain ever had a problem, returning visitors would be stuck. Switch to
+  // permanent once the domain has been stable for a few weeks.
+  async redirects() {
+    const siteHost = new URL(SITE_URL).host;
+    if (siteHost === VERCEL_PRODUCTION_HOST) return [];
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: VERCEL_PRODUCTION_HOST }],
+        destination: `${SITE_URL}/:path*`,
+        permanent: false,
+      },
+    ];
+  },
+
   // Security headers — applied to all routes
   async headers() {
     return [

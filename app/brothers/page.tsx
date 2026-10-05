@@ -7,7 +7,7 @@ import { getBrotherEvents } from "@/data/events";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Brothers' Section" };
+export const metadata: Metadata = { title: "Brothers' Section", description: "Football, weekly halaqa, speakers, mentoring and the brothers' WhatsApp — the Aston ISOC brotherhood." };
 
 const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "football", title: "Football & Sports", desc: "Weekly football sessions, inter-university tournaments, and gym meetups throughout the year." },

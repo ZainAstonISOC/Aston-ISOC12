@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/charity`,                                       changeFrequency: "weekly",   priority: 0.8 },
     { url: `${BASE}/donate`,                                        changeFrequency: "weekly",   priority: 0.9 },
     { url: `${BASE}/join`,                                          changeFrequency: "monthly",  priority: 0.9 },
+    { url: `${BASE}/feedback`,                                      changeFrequency: "monthly",  priority: 0.6 },
     { url: `${BASE}/contact`,                                       changeFrequency: "monthly",  priority: 0.7 },
     { url: `${BASE}/sponsors`,                                      changeFrequency: "monthly",  priority: 0.6 },
     { url: `${BASE}/careers`,                                       changeFrequency: "weekly",   priority: 0.7 },
