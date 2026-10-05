@@ -40,7 +40,7 @@ export default async function PrayerTimesPage() {
           <Reveal><PrayerTimesDisplay times={times} /></Reveal>
           <Reveal delay={80}>
             <p style={{ fontFamily: DM, color: "var(--muted-2)", textAlign: "center", fontSize: "0.82rem", marginTop: "1rem" }}>
-              Start times calculated with the {PRAYER_METHOD} method. Jamaat times differ from masjid to masjid, so check the one you&apos;re going to.
+              {`Start times calculated with the ${PRAYER_METHOD} method. Jamaat times differ from masjid to masjid, so check the one you're going to.`}
             </p>
           </Reveal>
         </div>

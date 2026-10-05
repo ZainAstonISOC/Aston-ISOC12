@@ -7,10 +7,10 @@ import { getSisterEvents } from "@/lib/events";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Sisters' Section", description: "Aston ISOC Sisters' Section dedicated events, halaqa circles, and a welcoming community for Muslim sisters at Aston." };
+export const metadata: Metadata = { title: "Sisters' Section", description: "Aston ISOC Sisters' Section dedicated events, mentorship, and a welcoming community for Muslim sisters at Aston." };
 
 const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
-  { icon: "book", title: "Weekly Halaqa", desc: "Sisters-only Islamic study circle exploring Seerah, Qur'an, and contemporary topics. Every Tuesday at 12:00." },
+  { icon: "book", title: "Weekly Roots Classes", desc: "Structured Islamic learning in partnership with Roots Academy, building knowledge week by week." },
   { icon: "coffee", title: "Monthly Brunch", desc: "Casual sisters' social brunch a relaxed space to connect and build genuine friendships." },
   { icon: "heart", title: "Wellbeing Circle", desc: "A safe, private space to discuss mental health, faith, and university life." },
   { icon: "briefcase", title: "Careers Mentorship", desc: "Connecting sisters with Muslim women professionals for mentorship and networking." },
@@ -31,7 +31,7 @@ export default async function SistersPage() {
           </h1>
           <span className="gold-rule" />
           <p className="max-w-lg leading-relaxed mb-8" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
-            A dedicated, welcoming space for Muslim sisters at Aston. Our Sisters&apos; Section runs its own events, halaqa circles, mentorship programmes, and has a warm, supportive community led by Aminah &amp; Yusra.
+            A dedicated, welcoming space for Muslim sisters at Aston. Our Sisters&apos; Section runs its own events and mentorship programmes, and has a warm, supportive community led by Aminah &amp; Yusra.
           </p>
           <div className="flex gap-3 flex-wrap">
             {WHATSAPP.sistersFreshers ? (
@@ -85,7 +85,7 @@ export default async function SistersPage() {
           </div>
         </Reveal>
         <Reveal>
-          <CtaBanner title="Join the Sisters' Community" description="Join us register on Aston SU for just £5 for the full year. Access all sisters' events, halaqa circles, and the private community." primaryLabel="Join ISOC" primaryHref={MEMBERSHIP.join} secondaryLabel="View All Events" secondaryHref="/events" />
+          <CtaBanner title="Join the Sisters' Community" description="Join us register on Aston SU for just £5 for the full year. Access all sisters' events and the private community." primaryLabel="Join ISOC" primaryHref={MEMBERSHIP.join} secondaryLabel="View All Events" secondaryHref="/events" />
         </Reveal>
       </div>
     </div>

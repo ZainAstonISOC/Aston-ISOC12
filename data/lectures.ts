@@ -75,7 +75,6 @@ export const getLecturesByCategory = (cat: Lecture["category"]) =>
 export const LECTURE_CATEGORY_LABELS: Record<Lecture["category"], string> = {
   lecture: "Lectures & Series",
   khutbah: "Jumu'ah Khutbahs",
-  halaqa:  "Halaqa Sessions",
   podcast: "Podcast",
   event:   "Recorded Events",
 };

@@ -11,7 +11,7 @@ const BENEFITS = [
   "Brothers' and Sisters' dedicated programmes",
   "Free freshers welcome pack",
   "ISOC membership discount card",
-  "Weekly halaqa circles and lectures",
+  "Weekly Roots classes and lectures",
   "Access to all charity campaigns",
   "Careers and networking events",
   "WhatsApp community groups",

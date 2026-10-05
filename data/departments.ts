@@ -112,7 +112,6 @@ export const departments: Department[] = [
       { title: "Weekly Roots Classes", desc: "Structured Islamic learning in partnership with Roots Academy, building knowledge week by week." },
       { title: "Ijazah Pathway", desc: "A route for dedicated students to pursue certified Islamic study." },
       { title: "Monthly Guest Lectures", desc: "Visiting scholars and speakers on a range of beneficial topics." },
-      { title: "Halaqa Circles", desc: "Smaller discussion-based sessions for brothers and sisters." },
     ],
   },
   {

@@ -78,7 +78,7 @@ export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] | nu
             Start times · Moonsighting Committee method
           </p>
         </div>
-        <div style={{ textAlign: "right" }}>
+        <div className="prayer-board__next">
           <p style={{ fontFamily: DM, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-2)", marginBottom: "0.3rem" }}>
             Next prayer
           </p>

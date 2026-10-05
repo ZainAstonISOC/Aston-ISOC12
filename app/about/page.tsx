@@ -16,7 +16,7 @@ const STATS = [
 
 const MISSION = [
   "Facilitate the five daily prayers and Friday Jumu'ah on campus",
-  "Run Islamic education: halaqas, lectures, and study circles",
+  "Run Islamic education: weekly Roots classes, lectures and talks",
   "Organise social events that strengthen brotherhood and sisterhood",
   "Lead significant charity campaigns locally and internationally",
   "Support Muslim students' wellbeing and sense of identity",
@@ -48,7 +48,7 @@ export default function AboutPage() {
             <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "2rem", fontWeight: 300, color: "#fff", marginBottom: "1.5rem" }}>Serving Aston for Decades</h2>
             <div className="space-y-4 text-sm leading-relaxed" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>
               <p>Aston ISOC has been the home of Muslim students at Aston University for decades. We are a family built on faith, sustained by community, and driven by purpose.</p>
-              <p>From daily congregational prayers to national charity campaigns, from intimate study circles to large-scale conferences, we serve every dimension of the Muslim student experience.</p>
+              <p>From daily congregational prayers to national charity campaigns, from weekly classes to large-scale conferences, we serve every dimension of the Muslim student experience.</p>
               <p>We exist to ensure that no Muslim student at Aston ever feels alone, lost, or disconnected from their faith and identity.</p>
             </div>
             <div className="mt-8 border-l-2 pl-5" style={{ borderColor: "#d8af72" }}>

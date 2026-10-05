@@ -76,7 +76,7 @@ export interface Lecture {
   youtubeId?: string;
   youtubeUrl?: string;
   spotifyUrl?: string;
-  category: "khutbah" | "lecture" | "halaqa" | "podcast" | "event";
+  category: "khutbah" | "lecture" | "podcast" | "event";
   isPlaylist?: boolean;
   description: string;
   thumbnailUrl?: string;

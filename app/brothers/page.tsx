@@ -7,11 +7,11 @@ import { getBrotherEvents } from "@/lib/events";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Brothers' Section", description: "Football, weekly halaqa, speakers, mentoring and the brothers' WhatsApp — the Aston ISOC brotherhood." };
+export const metadata: Metadata = { title: "Brothers' Section", description: "Football, weekly Roots classes, speakers, mentoring and the brothers' WhatsApp — the Aston ISOC brotherhood." };
 
 const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "football", title: "Football & Sports", desc: "Weekly football sessions, inter-university tournaments, and gym meetups throughout the year." },
-  { icon: "book", title: "Brothers' Halaqa", desc: "Weekly study circle Seerah, current affairs, and Qur'an. Every Monday at 18:00." },
+  { icon: "book", title: "Weekly Roots Classes", desc: "Structured Islamic learning in partnership with Roots Academy, building knowledge week by week." },
   { icon: "mic", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today faith, identity, and purpose." },
   { icon: "briefcase", title: "Careers Network", desc: "Connecting brothers with Muslim professionals, employers, and industry mentors." },
   { icon: "handshake", title: "Mentorship", desc: "Senior brothers mentor fresher students through their first year at Aston." },
@@ -31,7 +31,7 @@ export default async function BrothersPage() {
           </h1>
           <span className="gold-rule" />
           <p className="max-w-lg leading-relaxed mb-8" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
-            Brotherhood, sports, circles, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston led by Abdikarim &amp; Shahz.
+            Brotherhood, sports, talks, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston led by Abdikarim &amp; Shahz.
           </p>
           <div className="flex gap-3 flex-wrap">
             <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ borderColor: "rgba(165,180,252,0.4)", color: "#a5b4fc" }}>Join Brothers WhatsApp</a>

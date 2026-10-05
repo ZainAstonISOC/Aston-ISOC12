@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Start Here", description: "New to As
 
 const PATHWAYS: { icon: IconName; title: string; desc: string; href: string; cta: string; accent: string; border: string; tint: string }[] = [
   { icon: "seedling", title: "I'm a Fresher", desc: "Just arrived at Aston? Find your community, prayer facilities, halal food, and your first events.", href: "/freshers", cta: "Freshers Hub →", accent: "rgba(216,175,114,0.12)", border: "rgba(216,175,114,0.25)", tint: "#d8af72" },
-  { icon: "mosque", title: "Returning Muslim", desc: "Reconnect with your faith and community through halaqas, events, and WhatsApp groups.", href: "/events", cta: "See Events →", accent: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)", tint: "#a5b4fc" },
+  { icon: "mosque", title: "Returning Muslim", desc: "Reconnect with your faith and community through classes, events, and WhatsApp groups.", href: "/events", cta: "See Events →", accent: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)", tint: "#a5b4fc" },
   { icon: "moon", title: "New Muslim", desc: "Alhamdulillah. We have dedicated support, resources, and a welcoming community for you.", href: "/resources", cta: "New Muslim Resources →", accent: "rgba(52,211,153,0.08)", border: "rgba(52,211,153,0.2)", tint: "#6ee7b7" },
   { icon: "handshake", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn no pressure.", href: "/resources", cta: "Explore Resources →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)", tint: "#ddd6fe" },
 ];
@@ -27,7 +27,7 @@ const FAQS = [
   { q: "Do I need to be Muslim to attend ISOC events?", a: "Most events are open to everyone. We warmly welcome non-Muslim students to open lectures, social events, and educational talks." },
   { q: "How much does membership cost?", a: "ISOC membership is just £5 for the full academic year, paid through Aston Students' Union." },
   { q: "I missed freshers week can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
-  { q: "Is there a sisters-only space?", a: "Yes. The Sisters' Section has dedicated events, a weekly halaqa, a private WhatsApp group, and committee members specifically there for sisters." },
+  { q: "Is there a sisters-only space?", a: "Yes. The Sisters' Section has dedicated events, a private WhatsApp group, and committee members specifically there for sisters." },
   { q: "I'm a new Muslim what support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
 ];
 

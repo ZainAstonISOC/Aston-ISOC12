@@ -73,7 +73,7 @@ export default async function HomePage() {
 
           <Reveal delay={200}>
             <p className="lede" style={{ marginTop: "1.6rem" }}>
-              Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities for daily prayer, weekly circles, charity, and a community that lasts a lifetime.
+              Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities for daily prayer, weekly classes, charity, and a community that lasts a lifetime.
             </p>
           </Reveal>
 
@@ -147,7 +147,7 @@ export default async function HomePage() {
           <div className="grid cols-3">
             {[
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>, title: "Prayer & Jumu'ah", desc: "Dedicated brothers' and sisters' prayer spaces, with congregational Jumu'ah every Friday at the SU Hall." },
-              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>, title: "Weekly Halaqa", desc: "Reflect, learn and grow together with weekly circles, tafsir sessions and guest speakers from across the UK." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>, title: "Weekly Roots Classes", desc: "Structured Islamic learning with Roots Academy, plus guest speakers from across the UK." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>, title: "Charity & Sadaqah", desc: "Make your time at university count. Our Charity Week and year-round fundraising support causes at home and abroad." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>, title: "Sisters & Brothers", desc: "From football and futsal to game nights and meals out find your people and make friendships that last." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>, title: "Mentoring & Support", desc: "New to Aston? Our mentoring scheme pairs first-years with senior students for guidance, academic and spiritual." },
@@ -208,7 +208,7 @@ export default async function HomePage() {
               <div className="card card--stack hover-sisters" style={{ borderColor: "rgba(244,114,182,0.15)" }}>
                 <p className="eyebrow" style={{ color: "rgba(249,168,212,0.8)" }}>For Sisters</p>
                 <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Sisters&apos; <em style={{ color: "#f9a8d4" }}>Section</em></h3>
-                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Weekly halaqa, dedicated events, mentorship, and a strong sisterhood led by Aminah &amp; Yusra.</p>
+                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Dedicated events, mentorship, and a strong sisterhood led by Aminah &amp; Yusra.</p>
                 <div className="card__push" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                   <Link href="/sisters" className="btn btn-ghost" style={{ borderColor: "rgba(249,168,212,0.3)", color: "#f9a8d4" }}>Sisters&apos; Section</Link>
                   <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
@@ -219,7 +219,7 @@ export default async function HomePage() {
               <div className="card card--stack hover-brothers" style={{ borderColor: "rgba(129,140,248,0.15)" }}>
                 <p className="eyebrow" style={{ color: "rgba(165,180,252,0.8)" }}>For Brothers</p>
                 <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Brothers&apos; <em style={{ color: "#a5b4fc" }}>Section</em></h3>
-                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Brotherhood events, sports, circles, and networking led by Abdikarim &amp; Shahz.</p>
+                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Brotherhood events, sports, talks, and networking led by Abdikarim &amp; Shahz.</p>
                 <div className="card__push" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                   <Link href="/brothers" className="btn btn-ghost" style={{ borderColor: "rgba(165,180,252,0.3)", color: "#a5b4fc" }}>Brothers&apos; Section</Link>
                   <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>

@@ -6,9 +6,9 @@ import Reveal from "@/components/ui/Reveal";
 import { LECTURE_CATEGORY_LABELS, getLecturesByCategory } from "@/data/lectures";
 import { SOCIAL } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Lectures & Podcasts", description: "Recorded talks, Jumu'ah khutbahs, halaqa sessions, and the ISOC podcast." };
+export const metadata: Metadata = { title: "Lectures & Podcasts", description: "Recorded talks, Jumu'ah khutbahs, and the ISOC podcast." };
 
-const CATS = ["lecture", "khutbah", "halaqa", "podcast", "event"] as const;
+const CATS = ["lecture", "khutbah", "podcast", "event"] as const;
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
@@ -16,7 +16,7 @@ export default function LecturesPage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Lectures & Podcasts" }]} />
-      <PageHeader label="Knowledge" title="Lectures & Podcasts" subtitle="Recorded talks, Jumu'ah khutbahs, halaqa sessions, and the ISOC podcast archive." />
+      <PageHeader label="Knowledge" title="Lectures & Podcasts" subtitle="Recorded talks, Jumu'ah khutbahs, and the ISOC podcast archive." />
       {CATS.map((cat, si) => {
         const items = getLecturesByCategory(cat);
         if (!items.length) return null;

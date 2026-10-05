@@ -21,8 +21,8 @@ const AMOUNTS: Record<Frequency, number[]> = {
 };
 
 const IMPACT: Record<Frequency, Record<number, string>> = {
-  once:    { 5: "Covers printing costs for one event", 10: "Funds refreshments for a halaqa session", 20: "Supports one charity collection drive", 50: "Sponsors part of a community iftaar" },
-  weekly:  { 1: "52/yr in consistent barakah every Jumu'ah", 3: "156/yr funding the weekly halaqa sessions", 5: "260/yr sustaining a full lecture series", 10: "520/yr transforming our annual programme" },
+  once:    { 5: "Covers printing costs for one event", 10: "Funds refreshments for a weekly class", 20: "Supports one charity collection drive", 50: "Sponsors part of a community iftaar" },
+  weekly:  { 1: "52/yr in consistent barakah every Jumu'ah", 3: "156/yr funding the weekly Roots classes", 5: "260/yr sustaining a full lecture series", 10: "520/yr transforming our annual programme" },
   monthly: { 5: "60/yr covering event admin and printing", 10: "120/yr supporting charity campaigns", 20: "240/yr funding a major community event", 50: "600/yr sustaining ISOC full programme" },
 };
 

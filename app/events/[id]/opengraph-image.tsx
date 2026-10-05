@@ -32,7 +32,7 @@ export default async function EventImage({ params }: { params: Promise<{ id: str
     ? event.isRecurring
       ? `${event.recurringNote ?? "Weekly"} · ${event.time}`
       : `${formatEventDate(event.date)} · ${event.time}${event.endTime ? `–${event.endTime}` : ""}`
-    : "Events, circles and community";
+    : "Events, talks and community";
   const where = event?.location ?? "Aston University, Birmingham";
 
   return new ImageResponse(
