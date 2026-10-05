@@ -8,8 +8,9 @@ canonical URLs onto the domain, and it must only happen once the domain actually
 
 Vercel → the **aston-isoc-12** project → **Settings → Domains** → add `astonisoc.com`.
 
-- When Vercel offers to add `www.astonisoc.com` too, accept, and choose **redirect www → astonisoc.com**.
-- Make `astonisoc.com` (no www) the primary domain.
+- When Vercel offers to add `www.astonisoc.com` too, accept.
+- Vercel marks one host as primary and redirects the other to it. **Currently `www.astonisoc.com` is
+  primary** (`astonisoc.com` 308s to www). Everything below uses whichever host is primary.
 - Vercel will now show the DNS records it needs. Keep this tab open.
 
 ## 2. Point GoDaddy at Vercel
@@ -36,7 +37,7 @@ Vercel → **Settings → Environment Variables** → add:
 
 | Name | Value | Environment |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | `https://astonisoc.com` | Production |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.astonisoc.com` (the primary host, with `https://`) | Production |
 
 Then **Deployments → latest → ⋯ → Redeploy**.
 
@@ -45,19 +46,22 @@ That one variable:
 - moves canonical URLs, the sitemap, robots.txt and the structured data onto the domain;
 - puts `astonisoc.com` on the link-preview card shown in WhatsApp, Instagram and iMessage;
 - turns on a redirect so anyone with the old `aston-isoc-12.vercel.app` address lands on the same
-  page at `astonisoc.com`. Preview deployments are not affected.
+  page at `www.astonisoc.com`. Preview deployments are not affected.
+
+The code adds `https://` if it is left off and strips a trailing slash. A value that still isn't a
+URL stops the build with an error naming the variable (the site stays on the last good deploy).
 
 ## 5. Check it worked
 
-- Visit `https://aston-isoc-12.vercel.app/careers` — it should land on `https://astonisoc.com/careers`.
-- `https://astonisoc.com/robots.txt` should end with `Sitemap: https://astonisoc.com/sitemap.xml`.
+- Visit `https://aston-isoc-12.vercel.app/careers` — it should land on `https://www.astonisoc.com/careers`.
+- `https://www.astonisoc.com/robots.txt` should end with `Sitemap: https://www.astonisoc.com/sitemap.xml`.
 - Paste `https://astonisoc.com` into a WhatsApp chat — the gold-and-purple card should appear.
   (WhatsApp caches previews per link, so test with a link you haven't sent before.)
 
 ## 6. Afterwards (optional, recommended)
 
 - **Google Search Console** → add `astonisoc.com` as a Domain property (GoDaddy can add the
-  verification TXT record for you) → submit `https://astonisoc.com/sitemap.xml`.
+  verification TXT record for you) → submit `https://www.astonisoc.com/sitemap.xml`.
 - Update the link in the Instagram bio and the Linktree to `astonisoc.com`.
 - The redirect in `next.config.ts` is a temporary (307) one on purpose. Once the domain has been
   stable for a few weeks, change `permanent: false` to `permanent: true`.

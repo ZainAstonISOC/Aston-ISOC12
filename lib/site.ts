@@ -2,23 +2,33 @@
  * CANONICAL SITE URL
  * ---------------------------------------------------------------
  * Single source for the public origin, used by metadata, the share card,
- * the sitemap, robots.txt and the Stripe return URLs.
+ * the sitemap, robots.txt, the vercel.app -> domain redirect in
+ * next.config.ts, and the Stripe return URLs.
  *
- * astonisoc.com was registered on 2026-10-05 but is not yet attached in
- * Vercel. Until it is, the default stays on the working vercel.app origin —
- * pointing canonical URLs at a domain that does not serve the site yet stops
- * search engines indexing it and breaks shared-link previews.
+ * Set in Vercel -> Settings -> Environment Variables (Production):
+ *   NEXT_PUBLIC_SITE_URL = https://www.astonisoc.com
+ * Use whichever host Vercel shows as primary for the domain (currently www).
  *
- * GOING LIVE is one switch, done LAST (after the domain loads the site):
- *   Vercel → Settings → Environment Variables →
- *   NEXT_PUBLIC_SITE_URL = https://astonisoc.com   (Production)  → Redeploy
- *
- * That single variable moves every canonical URL and the share card onto the
- * domain, and turns on the redirect in next.config.ts that sends visitors of
- * the old vercel.app address to astonisoc.com.
+ * The value is normalised because it is typed by hand: "www.astonisoc.com"
+ * without a scheme once failed every build (new URL() threw inside
+ * next.config.ts). A missing scheme gets https://; anything still unparseable
+ * stops the build with a message that names the variable.
  */
 export const VERCEL_PRODUCTION_HOST = "aston-isoc-12.vercel.app";
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  `https://${VERCEL_PRODUCTION_HOST}`;
+export function normaliseSiteUrl(raw: string | undefined): string {
+  const value = raw?.trim();
+  if (!value) return `https://${VERCEL_PRODUCTION_HOST}`;
+  const withScheme = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  let url: URL;
+  try {
+    url = new URL(withScheme);
+  } catch {
+    throw new Error(
+      `NEXT_PUBLIC_SITE_URL is not a valid URL: "${value}". Expected something like https://www.astonisoc.com`,
+    );
+  }
+  return url.origin;
+}
+
+export const SITE_URL = normaliseSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
