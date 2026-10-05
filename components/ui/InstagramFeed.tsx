@@ -1,5 +1,6 @@
 import { getInstagramPosts, shortCaption } from "@/lib/instagram";
-import { getUpcomingEvents } from "@/data/events";
+import { getUpcomingEvents } from "@/lib/events";
+import { formatEventDate } from "@/lib/events/time";
 import { SOCIAL } from "@/lib/social";
 
 const PF = "'Playfair Display', Georgia, serif";
@@ -86,8 +87,8 @@ async function LiveGrid() {
  * Shown when no token is configured or Instagram is unreachable. It carries
  * real information from our own data rather than pretending to be posts.
  */
-function FallbackPanel() {
-  const upcoming = getUpcomingEvents(3);
+async function FallbackPanel() {
+  const upcoming = await getUpcomingEvents(3);
 
   return (
     <div className="ig-fallback">
@@ -134,7 +135,7 @@ function FallbackPanel() {
             >
               <p style={{ fontFamily: PF, fontSize: "1.02rem", color: "#fff", marginBottom: "0.2rem" }}>{e.title}</p>
               <p style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)" }}>
-                {new Date(e.date).toLocaleDateString("en-GB", { day: "numeric", month: "long" })} · {e.location}
+                {formatEventDate(e.date, { day: "numeric", month: "long" })} · {e.location}
               </p>
             </div>
           ))}

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Event, BlogPost, CommitteeMember, Resource, Lecture } from "@/types";
 import Icon from "./Icon";
+import { CATEGORY_LABELS } from "@/lib/events/categories";
+import { formatEventDate } from "@/lib/events/time";
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
@@ -22,17 +24,12 @@ export function PageHeader({ label, title, subtitle }: { label?: string; title: 
 }
 
 /* ── EVENT CARD ──────────────────────────────────────────────────────────── */
-const EVENT_LABELS: Record<string, string> = {
-  all: "All Welcome", sisters: "Sisters Only", brothers: "Brothers Only",
-  jummah: "Jumu'ah", charity: "Charity", sports: "Sports",
-  speaker: "Speaker", freshers: "Freshers", social: "Social",
-};
-
 export function EventCard({ event }: { event: Event }) {
   const [hovered, setHovered] = useState(false);
-  const d     = new Date(event.date);
-  const day   = d.getDate().toString().padStart(2, "0");
-  const month = d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase();
+  // Read straight from the YYYY-MM-DD string: new Date() would shift the day
+  // for anyone viewing from a timezone behind the UK.
+  const day   = event.date.slice(8, 10);
+  const month = formatEventDate(event.date, { month: "short" }).toUpperCase();
 
   return (
     <Link href={`/events/${event.id}`} style={{ display: "block", textDecoration: "none" }}>
@@ -55,7 +52,7 @@ export function EventCard({ event }: { event: Event }) {
             <div style={{ fontFamily: DM, fontSize: "0.65rem", letterSpacing: "0.12em", color: "var(--muted-2)", marginTop: "0.2rem" }}>{month}</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", alignItems: "flex-end" }}>
-            <span className={`badge badge-${event.category}`}>{EVENT_LABELS[event.category] ?? event.category}</span>
+            <span className={`badge badge-${event.category}`}>{CATEGORY_LABELS[event.category] ?? event.category}</span>
             {event.isRecurring && <span className="badge badge-muted">Recurring</span>}
           </div>
         </div>
@@ -71,7 +68,7 @@ export function EventCard({ event }: { event: Event }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
           <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)", display: "flex", gap: "0.5rem", alignItems: "center" }}>
             <Icon name="clock" size={14} style={{ color: "#d8af72", flexShrink: 0 }} />
-            {event.time}
+            {event.endTime ? `${event.time}–${event.endTime}` : event.time}
           </span>
           <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)", display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
             <Icon name="pin" size={14} style={{ color: "#d8af72", flexShrink: 0, marginTop: 3 }} />

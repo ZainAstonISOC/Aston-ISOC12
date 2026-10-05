@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import Icon, { type IconName } from "@/components/ui/Icon";
-import { getFeaturedEvents } from "@/data/events";
+import { getFeaturedEvents } from "@/lib/events";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Freshers Hub", description: "New to Aston? Prayer rooms, halal food, welcome events, and your ISOC community all in one place." };
@@ -27,8 +27,8 @@ const GUIDE: { icon: IconName; title: string; desc: string; href: string; extern
   { icon: "instagram", title: "Instagram",          desc: "@astonisoc all the latest",              href: SOCIAL.instagram,              external: true },
 ];
 
-export default function FreshersPage() {
-  const featuredEvents = getFeaturedEvents();
+export default async function FreshersPage() {
+  const featuredEvents = await getFeaturedEvents();
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
       <div className="interior-hero"

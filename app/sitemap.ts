@@ -1,10 +1,10 @@
 import { MetadataRoute } from "next";
-import { events } from "@/data/events";
+import { getUpcomingEvents } from "@/lib/events";
 import { SITE_URL } from "@/lib/site";
 
 const BASE = SITE_URL;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE,                          lastModified: new Date(), changeFrequency: "daily",   priority: 1 },
     { url: `${BASE}/about`,                                         changeFrequency: "monthly",  priority: 0.8 },
@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/data-policy`,                                   changeFrequency: "yearly",   priority: 0.3 },
   ];
 
-  const eventRoutes: MetadataRoute.Sitemap = events.map((e) => ({
+  const eventRoutes: MetadataRoute.Sitemap = (await getUpcomingEvents()).map((e) => ({
     url: `${BASE}/events/${e.id}`,
     lastModified: new Date(e.date),
     changeFrequency: "weekly" as const,

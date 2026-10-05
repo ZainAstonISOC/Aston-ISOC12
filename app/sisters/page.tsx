@@ -3,7 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { getSisterEvents } from "@/data/events";
+import { getSisterEvents } from "@/lib/events";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
@@ -18,8 +18,8 @@ const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "phone", title: "Private WhatsApp", desc: "Sisters-only announcements and community group join via the link below." },
 ];
 
-export default function SistersPage() {
-  const sistersEvents = getSisterEvents().slice(0, 3);
+export default async function SistersPage() {
+  const sistersEvents = await getSisterEvents(3);
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
       <div className="interior-hero" style={{ background: "linear-gradient(160deg, rgba(244,114,182,0.06) 0%, rgba(19,13,40,0.98) 60%)" }}>

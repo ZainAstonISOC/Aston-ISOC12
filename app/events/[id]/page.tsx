@@ -5,29 +5,47 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
 import Icon from "@/components/ui/Icon";
-import { getEventById, events } from "@/data/events";
+import AddToCalendar from "@/components/events/AddToCalendar";
+import { CATEGORY_LABELS, getAllEvents, getEventById } from "@/lib/events";
+import { formatEventDate, londonNow } from "@/lib/events/time";
 import { SOCIAL } from "@/lib/social";
 
-export async function generateStaticParams() { return events.map(e => ({ id: e.id })); }
+export const revalidate = 3600;
+
+// Events known at build time are prerendered; anything added in /admin
+// afterwards renders on first visit and is cached from then on.
+export async function generateStaticParams() {
+  return (await getAllEvents()).map(e => ({ id: e.id }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const event = getEventById(id);
-  return { title: event?.title ?? "Event Not Found" };
+  const event = await getEventById(id);
+  if (!event) return { title: "Event Not Found" };
+  const when = event.isRecurring
+    ? `${event.recurringNote ?? "Weekly"}, ${event.time}`
+    : `${formatEventDate(event.date)}, ${event.time}`;
+  const description = `${when} · ${event.location}. ${event.description}`;
+  return {
+    title: event.title,
+    description: description.length > 200 ? `${description.slice(0, 197)}…` : description,
+  };
 }
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
-const EVENT_LABELS: Record<string, string> = {
-  all: "All Welcome", sisters: "Sisters Only", brothers: "Brothers Only",
-  jummah: "Jumu'ah", charity: "Charity", sports: "Sports",
-  speaker: "Speaker Event", freshers: "Freshers", social: "Social",
-};
 
 export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const event = getEventById(id);
+  const event = await getEventById(id);
   if (!event) notFound();
-  const d = new Date(event.date);
+
+  const day = event.date.slice(8, 10);
+  const monthYear = formatEventDate(event.date, { month: "long", year: "numeric" });
+  const weekday = formatEventDate(event.date, { weekday: "long" });
+  const timeRange = event.endTime ? `${event.time}–${event.endTime}` : event.time;
+  const isPast = !event.isRecurring && event.date < londonNow().date;
+
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Events", href: "/events" }, { label: event.title }]} />
@@ -35,25 +53,31 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
         <div className="max-w-2xl">
           <div className="flex items-baseline gap-4 mb-6">
             <span style={{ fontFamily: PF, fontSize: "4.5rem", fontWeight: 400, color: "#d8af72", lineHeight: 1 }}>
-              {d.getDate().toString().padStart(2, "0")}
+              {day}
             </span>
             <div>
               <p className="text-xs tracking-widest uppercase" style={{ color: "var(--muted-2)", fontFamily: DM }}>
-                {d.toLocaleDateString("en-GB", { month: "long", year: "numeric" })}
+                {weekday} · {monthYear}
               </p>
-              <p className="text-xs mt-0.5" style={{ color: "#d8af72", fontFamily: DM, display: "flex", gap: "0.4rem", alignItems: "center", justifyContent: "center" }}>
+              <p className="text-xs mt-0.5" style={{ color: "#d8af72", fontFamily: DM, display: "flex", gap: "0.4rem", alignItems: "center" }}>
                 <Icon name="clock" size={13} style={{ flexShrink: 0 }} />
-                {event.time}
+                {timeRange}
               </p>
             </div>
           </div>
+
           <div className="flex flex-wrap gap-2 mb-5">
-            <span className={`badge badge-${event.category}`}>{EVENT_LABELS[event.category] ?? event.category}</span>
+            <span className={`badge badge-${event.category}`}>{CATEGORY_LABELS[event.category] ?? event.category}</span>
             {event.isRecurring && <span className="badge badge-muted">Recurring</span>}
             {event.isFeatured && <span className="badge badge-gold">Featured</span>}
+            {isPast && <span className="badge badge-muted">This event has passed</span>}
           </div>
-          <h1 style={{ fontFamily: PF, fontSize: "clamp(2rem,4.5vw,3.2rem)", fontWeight: 500, color: "#fff", marginBottom: "1rem", lineHeight: 1.08 }}>{event.title}</h1>
+
+          <h1 style={{ fontFamily: PF, fontSize: "clamp(2rem,4.5vw,3.2rem)", fontWeight: 500, color: "#fff", marginBottom: "1rem", lineHeight: 1.08 }}>
+            {event.title}
+          </h1>
           <span className="gold-rule" />
+
           <p className="text-sm mb-2" style={{ color: "var(--muted)", fontFamily: DM, display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
             <Icon name="pin" size={15} style={{ color: "#d8af72", flexShrink: 0, marginTop: 3 }} />
             {event.location}
@@ -64,11 +88,30 @@ export default async function EventDetailPage({ params }: { params: Promise<{ id
               {event.recurringNote}
             </p>
           )}
-          <p className="text-base leading-relaxed mb-10" style={{ color: "var(--muted)", fontFamily: DM, lineHeight: 1.85 }}>{event.description}</p>
+
+          {/* pre-line keeps the line breaks the committee typed into the admin form */}
+          <p className="text-base leading-relaxed mb-10" style={{ color: "var(--muted)", fontFamily: DM, lineHeight: 1.85, whiteSpace: "pre-line" }}>
+            {event.description}
+          </p>
+
+          {!isPast && (
+            <div style={{ marginBottom: "2rem" }}>
+              <h2 className="eyebrow" style={{ marginBottom: "0.85rem" }}>Add to your calendar</h2>
+              <AddToCalendar event={event} />
+            </div>
+          )}
+
           <div className="flex gap-3 flex-wrap">
-            {event.registrationUrl
-              ? <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Register for This Event</a>
-              : <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-gold">Register via Instagram</a>}
+            {!isPast &&
+              (event.registrationUrl ? (
+                <a href={event.registrationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
+                  Register for This Event
+                </a>
+              ) : (
+                <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-gold">
+                  Ask on Instagram
+                </a>
+              ))}
             <Link href="/events" className="btn btn-ghost">← All Events</Link>
           </div>
         </div>

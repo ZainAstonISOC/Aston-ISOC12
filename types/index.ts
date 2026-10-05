@@ -16,19 +16,29 @@ export interface CommitteeMember {
   section: CommitteeSection;
 }
 
+export type EventCategory =
+  | "all" | "sisters" | "brothers" | "jummah" | "charity"
+  | "sports" | "speaker" | "freshers" | "social";
+
 export interface Event {
   id: string;
   title: string;
+  /** YYYY-MM-DD, in UK local time. */
   date: string;
+  /** HH:MM start, 24-hour, UK local time. */
   time: string;
+  /** HH:MM end. Optional — calendars assume one hour when it is missing. */
+  endTime?: string;
   location: string;
-  category: "all" | "sisters" | "brothers" | "jummah" | "charity" | "sports" | "speaker" | "freshers" | "social";
+  category: EventCategory;
   description: string;
   registrationUrl?: string;
   image?: string;
   isFeatured?: boolean;
   isRecurring?: boolean;
   recurringNote?: string;
+  /** "builtin" lives in data/events.ts; "admin" was added through /admin. */
+  source?: "builtin" | "admin";
 }
 
 export interface BlogPost {

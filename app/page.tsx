@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getFeaturedEvents } from "@/data/events";
+import { getFeaturedEvents } from "@/lib/events";
 import { fetchLivePrayerTimes } from "@/data/prayer";
 import { getActiveCampaigns } from "@/data/donations";
 import { getBySection } from "@/data/committee";
@@ -22,7 +22,7 @@ const DM = "'DM Sans', sans-serif";
 export default async function HomePage() {
   const [prayers, featuredEvents, campaigns] = await Promise.all([
     fetchLivePrayerTimes(),
-    Promise.resolve(getFeaturedEvents()),
+    getFeaturedEvents(),
     Promise.resolve(getActiveCampaigns()),
   ]);
   // Homepage shows Head Brother + Head Sister only (the two society leads)

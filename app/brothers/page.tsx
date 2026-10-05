@@ -3,7 +3,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { getBrotherEvents } from "@/data/events";
+import { getBrotherEvents } from "@/lib/events";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
@@ -18,8 +18,8 @@ const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "phone", title: "Brothers' WhatsApp", desc: "Private brotherhood group for announcements, community and organising meetups." },
 ];
 
-export default function BrothersPage() {
-  const brothersEvents = getBrotherEvents().slice(0, 3);
+export default async function BrothersPage() {
+  const brothersEvents = await getBrotherEvents(3);
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
       <div className="interior-hero" style={{ background: "linear-gradient(160deg, rgba(99,102,241,0.06) 0%, rgba(19,13,40,0.98) 60%)" }}>

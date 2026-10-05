@@ -1,7 +1,5 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
-import { SITE_URL } from "@/lib/site";
+import { OG_COLORS, OG_SIZE, loadOgAssets, ogFooterHost } from "@/lib/og";
 
 /**
  * The card shown whenever a link to the site is shared — WhatsApp, Instagram
@@ -13,29 +11,14 @@ import { SITE_URL } from "@/lib/site";
  */
 
 export const alt = "Aston ISOC — the Islamic Society at Aston University, Birmingham";
-export const size = { width: 1200, height: 630 };
+export const size = OG_SIZE;
 export const contentType = "image/png";
 
-const BG = "#130d28";
-const BG_3 = "#1f1547";
-const GOLD = "#d8af72";
-const GOLD_SOFT = "#ecd3a6";
-const TEXT = "#f5f2ea";
-const MUTED = "#b7b0c9";
+const { bg: BG, bg3: BG_3, gold: GOLD, goldSoft: GOLD_SOFT, text: TEXT, muted: MUTED } = OG_COLORS;
 
 export default async function OpengraphImage() {
-  const [playfair, playfairItalic, dmSans, mark] = await Promise.all([
-    readFile(join(process.cwd(), "assets/fonts/PlayfairDisplay-SemiBold.ttf")),
-    readFile(join(process.cwd(), "assets/fonts/PlayfairDisplay-MediumItalic.ttf")),
-    readFile(join(process.cwd(), "assets/fonts/DMSans-Medium.ttf")),
-    readFile(join(process.cwd(), "public/isoc-mark.png")),
-  ]);
-  const markSrc = `data:image/png;base64,${mark.toString("base64")}`;
-
-  // Only print a domain once the site is actually served from one; the
-  // vercel.app fallback is not something to put on a share card.
-  const host = new URL(SITE_URL).host;
-  const footerLeft = host.endsWith(".vercel.app") ? "Aston University · Birmingham" : host;
+  const { markSrc, fonts } = await loadOgAssets();
+  const footerLeft = ogFooterHost() ?? "Aston University · Birmingham";
 
   return new ImageResponse(
     (
@@ -137,11 +120,7 @@ export default async function OpengraphImage() {
     ),
     {
       ...size,
-      fonts: [
-        { name: "Playfair Display", data: playfair, style: "normal", weight: 600 },
-        { name: "Playfair Display Italic", data: playfairItalic, style: "italic", weight: 500 },
-        { name: "DM Sans", data: dmSans, style: "normal", weight: 500 },
-      ],
+      fonts,
     }
   );
 }

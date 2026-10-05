@@ -37,6 +37,25 @@ export const departments: Department[] = [
     ],
   },
   {
+    key: "marketing",
+    name: "Marketing",
+    icon: "sparkle",
+    tagline: "Telling the ISOC story",
+    mission: "To make sure every student knows what's on, feels welcome to come, and sees a society worth being part of — through a brand and campaigns people recognise.",
+    objectives: [
+      "Make sure every event reaches the students it's for",
+      "Keep a consistent, recognisable ISOC brand across every channel",
+      "Give the sisters' and brothers' programmes their own dedicated promotion",
+      "Represent the society professionally to the university, partners and sponsors",
+    ],
+    initiatives: [
+      { title: "Event Campaigns", desc: "Posters, graphics and countdowns for every event, so nothing gets announced at the last minute." },
+      { title: "Brand & Design", desc: "The ISOC look — logo, colours and templates used across Instagram, print and the website." },
+      { title: "Sisters' & Brothers' Promotion", desc: "Dedicated officers producing content for each community's own programmes and events." },
+      { title: "Flagship Campaigns", desc: "Freshers, Charity Week, Discover Islam Week and Ramadan — the campaigns that need the biggest push." },
+    ],
+  },
+  {
     key: "jummah",
     name: "Jumu'ah",
     icon: "mosque",
