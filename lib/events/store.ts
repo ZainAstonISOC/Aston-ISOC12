@@ -168,6 +168,39 @@ export async function deleteStoredEvent(id: string): Promise<void> {
   await redis(["HDEL", HASH_KEY, id]);
 }
 
+/* ── Settings (single JSON values, e.g. Jumu'ah times) ────────────────── */
+
+const LOCAL_SETTINGS = join(process.cwd(), ".data", "settings.json");
+
+async function readLocalSettings(): Promise<Record<string, string>> {
+  try {
+    return JSON.parse(await fs.readFile(LOCAL_SETTINGS, "utf8")) as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
+/** A stored setting's raw JSON, or null if it has never been saved. */
+export async function getSetting(name: string): Promise<string | null> {
+  const mode = storageMode();
+  if (mode === "unavailable") return null;
+  if (mode === "local-file") return (await readLocalSettings())[name] ?? null;
+  return redis<string | null>(["GET", `${NAMESPACE}:settings:${name}`]);
+}
+
+export async function saveSetting(name: string, json: string): Promise<void> {
+  const mode = storageMode();
+  if (mode === "unavailable") throw new StorageUnavailableError();
+  if (mode === "local-file") {
+    const all = await readLocalSettings();
+    all[name] = json;
+    await fs.mkdir(join(process.cwd(), ".data"), { recursive: true });
+    await fs.writeFile(LOCAL_SETTINGS, JSON.stringify(all, null, 2));
+    return;
+  }
+  await redis(["SET", `${NAMESPACE}:settings:${name}`, json]);
+}
+
 /* ── Counters (login rate limiting) ───────────────────────────────────── */
 
 const memoryCounters = new Map<string, { n: number; until: number }>();

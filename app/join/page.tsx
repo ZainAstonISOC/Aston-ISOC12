@@ -68,10 +68,10 @@ export default function JoinPage() {
           style={{ background: "rgba(216,175,114,0.05)", border: "1px solid rgba(216,175,114,0.2)", borderRadius: "1.25rem" }}>
           <div>
             <p className="eyebrow mb-1">Exclusive Perk</p>
-            <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>ISOC Discount Card 2025/26</p>
-            <p className="text-sm mt-1" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>Exclusive discounts for members across Birmingham and online.</p>
+            <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>ISOC Discount Card</p>
+            <p className="text-sm mt-1" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>Discounts across Birmingham and online, for members. It comes with your membership, so buy that first on Aston SU.</p>
           </div>
-          <a href={MEMBERSHIP.discountCard} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold shrink-0">View Discounts →</a>
+          <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold shrink-0">Buy membership →</a>
         </div>
       </Reveal>
 

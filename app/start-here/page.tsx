@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getJumuah, jamaatList } from "@/lib/jumuah";
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
@@ -28,10 +29,17 @@ const FAQS = [
   { q: "I missed freshers week can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
   { q: "Is there a sisters-only space?", a: "Yes. The Sisters' Section has dedicated events, a weekly halaqa, a private WhatsApp group, and committee members specifically there for sisters." },
   { q: "I'm a new Muslim what support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
-  { q: "Where is Friday prayer (Jumu'ah)?", a: "Every Friday during term time Aston Students' Union Hall (SU Hall). Khutbah 13:30, prayer ~14:00." },
 ];
 
-export default function StartHerePage() {
+export default async function StartHerePage() {
+  const jumuah = await getJumuah();
+  const faqs = [
+    ...FAQS,
+    {
+      q: "Where is Friday prayer (Jumu'ah)?",
+      a: `Every Friday during term time at ${jumuah.location}. ${jumuah.jamaats.length > 1 ? `There are ${jumuah.jamaats.length} jamaats: ${jamaatList(jumuah.jamaats)}.` : `It starts at ${jumuah.jamaats[0]}.`}`,
+    },
+  ];
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Start Here" }]} />
@@ -72,7 +80,7 @@ export default function StartHerePage() {
       <Reveal delay={100}>
         <p className="eyebrow mb-6">Frequently Asked Questions</p>
         <div className="space-y-2 mb-20">
-          {FAQS.map(faq => (
+          {faqs.map(faq => (
             <details key={faq.q} style={{ border: "1px solid rgba(216,175,114,0.1)", borderRadius: "0.75rem", overflow: "hidden" }}>
               <summary className="flex justify-between items-center px-5 py-4 cursor-pointer font-medium text-sm" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif", listStyle: "none" }}>
                 {faq.q}<span style={{ color: "#d8af72", flexShrink: 0 }}>▾</span>

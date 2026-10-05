@@ -36,6 +36,7 @@ export const linkGroups: LinkGroup[] = [
     items: [
       { label: "Instagram", desc: "@astonisoc. Everything lands here first.", href: SOCIAL.instagram },
       { label: "Brothers' WhatsApp group", desc: "Updates and community chat.", href: WHATSAPP.brothersFreshers },
+      { label: "Sisters' WhatsApp group", desc: "Updates and community chat for sisters.", href: WHATSAPP.sistersFreshers },
       { label: "LinkedIn", desc: "Society news, alumni and careers.", href: SOCIAL.linkedin },
     ],
   },

@@ -21,7 +21,7 @@ const HALAL_FOOD = [
 const GUIDE: { icon: IconName; title: string; desc: string; href: string; external: boolean }[] = [
   { icon: "card",      title: "Join ISOC",          desc: "Full year membership via Aston SU",       href: MEMBERSHIP.join,               external: true },
   { icon: "users",     title: "Sisters WhatsApp",   desc: WHATSAPP.sistersFreshers ? "Sisters Freshers Group" : "Coming Soon",  href: WHATSAPP.sistersFreshers || SOCIAL.instagram, external: true },
-  { icon: "users",     title: "Brothers WhatsApp",  desc: "Brothers Freshers Group 2025/26",          href: WHATSAPP.brothersFreshers,     external: true },
+  { icon: "users",     title: "Brothers WhatsApp",  desc: "Brothers Freshers Group",                  href: WHATSAPP.brothersFreshers,     external: true },
   { icon: "mosque",    title: "Prayer Times",       desc: "Live Birmingham prayer times",             href: "/prayer-times",               external: false },
   { icon: "calendar",  title: "Events Calendar",    desc: "What's on this term",                      href: "/events",                     external: false },
   { icon: "instagram", title: "Instagram",          desc: "@astonisoc all the latest",              href: SOCIAL.instagram,              external: true },
@@ -84,10 +84,10 @@ export default async function FreshersPage() {
             style={{ background: "rgba(216,175,114,0.05)", border: "1px solid rgba(216,175,114,0.2)", borderRadius: "1.25rem" }}>
             <div>
               <p className="eyebrow mb-1">Member Perk</p>
-              <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>ISOC Discount Card 2025/26</p>
-              <p className="text-sm mt-1" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>Exclusive discounts for ISOC members across Birmingham and online.</p>
+              <p className="font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>ISOC Discount Card</p>
+              <p className="text-sm mt-1" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>Discounts across Birmingham and online, for members. It comes with your membership, so buy that first on Aston SU.</p>
             </div>
-            <a href={MEMBERSHIP.discountCard} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold shrink-0">View Discounts →</a>
+            <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold shrink-0">Buy membership →</a>
           </div>
         </Reveal>
 

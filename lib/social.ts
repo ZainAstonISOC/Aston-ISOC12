@@ -11,7 +11,7 @@ export const SOCIAL = {
 
 export const WHATSAPP = {
   brothersFreshers: "https://chat.whatsapp.com/H59AtdMxGSyDRZHjeks0a3",
-  sistersFreshers:  "", // Coming Soon — link to be provided
+  sistersFreshers:  "https://chat.whatsapp.com/C635Kajirb0Kla4jQVp3v9",
   community:        "https://linktr.ee/astonisoc",
 } as const;
 
@@ -27,7 +27,8 @@ export const TELLSAFE = {
 
 export const MEMBERSHIP = {
   join:         "https://www.astonsu.com/society/isoc/",
-  discountCard: "https://www.notion.so/Aston-ISoc-Discount-Card-25-26-26a5bc9019fd8036b676d31825b1cdb6",
+  // The discount card itself is not linked from the site: members receive it
+  // with their membership, so every discount CTA points at `join`.
 } as const;
 
 export const PRAYER_LINKS = {

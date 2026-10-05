@@ -6,6 +6,7 @@ import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import { PRAYER_METHOD, fetchLivePrayerTimes } from "@/data/prayer";
 import { masjids, directionsUrl, MASJIDS_CHECKED } from "@/data/masjids";
 import { formatEventDate } from "@/lib/events/time";
+import { getJumuah } from "@/lib/jumuah";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -18,7 +19,8 @@ const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
 export default async function PrayerTimesPage() {
-  const times = await fetchLivePrayerTimes();
+  const [times, jumuah] = await Promise.all([fetchLivePrayerTimes(), getJumuah()]);
+  const ordinal = ["1st", "2nd", "3rd"];
 
   return (
     <div style={{ minHeight: "100vh" }}>
@@ -56,20 +58,25 @@ export default async function PrayerTimesPage() {
                 </div>
                 <h2 style={{ fontFamily: PF, color: "#fff", fontSize: "clamp(1.3rem, 2.4vw, 1.7rem)" }}>Jumu&apos;ah Prayer</h2>
                 <p style={{ fontFamily: DM, marginTop: "0.5rem", marginBottom: "1rem" }}>
-                  Friday congregational prayer is held every week during term time at the Aston Students&apos; Union Hall (SU Hall).
+                  Friday congregational prayer is held every week during term time
+                  {jumuah.jamaats.length > 1 ? `, in ${jumuah.jamaats.length} jamaats` : ""}.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   {[
-                    { k: "Location", v: "Aston Students' Union Hall (SU Hall)" },
-                    { k: "Khutbah", v: "13:30 (doors open 13:15)" },
-                    { k: "Prayer",  v: "~14:00 (after khutbah)" },
-                    { k: "Sisters", v: "Dedicated section side entrance" },
+                    { k: "Location", v: jumuah.location },
+                    ...jumuah.jamaats.map((t, i) => ({ k: jumuah.jamaats.length > 1 ? `${ordinal[i]} jamaat` : "Time", v: t })),
+                    ...(jumuah.sisters ? [{ k: "Sisters", v: jumuah.sisters }] : []),
                   ].map(row => (
                     <p key={row.k} style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted-2)" }}>
                       <span style={{ color: "#d8af72", fontWeight: 600, marginRight: "0.5rem" }}>{row.k}:</span>{row.v}
                     </p>
                   ))}
                 </div>
+                {jumuah.note && (
+                  <p role="note" style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--gold-soft)", marginTop: "1rem", padding: "0.7rem 0.9rem", border: "1px solid var(--line)", borderRadius: "var(--radius-sm)" }}>
+                    {jumuah.note}
+                  </p>
+                )}
                 <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)", marginTop: "1rem" }}>
                   Confirm on <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ color: "#d8af72" }}>@astonisoc</a> during exam periods.
                 </p>
@@ -115,7 +122,7 @@ export default async function PrayerTimesPage() {
           </div>
           <div className="grid cols-2">
             {[
-              { title: "Your first Jumu\u2019ah?", desc: "Head to the Students' Union Hall (SU Hall) a few minutes early; the times are in the Jumu'ah box above. Sisters have a dedicated section through the side entrance. Not sure where to go? Message us on Instagram." },
+              { title: "Your first Jumu\u2019ah?", desc: `Head to ${jumuah.location} a few minutes early; the times are in the Jumu'ah box above.${jumuah.sisters ? ` Sisters: ${jumuah.sisters.charAt(0).toLowerCase()}${jumuah.sisters.slice(1)}.` : ""} Not sure where to go? Message us on Instagram.` },
               { title: "Everyone is welcome", desc: "You don't need to be a member to use the prayer rooms. New Muslims and non-Muslims are always welcome." },
               { title: "Bring nothing but yourself", desc: "Prayer mats and Qur'ans are provided. Wudu areas are right next door." },
               { title: "Find us if you're lost", desc: "Message us on Instagram or WhatsApp and a committee member will walk you to the prayer room." },

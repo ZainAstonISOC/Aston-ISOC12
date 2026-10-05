@@ -21,6 +21,8 @@ import {
 } from "@/lib/events/store";
 import { EVENTS_TAG } from "@/lib/events";
 import { getBuiltinEvents } from "@/data/events";
+import { JUMUAH_TAG, MAX_JAMAATS, getJumuah } from "@/lib/jumuah";
+import { saveSetting } from "@/lib/events/store";
 
 /* ── Login / logout ───────────────────────────────────────────────────── */
 
@@ -86,7 +88,7 @@ function refreshEventPages(): void {
  * an id that already exists, and saving would silently overwrite that event.
  */
 async function uniqueId(base: string): Promise<string> {
-  const builtin = new Set(getBuiltinEvents().map(e => e.id));
+  const builtin = new Set(getBuiltinEvents(await getJumuah()).map(e => e.id));
   const taken = async (id: string) => builtin.has(id) || (await getStoredEvent(id)) !== null;
   if (!(await taken(base))) return base;
   for (let n = 2; ; n++) if (!(await taken(`${base}-${n}`))) return `${base}-${n}`;
@@ -137,4 +139,64 @@ export async function deleteEvent(form: FormData): Promise<void> {
 
   refreshEventPages();
   redirect("/admin?deleted=1");
+}
+
+/* ── Jumu'ah ──────────────────────────────────────────────────────────── */
+
+export interface JumuahFormValues {
+  jamaats: string[];
+  location: string;
+  sisters: string;
+  note: string;
+}
+
+export interface JumuahFormState {
+  error?: string;
+  fieldErrors?: Partial<Record<"jamaats" | "location" | "sisters" | "note", string>>;
+  values?: JumuahFormValues;
+}
+
+const HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+export async function saveJumuah(_prev: JumuahFormState, form: FormData): Promise<JumuahFormState> {
+  await requireAdmin();
+
+  const values: JumuahFormValues = {
+    jamaats: form.getAll("jamaat").map(v => String(v).trim()).slice(0, MAX_JAMAATS),
+    location: String(form.get("location") ?? "").trim(),
+    sisters: String(form.get("sisters") ?? "").trim(),
+    note: String(form.get("note") ?? "").trim(),
+  };
+  const times = values.jamaats.filter(Boolean);
+  const fieldErrors: JumuahFormState["fieldErrors"] = {};
+
+  if (!times.length) fieldErrors.jamaats = "Add at least one jamaat time.";
+  else if (times.some(t => !HHMM.test(t))) fieldErrors.jamaats = "Use 24-hour times, like 13:30.";
+  else if (new Set(times).size !== times.length) fieldErrors.jamaats = "Two jamaats have the same time.";
+  else if (times.some(t => t < "11:00" || t > "17:00")) fieldErrors.jamaats = "Jumu'ah times should be between 11:00 and 17:00.";
+  if (values.location.length < 3 || values.location.length > 120) fieldErrors.location = "Give a location (up to 120 characters).";
+  if (values.sisters.length > 160) fieldErrors.sisters = "Keep this under 160 characters.";
+  if (values.note.length > 240) fieldErrors.note = "Keep the notice under 240 characters.";
+
+  if (Object.keys(fieldErrors).length) return { error: "Some details need fixing.", fieldErrors, values };
+
+  const settings = {
+    jamaats: [...times].sort(),
+    location: values.location,
+    sisters: values.sisters.replace(/\.$/, ""),
+    note: values.note,
+    updatedAt: new Date().toISOString(),
+  };
+
+  try {
+    await saveSetting("jumuah", JSON.stringify(settings));
+  } catch (err) {
+    if (err instanceof StorageUnavailableError) return { error: err.message, values };
+    console.error("[admin] jumuah save failed:", err);
+    return { error: "Saving failed — nothing was changed. Try again in a moment.", values };
+  }
+
+  updateTag(JUMUAH_TAG);
+  refreshEventPages();
+  redirect("/admin?jumuah=saved");
 }

@@ -6,7 +6,8 @@ import { requireAdmin } from "@/lib/admin/auth";
 import { logout } from "./actions";
 import { CATEGORY_LABELS } from "@/lib/events";
 import { getBuiltinEvents } from "@/data/events";
-import { listStoredEvents, storageMode } from "@/lib/events/store";
+import { getSetting, listStoredEvents, storageMode } from "@/lib/events/store";
+import { jamaatList, parseJumuah } from "@/lib/jumuah";
 import { formatEventDate, londonNow } from "@/lib/events/time";
 import type { Event } from "@/types";
 
@@ -40,7 +41,7 @@ function EventRow({ event, editable }: { event: Event; editable: boolean }) {
           <DeleteEventButton id={event.id} title={event.title} />
         </div>
       ) : (
-        <span className="badge badge-muted" title="Built into the website — change it in data/events.ts">Built in</span>
+        <span className="badge badge-muted" title="Generated from the Jumu'ah settings above">Weekly</span>
       )}
     </li>
   );
@@ -49,7 +50,7 @@ function EventRow({ event, editable }: { event: Event; editable: boolean }) {
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ saved?: string; deleted?: string; error?: string }>;
+  searchParams: Promise<{ saved?: string; deleted?: string; error?: string; jumuah?: string }>;
 }) {
   await requireAdmin();
   const params = await searchParams;
@@ -64,6 +65,14 @@ export default async function AdminPage({
     console.error("[admin] could not load events:", err);
     loadError = true;
   }
+
+  let jumuahRaw: string | null = null;
+  try {
+    jumuahRaw = await getSetting("jumuah");
+  } catch (err) {
+    console.error("[admin] could not load jumuah settings:", err);
+  }
+  const jumuah = parseJumuah(jumuahRaw);
 
   const today = londonNow().date;
   const byDate = (a: Event, b: Event) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`);
@@ -92,6 +101,9 @@ export default async function AdminPage({
         </p>
       )}
       {params.deleted && <p role="status" className="card admin-flash">Event deleted.</p>}
+      {params.jumuah === "saved" && (
+        <p role="status" className="card admin-flash">Jumu&apos;ah details saved. They&apos;re live across the site and in subscribed calendars.</p>
+      )}
       {params.error === "delete" && (
         <p role="alert" className="card admin-flash admin-flash--error">Deleting failed — the event is still there. Try again.</p>
       )}
@@ -119,6 +131,19 @@ export default async function AdminPage({
         </p>
       )}
 
+      <section className="card" style={{ marginBottom: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+        <div style={{ fontFamily: DM }}>
+          <h2 className="eyebrow" style={{ marginBottom: "0.3rem" }}>Jumu&apos;ah</h2>
+          <p style={{ color: "var(--text)", fontWeight: 600 }}>
+            {jumuah.jamaats.length > 1 ? `${jumuah.jamaats.length} jamaats: ` : ""}{jamaatList(jumuah.jamaats)}
+          </p>
+          <p style={{ fontSize: "0.85rem", color: "var(--muted-2)" }}>{jumuah.location}</p>
+          {jumuah.note && <p style={{ fontSize: "0.85rem", color: "var(--gold-soft)", marginTop: "0.3rem" }}>Notice: {jumuah.note}</p>}
+          {!jumuahRaw && <p style={{ fontSize: "0.78rem", color: "var(--muted-2)", marginTop: "0.3rem" }}>Using the website&apos;s defaults until you save.</p>}
+        </div>
+        <Link href="/admin/jumuah" className="btn btn-outline-gold">Edit Jumu&apos;ah times</Link>
+      </section>
+
       <section style={{ marginBottom: "3rem" }}>
         <h2 className="eyebrow">Upcoming</h2>
         {upcoming.length === 0 ? (
@@ -132,7 +157,7 @@ export default async function AdminPage({
 
       <section style={{ marginBottom: "3rem" }}>
         <h2 className="eyebrow">Every week</h2>
-        <ul className="admin-list">{getBuiltinEvents().map(e => <EventRow key={e.id} event={e} editable={false} />)}</ul>
+        <ul className="admin-list">{getBuiltinEvents(jumuah).map(e => <EventRow key={e.id} event={e} editable={false} />)}</ul>
       </section>
 
       {past.length > 0 && (

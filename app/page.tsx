@@ -9,6 +9,7 @@ import Reveal from "@/components/ui/Reveal";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import InstagramFeed from "@/components/ui/InstagramFeed";
 import AyahOfTheDay from "@/components/quran/AyahOfTheDay";
+import { getJumuah, jamaatList } from "@/lib/jumuah";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -21,10 +22,11 @@ const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
 export default async function HomePage() {
-  const [prayers, featuredEvents, campaigns] = await Promise.all([
+  const [prayers, featuredEvents, campaigns, jumuah] = await Promise.all([
     fetchLivePrayerTimes(),
     getFeaturedEvents(),
     Promise.resolve(getActiveCampaigns()),
+    getJumuah(),
   ]);
   // Homepage shows Head Brother + Head Sister only (the two society leads)
   const allExec = getBySection("executive");
@@ -115,7 +117,7 @@ export default async function HomePage() {
           </Reveal>
           <Reveal delay={120}>
             <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "var(--muted-2)", textAlign: "center", marginTop: "1.2rem" }}>
-              Jumu&apos;ah every Friday · Aston Students&apos; Union Hall (SU Hall) · Khutbah 13:30
+              Jumu&apos;ah every Friday · {jumuah.location} · {jamaatList(jumuah.jamaats)}
             </p>
           </Reveal>
         </div>
