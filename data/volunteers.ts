@@ -39,7 +39,7 @@ export const volunteerCampaigns: VolunteerCampaign[] = [
     tagline: "Opening Doors. Building Bridges.",
     description:
       "Discover Islam Week (DIW) is Aston ISOC's flagship dawah event a week-long programme of talks, exhibitions, and open conversations that welcome the whole university community to learn about Islam. Volunteers are at the heart of making it happen.",
-    status: "active",
+    status: "upcoming", // not recruiting yet (2026-10-05); set to "active" when sign-ups open
     roles: ["Event Host", "Exhibition Coordinator", "Guest Speaker Liaison", "Stall Volunteer", "Social Media", "Registration Desk"],
     commitment: "3–6 hours/day during DIW week",
     impact: "Reaches 500+ non-Muslim students annually and generates meaningful conversations",

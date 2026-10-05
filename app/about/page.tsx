@@ -4,12 +4,14 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
+import { committeeMembers } from "@/data/committee";
 
 export const metadata: Metadata = { title: "About Us", description: "Learn about Aston University Islamic Society our mission, history, and the community we've built." };
 
 const STATS = [
   { value: "1,000+", label: "Active Members" },
-  { value: "29", label: "Committee Members" },
+  // Counted from data/committee.ts so it can never drift from the committee page.
+  { value: String(committeeMembers.length), label: "Committee Members" },
   { value: "50+", label: "Events Per Semester" },
   { value: "£100k+", label: "Raised for Charity Last Year" },
 ];
