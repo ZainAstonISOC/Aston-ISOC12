@@ -1,65 +1,72 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { PrayerTime } from "@/types";
+import { PRAYER_LINKS } from "@/lib/social";
 
 const ARABIC = ["الفجر","الشروق","الظهر","العصر","المغرب","العشاء"];
+const DM = "'DM Sans', sans-serif";
 
-function pad(n: number) { return String(n).padStart(2,"0"); }
+function pad(n: number) { return String(n).padStart(2, "0"); }
 
 function timeToMinutes(t: string): number {
   const [h, m] = t.split(":").map(Number);
   return h * 60 + m;
 }
 
-function getCurrentPrayerIndex(times: PrayerTime[]): number {
-  const now = new Date();
-  const nowMins = now.getHours() * 60 + now.getMinutes();
-  // Find next prayer (skip Sunrise as a prayer)
-  const prayerOrder = times.filter(p => p.name !== "Sunrise");
-  let nextIdx = prayerOrder.findIndex(p => timeToMinutes(p.time) > nowMins);
-  // nextIdx -1 means all passed today highlight Fajr (next day)
-  if (nextIdx === -1) nextIdx = 0;
-  // Map back to full array index
-  const nextName = prayerOrder[nextIdx]?.name;
-  return times.findIndex(p => p.name === nextName);
+const londonClock = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/London",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23",
+});
+
+/**
+ * Seconds since midnight in Birmingham. The times on the board are London
+ * times, so the countdown must be too — a visitor's phone set to another
+ * timezone used to get a countdown hours out.
+ */
+function londonSeconds(ms: number): number {
+  const [h, m, s] = londonClock.format(ms).split(":").map(Number);
+  return h * 3600 + m * 60 + s;
 }
 
-function getCountdown(nextTime: string): string {
-  const now = new Date();
-  const [h, m] = nextTime.split(":").map(Number);
-  const target = new Date();
-  target.setHours(h, m, 0, 0);
-  if (target <= now) target.setDate(target.getDate() + 1);
-  const diff = target.getTime() - now.getTime();
-  const hrs  = Math.floor(diff / 3_600_000);
-  const mins = Math.floor((diff % 3_600_000) / 60_000);
-  const secs = Math.floor((diff % 60_000) / 1_000);
-  return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+// A one-second clock shared by every board on the page. The server snapshot is
+// null, so the first client render matches the server and the countdown
+// appears straight after hydration.
+function subscribe(cb: () => void) {
+  const id = setInterval(cb, 1000);
+  return () => clearInterval(id);
 }
+const getSecond = () => Math.floor(Date.now() / 1000);
+const getServerSecond = () => null;
 
-export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] }) {
-  const [nextIdx, setNextIdx]     = useState(() => getCurrentPrayerIndex(times));
-  const [countdown, setCountdown] = useState(() => getCountdown(times.filter(p => p.name !== "Sunrise")[
-    (() => { const now = new Date(); const nowMins = now.getHours()*60+now.getMinutes();
-      const arr = times.filter(p=>p.name!=="Sunrise"); let i = arr.findIndex(p=>timeToMinutes(p.time)>nowMins);
-      if(i===-1)i=0; return i; })()
-  ]?.time ?? "00:00"));
+export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] | null }) {
+  const second = useSyncExternalStore(subscribe, getSecond, getServerSecond);
 
-  useEffect(() => {
-    const tick = setInterval(() => {
-      const idx = getCurrentPrayerIndex(times);
-      setNextIdx(idx);
-      const nextPrayer = times.filter(p => p.name !== "Sunrise")[
-        (() => { const now = new Date(); const nowMins = now.getHours()*60+now.getMinutes();
-          const arr = times.filter(p=>p.name!=="Sunrise"); let i = arr.findIndex(p=>timeToMinutes(p.time)>nowMins);
-          if(i===-1)i=0; return i; })()
-      ];
-      if (nextPrayer) setCountdown(getCountdown(nextPrayer.time));
-    }, 1000);
-    return () => clearInterval(tick);
-  }, [times]);
+  if (!times) {
+    return (
+      <div className="prayer-board" style={{ textAlign: "center" }}>
+        <p style={{ fontFamily: DM, color: "var(--muted)", lineHeight: 1.7 }}>
+          Today&apos;s prayer times couldn&apos;t load just now.
+        </p>
+        <a href={PRAYER_LINKS.liveWidget} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ marginTop: "1rem" }}>
+          See the prayer room timetable
+        </a>
+      </div>
+    );
+  }
 
-  const nextPrayer = times[nextIdx];
+  // Next prayer (Sunrise is shown but is not a prayer). After Isha it is Fajr.
+  const prayers = times.filter(p => p.name !== "Sunrise");
+  let next: PrayerTime | undefined;
+  let countdown = "--:--:--";
+  if (second !== null) {
+    const now = londonSeconds(second * 1000);
+    next = prayers.find(p => timeToMinutes(p.time) * 60 > now) ?? prayers[0];
+    const diff = (timeToMinutes(next.time) * 60 - now + 86_400) % 86_400;
+    countdown = `${pad(Math.floor(diff / 3600))}:${pad(Math.floor((diff % 3600) / 60))}:${pad(diff % 60)}`;
+  }
 
   return (
     <div className="prayer-board">
@@ -67,18 +74,18 @@ export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] }) {
       <div className="prayer-board__top">
         <div>
           <span className="pill live">Live · Birmingham</span>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", color: "var(--muted-2)", marginTop: "0.5rem" }}>
-            Auto-updates daily · Muslim World League method
+          <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "var(--muted-2)", marginTop: "0.5rem" }}>
+            Start times · Moonsighting Committee method
           </p>
         </div>
         <div style={{ textAlign: "right" }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-2)", marginBottom: "0.3rem" }}>
+          <p style={{ fontFamily: DM, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted-2)", marginBottom: "0.3rem" }}>
             Next prayer
           </p>
           <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#d8af72", fontWeight: 600 }}>
-            {nextPrayer?.name ?? " "}
+            {next?.name ?? " "}
           </p>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.35rem", color: "#fff", fontVariantNumeric: "tabular-nums", letterSpacing: "0.05em" }}>
+          <p style={{ fontFamily: DM, fontSize: "1.35rem", color: "#fff", fontVariantNumeric: "tabular-nums", letterSpacing: "0.05em" }}>
             {countdown}
           </p>
         </div>
@@ -87,21 +94,20 @@ export default function PrayerTimesDisplay({ times }: { times: PrayerTime[] }) {
       {/* Prayer grid */}
       <div className="prayer-grid">
         {times.map((p, i) => (
-          <div
-            key={p.name}
-            className={`prayer-cell${i === nextIdx ? " next" : ""}`}
-          >
+          <div key={p.name} className={`prayer-cell${p === next ? " next" : ""}`}>
             <div className="name">{p.name}</div>
             <div className="ar">{ARABIC[i]}</div>
             <div className="time">{p.time}</div>
-            {p.iqamaTime && p.name !== "Sunrise" && (
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: i === nextIdx ? "rgba(216,175,114,0.7)" : "var(--muted-2)", marginTop: "0.3rem" }}>
-                {p.iqamaTime}
-              </div>
-            )}
           </div>
         ))}
       </div>
+
+      <p style={{ fontFamily: DM, fontSize: "0.82rem", color: "var(--muted-2)", textAlign: "center", marginTop: "1.1rem" }}>
+        Jamaat times are set by the prayer room:{" "}
+        <a href={PRAYER_LINKS.liveWidget} target="_blank" rel="noopener noreferrer" style={{ color: "var(--gold)" }}>
+          see today&apos;s jamaat times
+        </a>
+      </p>
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function DonationSuccessPage() {
           <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)", marginBottom: "2.5rem" }}>A confirmation receipt has been sent to your email address.</p>
           <div className="card" style={{ padding: "1.5rem 2rem", marginBottom: "2.5rem" }}>
             <p style={{ fontFamily: PF, fontStyle: "italic", color: "#d8af72", lineHeight: 1.7, fontSize: "0.95rem" }}>&ldquo;Charity does not decrease wealth.&rdquo;</p>
-            <p style={{ fontFamily: DM, fontSize: "0.72rem", color: "var(--muted-2)", marginTop: "0.5rem", letterSpacing: "0.08em" }}>Prophet Muhammad ﷺ · Sahih Muslim</p>
+            <p style={{ fontFamily: DM, fontSize: "0.72rem", color: "var(--muted-2)", marginTop: "0.5rem", letterSpacing: "0.08em" }}>Prophet Muhammad ﷺ · Sahih Muslim 2588</p>
           </div>
           <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/" className="btn btn-gold">Return Home</Link>

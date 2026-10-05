@@ -46,6 +46,7 @@ export const navItems: NavItem[] = [
   {
     label: "Contact", href: "/contact", children: [
       { label: "Contact Us", href: "/contact" },
+      { label: "All Our Links", href: "/links" },
       { label: "Share Feedback", href: "/feedback" },
     ]
   },
@@ -77,6 +78,7 @@ export const footerLinks = {
   ],
   Connect: [
     { label: "Contact Us", href: "/contact" },
+    { label: "All Our Links", href: "/links" },
     { label: "Share Feedback", href: "/feedback" },
     { label: "Sponsorships", href: "/sponsors" },
     { label: "Instagram", href: SOCIAL.instagram, external: true },

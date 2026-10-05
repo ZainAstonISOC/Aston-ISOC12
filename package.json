@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "ayat:refresh": "node --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/refresh-ayat.mjs"
+    "ayat:refresh": "node --disable-warning=ExperimentalWarning --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/refresh-ayat.mjs",
+    "links:check": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",

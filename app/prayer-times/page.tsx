@@ -3,7 +3,9 @@ import Link from "next/link";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
-import { fetchLivePrayerTimes } from "@/data/prayer";
+import { PRAYER_METHOD, fetchLivePrayerTimes } from "@/data/prayer";
+import { masjids, directionsUrl, MASJIDS_CHECKED } from "@/data/masjids";
+import { formatEventDate } from "@/lib/events/time";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export default async function PrayerTimesPage() {
           <p className="eyebrow" style={{ justifyContent: "center" }}>Birmingham · Live daily</p>
           <h1 style={{ fontFamily: PF }}>Never miss a prayer on campus</h1>
           <p className="lede" style={{ margin: "1.4rem auto 0" }}>
-            Times update automatically each day. Congregational prayers are held in the prayer rooms throughout the day.
+            Start times update automatically each day. The prayer room sets its own jamaat times, linked below.
           </p>
         </div>
       </div>
@@ -36,7 +38,7 @@ export default async function PrayerTimesPage() {
           <Reveal><PrayerTimesDisplay times={times} /></Reveal>
           <Reveal delay={80}>
             <p style={{ fontFamily: DM, color: "var(--muted-2)", textAlign: "center", fontSize: "0.82rem", marginTop: "1rem" }}>
-              Calculation method: Muslim World League (MWL). Always confirm with your local mosque for exact congregation times.
+              Start times calculated with the {PRAYER_METHOD} method. Jamaat times differ from masjid to masjid, so check the one you&apos;re going to.
             </p>
           </Reveal>
         </div>
@@ -111,13 +113,14 @@ export default async function PrayerTimesPage() {
             <Reveal><h2 className="eyebrow">Good to know</h2></Reveal>
             <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Praying on campus for the first time?</h2></Reveal>
           </div>
-          <div className="grid cols-3">
+          <div className="grid cols-2">
             {[
+              { title: "Your first Jumu\u2019ah?", desc: "Head to the Students' Union Hall (SU Hall) a few minutes early; the times are in the Jumu'ah box above. Sisters have a dedicated section through the side entrance. Not sure where to go? Message us on Instagram." },
               { title: "Everyone is welcome", desc: "You don't need to be a member to use the prayer rooms. New Muslims and non-Muslims are always welcome." },
               { title: "Bring nothing but yourself", desc: "Prayer mats and Qur'ans are provided. Wudu areas are right next door." },
               { title: "Find us if you're lost", desc: "Message us on Instagram or WhatsApp and a committee member will walk you to the prayer room." },
             ].map((item, i) => (
-              <Reveal key={item.title} delay={i * 80}>
+              <Reveal key={item.title} delay={(i % 2) * 80}>
                 <article className="card feature">
                   <h3 style={{ fontFamily: PF, color: "#fff" }}>{item.title}</h3>
                   <p style={{ fontFamily: DM, marginTop: "0.5rem" }}>{item.desc}</p>
@@ -125,6 +128,38 @@ export default async function PrayerTimesPage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section section--tight" id="masjids">
+        <div className="container">
+          <div className="section-head center">
+            <Reveal><p className="eyebrow">Off campus</p></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Masjids near campus</h2></Reveal>
+            <Reveal delay={100}>
+              <p style={{ fontFamily: DM, color: "var(--muted)", maxWidth: "56ch", margin: "0.75rem auto 0", lineHeight: 1.7 }}>
+                We don&apos;t print other masjids&apos; prayer times, because only they can keep them right. Each one publishes its own timetable.
+              </p>
+            </Reveal>
+          </div>
+          <div className="grid cols-3">
+            {masjids.map((m, i) => (
+              <Reveal key={m.name} delay={i * 80}>
+                <article className="card" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                  <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.2rem" }}>{m.name}</h3>
+                  <p style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted-2)", marginTop: "0.4rem", flex: 1 }}>{m.address}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "1.1rem" }}>
+                    <a href={m.timetable} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ fontSize: "0.78rem", padding: "0.6rem 1rem" }}>Timetable</a>
+                    <a href={directionsUrl(m.address)} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ fontSize: "0.78rem", padding: "0.6rem 1rem" }}>Directions</a>
+                    <a href={m.website} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ fontSize: "0.78rem", padding: "0.6rem 1rem" }}>Website</a>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+          <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)", textAlign: "center", marginTop: "1.25rem" }}>
+            Addresses and links checked against each masjid&apos;s own website on {formatEventDate(MASJIDS_CHECKED, { day: "numeric", month: "long", year: "numeric" })}.
+          </p>
         </div>
       </section>
 

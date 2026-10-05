@@ -197,7 +197,7 @@ export default async function HomePage() {
             <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Sisters &amp; Brothers</h2></Reveal>
             <Reveal delay={120}>
               <p className="lede" style={{ marginInline: "auto", fontStyle: "italic", color: "var(--muted-2)", fontFamily: PF, fontSize: "0.95rem" }}>
-                &ldquo;The believers are like one body in their mutual love.&rdquo; Prophet Muhammad ﷺ
+                &ldquo;The believers are like one body in their mutual love.&rdquo; Prophet Muhammad ﷺ · Sahih Muslim 2586
               </p>
             </Reveal>
           </div>
@@ -263,7 +263,7 @@ export default async function HomePage() {
                 <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Active Campaigns</h2></Reveal>
                 <Reveal delay={100}>
                   <p style={{ fontFamily: PF, fontStyle: "italic", color: "var(--muted-2)", fontSize: "0.92rem" }}>
-                    &ldquo;Charity does not decrease wealth.&rdquo; Prophet Muhammad ﷺ
+                    &ldquo;Charity does not decrease wealth.&rdquo; Prophet Muhammad ﷺ · Sahih Muslim 2588
                   </p>
                 </Reveal>
               </div>
