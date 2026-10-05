@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
+import Icon from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP, CONTACT } from "@/lib/social";
 import { volunteerCampaigns } from "@/data/volunteers";
 
@@ -120,7 +121,7 @@ export default function ContactPage() {
         {campaigns.map((c, i) => (
           <Reveal key={c.id} delay={i * 80}>
             <div className="card" style={{ borderColor: "rgba(216,175,114,0.15)" }}>
-              <span style={{ fontSize: "2rem", display: "block", marginBottom: "0.85rem" }}>{c.icon}</span>
+              <span className="icon-badge" style={{ marginBottom: "0.85rem" }}><Icon name={c.icon} /></span>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
                 <h3 style={{ fontFamily: PF, fontSize: "1.2rem", color: "#fff" }}>{c.name}</h3>
                 <span className={`pill${c.status === "active" ? " live" : ""}`} style={{ fontSize: "0.62rem" }}>

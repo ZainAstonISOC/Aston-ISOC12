@@ -29,7 +29,6 @@ export const committeeMembers: CommitteeMember[] = [
   { id: "socials-head",        name: "Ahmad Gebriel",  role: "Head of Socials",           year: "2026/27", bio: "Manages ISOC social events, community engagement, and content creation across all platforms.", section: "social_media" },
   { id: "socials-brothers-1",  name: "Fayez",          role: "Socials Brothers Officer",  year: "2026/27", bio: "Creates brothers-focused social content, organises community events, and drives engagement.", section: "social_media" },
   { id: "socials-brothers-2",  name: "Al Juwainy",     role: "Socials Brothers Officer",  year: "2026/27", bio: "Produces video content, supports social events, and manages brothers community campaigns.", section: "social_media" },
-  { id: "socials-brothers-3",  name: "Rahfay",         role: "Socials Brothers Officer",  year: "2026/27", bio: "Helps run brothers social events and content, building engagement across the ISOC community.", section: "social_media" },
   { id: "socials-sisters-1",   name: "Hibah",          role: "Socials Sisters Officer",   year: "2026/27", bio: "Manages sisters social presence, creates community content, and organises sisters engagement activities.", section: "social_media" },
   { id: "socials-sisters-2",   name: "Shafiya",        role: "Socials Sisters Officer",   year: "2026/27", bio: "Supports sisters social content creation and community engagement.", section: "social_media" },
 
@@ -37,6 +36,7 @@ export const committeeMembers: CommitteeMember[] = [
   { id: "education-head",       name: "Yousaf Ali",    role: "Head of Education",          year: "2026/27", bio: "Leads ISOC Islamic education programme, halaqa circles, lecture series, and speaker events.", section: "education" },
   { id: "education-brothers-1", name: "Zahi Manakkal", role: "Education Brothers Officer",  year: "2026/27", bio: "Organises brothers halaqa circles and supports the Islamic education programme.", section: "education" },
   { id: "education-brothers-2", name: "Ismaeel",       role: "Education Brothers Officer",  year: "2026/27", bio: "Coordinates brothers educational workshops and Islamic study sessions.", section: "education" },
+  { id: "education-brothers-3", name: "Rahfay",        role: "Education Brothers Officer",  year: "2026/27", bio: "Supports brothers halaqa circles and the Islamic education programme.", section: "education" },
   { id: "education-sisters-1",  name: "Zainab Khan",   role: "Education Sisters Officer",   year: "2026/27", bio: "Leads sisters halaqa circles and Islamic knowledge sessions.", section: "education" },
   { id: "education-sisters-2",  name: "Madheeha",      role: "Education Sisters Officer",   year: "2026/27", bio: "Organises sisters educational events and supports the education programme.", section: "education" },
 
