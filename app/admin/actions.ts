@@ -41,7 +41,7 @@ export async function login(_prev: LoginState, form: FormData): Promise<LoginSta
     return { error: "The admin area isn't set up yet. ADMIN_PASSWORD and ADMIN_SESSION_SECRET need adding in Vercel." };
   }
 
-  const key = `isoc:login:${await clientIp()}`;
+  const key = `login:${await clientIp()}`;
   const attempts = await hitCounter(key, WINDOW_SECONDS);
   if (attempts > MAX_ATTEMPTS) {
     return { error: "Too many attempts. Wait 15 minutes and try again." };

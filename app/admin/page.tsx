@@ -102,6 +102,12 @@ export default async function AdminPage({
           Storage → create an <strong>Upstash Redis</strong> database → connect it to this project → redeploy.
         </div>
       )}
+      {mode === "redis" && process.env.VERCEL_ENV === "preview" && (
+        <p className="card admin-flash">
+          <strong>Preview deployment.</strong> Events saved here are test data, stored separately, and
+          never appear on the live site.
+        </p>
+      )}
       {mode === "local-file" && (
         <p className="card admin-flash">
           Development mode: events are saved to <code>.data/events.json</code> on this computer only.

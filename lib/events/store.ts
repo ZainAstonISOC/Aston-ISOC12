@@ -17,7 +17,18 @@ import type { Event } from "@/types";
  * panel can be exercised locally with no credentials.
  */
 
-const HASH_KEY = "isoc:events";
+/**
+ * Keys are namespaced by Vercel environment. One Upstash database is normally
+ * connected to Production AND Preview; without this, an event added while
+ * testing a preview deployment would appear on the live site.
+ * Production keeps the plain "isoc:" prefix.
+ */
+const NAMESPACE =
+  process.env.VERCEL_ENV === "production" ? "isoc" : `isoc:${process.env.VERCEL_ENV ?? "local"}`;
+
+export const storageNamespace = NAMESPACE;
+
+const HASH_KEY = `${NAMESPACE}:events`;
 
 function redisConfig(): { url: string; token: string } | null {
   // The Vercel Marketplace integration names these KV_*; a direct Upstash
@@ -166,7 +177,8 @@ const memoryCounters = new Map<string, { n: number; until: number }>();
  * returns the new value. Redis-backed in production so the limit holds across
  * serverless instances; in-memory locally.
  */
-export async function hitCounter(key: string, ttlSeconds: number): Promise<number> {
+export async function hitCounter(name: string, ttlSeconds: number): Promise<number> {
+  const key = `${NAMESPACE}:${name}`;
   if (storageMode() === "redis") {
     const [, count] = await redisPipeline([
       ["SET", key, "0", "EX", ttlSeconds, "NX"],
@@ -184,7 +196,8 @@ export async function hitCounter(key: string, ttlSeconds: number): Promise<numbe
   return cur.n;
 }
 
-export async function clearCounter(key: string): Promise<void> {
+export async function clearCounter(name: string): Promise<void> {
+  const key = `${NAMESPACE}:${name}`;
   if (storageMode() === "redis") {
     await redis(["DEL", key]);
     return;
