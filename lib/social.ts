@@ -17,11 +17,12 @@ export const WHATSAPP = {
 
 /**
  * TellSafe — anonymous community feedback platform.
- * `url` is the org page members submit through; change the slug here if the
- * society moves to its own TellSafe organisation and everything follows.
+ * `url` is the society's own TellSafe page ("Aston Isoc"), used for the
+ * embedded form and every link to it. Keep it free of tracking parameters
+ * (utm_*, fbclid) even when the link is copied from Instagram.
  */
 export const TELLSAFE = {
-  url:    "https://www.tellsafe.app/feedback",
+  url:    "https://www.tellsafe.app/aston-isoc",
   origin: "https://www.tellsafe.app",
 } as const;
 
