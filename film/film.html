@@ -1,0 +1,543 @@
+<!doctype html>
+<!--
+  Aston ISOC — launch film.
+  A deterministic timeline: render.mjs calls window.renderAt(seconds) for every
+  frame and screenshots the stage. Nothing animates on its own, so any frame can
+  be re-rendered exactly. Open in a browser with ?cut=reel&scrub to preview.
+
+  Cuts:
+    reel  1080×1920, ~24.5s — Instagram Reel, with chapter typography and end card.
+    hero  1080×1350, 16s seamless loop — website hero, no typography (the page has its own).
+
+  Every screen and card is a capture of the live site (capture.mjs). Nothing here
+  is invented footage.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aston ISOC film</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=block" rel="stylesheet">
+<style>
+  :root {
+    --bg: #130d28; --bg-3: #1f1547; --gold: #d8af72; --gold-soft: #ecd3a6;
+    --text: #f5f2ea; --muted: #b7b0c9;
+  }
+  html, body { margin: 0; background: #0b0718; overflow: hidden; }
+  #stage { position: relative; overflow: hidden; background: var(--bg); }
+
+  /* Light: one warm key from above, a cool fill low on the opposite side. */
+  .light { position: absolute; inset: 0; pointer-events: none; }
+  #key  { background: radial-gradient(60% 42% at var(--kx, 50%) var(--ky, 30%), rgba(216,175,114,0.20), rgba(216,175,114,0.05) 45%, transparent 70%); }
+  #fill { background: radial-gradient(70% 50% at 20% 100%, rgba(80,58,160,0.28), transparent 70%); }
+  #vignette { background: radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(5,3,14,0.75) 100%); }
+
+  #scene { position: absolute; inset: 0; perspective: 2600px; perspective-origin: 50% 50%; }
+  #rig, #pieces { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+
+  /* ---- Phone. A generic slab, no manufacturer marks. ---- */
+  .phone { position: absolute; width: 418px; height: 872px; left: -209px; top: -436px; transform-style: preserve-3d; }
+  .slab { position: absolute; inset: 0; border-radius: 66px; background: #2a2340; }
+  .side { position: absolute; top: 66px; height: 740px; width: 12px; transform-origin: 0 50%;
+          background: linear-gradient(180deg, #3a3152, #6d6287 18%, #2b2440 40%, #574b74 70%, #2a2340); }
+  .side::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,240,215,var(--spec,0.0)), transparent); }
+  .btn-side { position: absolute; left: 3px; width: 6px; border-radius: 3px; background: linear-gradient(90deg,#5c5178,#8c80a8,#4b4166); }
+  .front { position: absolute; inset: 0; border-radius: 66px; transform: translateZ(0.5px);
+           background: linear-gradient(145deg, #7f739c 0%, #3b3255 22%, #251e38 50%, #4d4369 78%, #9a8fb5 100%);
+           box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10); }
+  .bezel { position: absolute; inset: 4px; border-radius: 62px; background: #05030b; }
+  .screen { position: absolute; left: 14px; top: 14px; width: 390px; height: 844px; border-radius: 52px; overflow: hidden; background: var(--bg); }
+  .strip { position: absolute; left: 0; top: 48px; width: 390px; will-change: transform; }
+  .statusbar { position: absolute; left: 0; top: 0; right: 0; height: 48px; background: linear-gradient(var(--bg) 70%, rgba(19,13,40,0)); z-index: 2;
+               font: 600 16px/48px 'DM Sans', system-ui, sans-serif; color: var(--text); }
+  .statusbar .time { position: absolute; left: 44px; top: 4px; }
+  .statusbar .icons { position: absolute; right: 34px; top: 21px; display: flex; gap: 6px; align-items: flex-end; }
+  .bars i { display: inline-block; width: 3px; margin-left: 2px; background: var(--text); border-radius: 1px; }
+  .batt { width: 24px; height: 11px; border: 1.5px solid rgba(245,242,234,0.55); border-radius: 3.5px; position: relative; box-sizing: border-box; }
+  .batt::after { content: ""; position: absolute; inset: 1.5px; right: 5px; background: var(--text); border-radius: 1.5px; }
+  .island { position: absolute; left: 50%; top: 11px; width: 118px; height: 34px; margin-left: -59px; background: #000; border-radius: 20px; z-index: 3; }
+  .glare { position: absolute; inset: 0; border-radius: 52px; z-index: 4; pointer-events: none;
+           background: linear-gradient(var(--ga, 115deg), transparent 40%, rgba(255,246,230,0.11) 48%, rgba(255,246,230,0.03) 53%, transparent 60%);
+           background-size: 300% 300%; background-position: var(--gp, 50%) var(--gp, 50%); }
+  .dim { position: absolute; inset: -2px; border-radius: 66px; background: #07040f; opacity: 0; z-index: 5; }
+
+  /* ---- Pieces lifted from the screen ---- */
+  .piece { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; opacity: 0; }
+  .piece img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 30px 40px rgba(4,2,12,0.55)); }
+
+  /* ---- Typography ---- */
+  .chapter { position: absolute; left: 96px; right: 96px; top: 250px; opacity: 0; }
+  .eyebrow { display: flex; align-items: center; gap: 22px; font: 600 25px/1 'DM Sans', sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); margin: 0 0 34px; }
+  .eyebrow::before { content: ""; width: 64px; height: 2px; background: var(--gold); opacity: 0.8; transform-origin: 0 50%; transform: scaleX(var(--rule, 1)); }
+  .headline { font: 600 92px/1.04 'Playfair Display', Georgia, serif; color: var(--text); margin: 0; letter-spacing: -0.01em; }
+  .headline em { font-style: italic; font-weight: 500; color: var(--gold); }
+  .line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+  .line > span { display: inline-block; will-change: transform; }
+
+  .greet { position: absolute; font: 700 120px/1.3 'Aref Ruqaa', serif; color: var(--gold); direction: rtl; white-space: nowrap;
+           text-shadow: 0 0 40px rgba(216,175,114,0.25); opacity: 0; }
+
+  #end { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; }
+  #end img { width: 560px; height: auto; }
+  #end .tag { margin-top: 70px; font: 600 26px/1 'DM Sans', sans-serif; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold-soft); }
+  #end .url { margin-top: 28px; font: 500 30px/1 'DM Sans', sans-serif; letter-spacing: 0.04em; color: var(--muted); }
+
+  #grain { position: absolute; inset: 0; width: 100%; height: 100%; mix-blend-mode: overlay; pointer-events: none; }
+  #scrub { position: fixed; left: 0; right: 0; bottom: 0; z-index: 99; width: 100%; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <filter id="vblur" x="0" y="-10%" width="100%" height="120%"><feGaussianBlur id="vblurDev" stdDeviation="0 0"/></filter>
+  <filter id="hblur" x="-10%" y="0" width="120%" height="100%"><feGaussianBlur id="hblurDev" stdDeviation="0 0"/></filter>
+</svg>
+
+<div id="stage">
+  <div class="light" id="key"></div>
+  <div class="light" id="fill"></div>
+
+  <div id="greetings">
+    <div class="greet" id="g0">السلام عليكم</div>
+    <div class="greet" id="g1">أهلاً وسهلاً</div>
+    <div class="greet" id="g2">مرحباً بكم</div>
+  </div>
+
+  <div id="scene">
+    <div id="rig">
+      <div class="phone" id="phone"></div>
+      <div id="pieces"></div>
+    </div>
+  </div>
+
+  <div class="chapter" id="ch-faith">
+    <p class="eyebrow">Faith</p>
+    <h2 class="headline"><span class="line"><span>Never miss a</span></span><span class="line"><span><em>prayer</em> on</span></span><span class="line"><span>campus.</span></span></h2>
+  </div>
+  <div class="chapter" id="ch-community">
+    <p class="eyebrow">Community</p>
+    <h2 class="headline"><span class="line"><span>More than</span></span><span class="line"><span>a society.</span></span><span class="line"><span>A <em>community.</em></span></span></h2>
+  </div>
+  <div class="chapter" id="ch-growth">
+    <p class="eyebrow">Growth</p>
+    <h2 class="headline"><span class="line"><span>One ayah,</span></span><span class="line"><span><em>every</em> day.</span></span></h2>
+  </div>
+
+  <div id="end">
+    <img src="../public/loader-new.png" alt="Aston University Islamic Society">
+    <p class="tag">Faith · Community · Growth</p>
+    <p class="url">astonisoc.com</p>
+  </div>
+
+  <div class="light" id="vignette"></div>
+  <canvas id="grain"></canvas>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const CUT = params.get('cut') || 'reel';
+
+// ───────────────────────────── easing + tracks ─────────────────────────────
+const E = {
+  lin: p => p,
+  inOut: p => p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3)/2,
+  inOutQuint: p => p < .5 ? 16*p**5 : 1 - Math.pow(-2*p + 2, 5)/2,
+  out: p => 1 - Math.pow(1 - p, 3),
+  outExpo: p => p === 1 ? 1 : 1 - Math.pow(2, -10*p),
+  in: p => p*p*p,
+  inExpo: p => p === 0 ? 0 : Math.pow(2, 10*p - 10),
+  outBack: p => { const c = 1.15, d = c + 1; return 1 + d*Math.pow(p - 1, 3) + c*Math.pow(p - 1, 2); },
+};
+const clamp01 = v => Math.max(0, Math.min(1, v));
+const lerp = (a, b, p) => a + (b - a)*p;
+
+// A track is [[time, value, easeIntoThisKey], ...]; values are numbers or flat objects.
+function track(keys) {
+  return t => {
+    if (t <= keys[0][0]) return keys[0][1];
+    for (let i = 1; i < keys.length; i++) {
+      const [t1, v1, ease = 'inOut'] = keys[i];
+      if (t <= t1) {
+        const [t0, v0] = keys[i - 1];
+        const p = t1 === t0 ? 1 : E[ease]((t - t0)/(t1 - t0));
+        if (typeof v0 === 'number') return lerp(v0, v1, p);
+        const o = {}; for (const k in v1) o[k] = lerp(v0[k] ?? v1[k], v1[k], p); return o;
+      }
+    }
+    return keys[keys.length - 1][1];
+  };
+}
+// Window helper: 0 before a, ramps to 1 by b, holds, ramps back to 0 between c and d.
+function win(t, a, b, c, d, ein = 'out', eout = 'in') {
+  if (t <= a || t >= d) return 0;
+  if (t < b) return E[ein]((t - a)/(b - a));
+  if (t <= c) return 1;
+  return 1 - E[eout]((t - c)/(d - c));
+}
+
+// ───────────────────────────── build the phone ─────────────────────────────
+const phone = document.getElementById('phone');
+const T = 12; // body thickness in px
+for (let i = 1; i <= 14; i++) {
+  const s = document.createElement('div'); s.className = 'slab';
+  const shade = 22 + Math.round(18*Math.sin(i/14*Math.PI));
+  s.style.background = `hsl(258 22% ${shade}%)`;
+  s.style.transform = `translateZ(${-i*T/14}px)`;
+  phone.appendChild(s);
+}
+for (const side of ['left', 'right']) {
+  const f = document.createElement('div'); f.className = 'side';
+  f.style.left = side === 'left' ? '0px' : '418px';
+  f.style.transform = side === 'left' ? `rotateY(90deg) translateX(${-T}px)` : `rotateY(90deg)`;
+  f.style.transform = side === 'left' ? `translateZ(${-T}px) rotateY(-90deg)` : `rotateY(90deg)`;
+  // buttons: volume on the left, power on the right
+  const btns = side === 'left' ? [[110, 54], [190, 54], [40, 30]] : [[150, 96]];
+  for (const [top, h] of btns) { const b = document.createElement('div'); b.className = 'btn-side'; b.style.top = top + 'px'; b.style.height = h + 'px'; f.appendChild(b); }
+  f.dataset.side = side;
+  phone.appendChild(f);
+}
+phone.insertAdjacentHTML('beforeend', `
+  <div class="front">
+    <div class="bezel"></div>
+    <div class="screen" id="screen">
+      <img class="strip" id="strip" src="screens/home.jpg" alt="">
+      <div class="statusbar"><span class="time">9:41</span>
+        <span class="icons"><span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span><span class="batt"></span></span>
+      </div>
+      <div class="island"></div>
+      <div class="glare" id="glare"></div>
+    </div>
+    <div class="dim" id="dim"></div>
+  </div>`);
+
+const SCREEN_X = -195, SCREEN_Y = -422, STATUS = 48, SCREEN_H = 844;
+const strip = document.getElementById('strip');
+
+// ───────────────────────────── pieces ─────────────────────────────
+let LAYOUT;
+const groups = {};
+function makeGroup(name, prefix, rects) {
+  const host = document.getElementById('pieces');
+  groups[name] = rects.map((r, i) => {
+    const el = document.createElement('div'); el.className = 'piece';
+    el.style.width = r.w + 'px'; el.style.height = r.h + 'px';
+    el.innerHTML = `<img src="screens/${prefix}-${i}.png" alt="">`;
+    host.appendChild(el);
+    return { el, r };
+  });
+}
+
+// Place a piece. `ref` is the strip scroll at the moment it lifted, so a
+// floating card does not ride along when the screen scrolls underneath it.
+// `p` 0 → sitting exactly on the screen; 1 → at its target `to`.
+const PERSPECTIVE = 2600;
+const CUR = { cx: 0, cy: 0, s: 1 };
+function placePiece(pc, ref, p, to, t, i) {
+  const { r, el } = pc;
+  const baseY = SCREEN_Y + STATUS + r.y - ref;
+  const clampedY = Math.max(SCREEN_Y + STATUS, Math.min(SCREEN_Y + SCREEN_H - r.h, baseY));
+  const x0 = SCREEN_X + r.x, y0 = clampedY;
+  // Cards that start off-screen fade in as they emerge instead of popping.
+  const offscreen = Math.abs(baseY - clampedY) > 2;
+  const alpha = p <= 0 ? 0 : offscreen ? clamp01(p*5) : 1;
+  const drift = p*(to.drift ?? 1);
+  if (to.wx !== undefined) {
+    // Target given as a point in the frame: invert the camera roughly (perspective
+    // about the stage centre, then the rig's position and scale).
+    const mag = PERSPECTIVE/(PERSPECTIVE - to.z*CUR.s);
+    to = { ...to,
+      x: ((to.wx - cut.W/2)/mag + cut.W/2 - CUR.cx)/CUR.s - (x0 + r.w/2),
+      y: ((to.wy - cut.H/2)/mag + cut.H/2 - CUR.cy)/CUR.s - (y0 + r.h/2) };
+  }
+  const dx = lerp(0, to.x, p) + Math.sin(t*0.9 + i*1.7)*6*drift;
+  const dy = lerp(0, to.y, p) + Math.cos(t*0.7 + i*2.3)*8*drift;
+  const dz = lerp(1, to.z, p);
+  el.style.opacity = alpha;
+  el.style.transform = `translate3d(${x0 + dx}px, ${y0 + dy}px, ${dz}px) rotateX(${lerp(0, to.rx ?? 0, p)}deg) rotateY(${lerp(0, to.ry ?? 0, p)}deg) rotateZ(${lerp(0, to.rz ?? 0, p)}deg) scale(${lerp(1, to.s ?? 1, p)})`;
+}
+function staggered(p, i, n, st) { return clamp01((p - i*st)/(1 - (n - 1)*st)); }
+
+// ───────────────────────────── cut definitions ─────────────────────────────
+const CUTS = {};
+
+// Scroll stops on the homepage strip (document px).
+const SC = { top: 0, prayer: 1175, ayah: 1990, offer: 2790 };
+
+CUTS.reel = {
+  W: 1080, H: 1920, duration: 24.5, grain: 0.055,
+  pose: track([
+    // Open in macro on the Bismillah at the top of the homepage, then pull back.
+    [0.0,  { x: -250, y: 960, s: 4.3,  rx: 10, ry: -22, rz: -5 }],
+    [1.3,  { x: -250, y: 760, s: 3.5,  rx: 9,  ry: -20, rz: -4 }, 'inOut'],
+    [2.7,  { x: 0,    y: 140, s: 1.22, rx: 6, ry: -16, rz: -3 }, 'outExpo'],
+    [5.0,  { x: 0,    y: 120, s: 1.26, rx: 4, ry: -7,  rz: -1 }, 'inOut'],
+    [6.5,  { x: 0,    y: 0,   s: 2.76, rx: 0, ry: 0,   rz: 0 }, 'inOutQuint'],
+    [7.7,  { x: 60,   y: 330, s: 1.08, rx: 8, ry: 15,  rz: 2 }, 'outExpo'],
+    [9.85, { x: 40,   y: 310, s: 1.12, rx: 6, ry: 9,   rz: 1 }, 'inOut'],
+    [10.2, { x: -1100,y: 290, s: 1.12, rx: 6, ry: -10, rz: -2 }, 'in'],
+    [10.2001, { x: 1100, y: 420, s: 0.98, rx: 6, ry: 30, rz: 2 }],
+    [10.9, { x: -190, y: 470, s: 0.98, rx: 6, ry: 24,  rz: 1 }, 'outExpo'],
+    [13.4, { x: -170, y: 450, s: 1.0,  rx: 5, ry: 18,  rz: 0 }, 'inOut'],
+    [14.4, { x: 0,    y: 330, s: 1.14, rx: 4, ry: -6,  rz: 0 }, 'inOut'],
+    [15.6, { x: 0,    y: 560, s: 0.9,  rx: 14, ry: -4, rz: 0 }, 'inOut'],
+    [18.5, { x: 0,    y: 590, s: 0.88, rx: 15, ry: -2, rz: 0 }, 'inOut'],
+    [19.3, { x: 0,    y: 40,  s: 2.4,  rx: 0, ry: 0,   rz: 0 }, 'inOutQuint'],
+    [20.6, { x: 0,    y: 90,  s: 1.22, rx: 6, ry: -16, rz: -3 }, 'outExpo'],
+    [21.1, { x: 0,    y: 100, s: 1.2,  rx: 6, ry: -18, rz: -3 }, 'inOut'],
+    [21.8, { x: 0,    y: 640, s: 0.86, rx: 24, ry: -24, rz: -4 }, 'in'],
+  ]),
+  phoneAlpha: track([[0, 1], [21.15, 1], [21.75, 0, 'in']]),
+  scroll: track([
+    [0, SC.top], [5.3, SC.top], [6.55, SC.prayer, 'inOutQuint'],
+    [10.2, SC.prayer], [10.2001, SC.offer],
+    [13.7, SC.offer], [14.35, SC.ayah, 'inOutQuint'],
+    [18.55, SC.ayah], [19.25, SC.top, 'inOutQuint'],
+  ]),
+  dim: track([[0, 0], [14.9, 0], [15.7, 0.62], [18.4, 0.62], [19.0, 0]]),
+  light: track([[0, { kx: 78, ky: 30 }], [2.7, { kx: 50, ky: 38 }], [7.7, { kx: 60, ky: 52 }], [10.9, { kx: 40, ky: 56 }], [15.6, { kx: 50, ky: 46 }], [22, { kx: 50, ky: 42 }]]),
+  spec: track([[0, 0], [1.4, 0.7], [2.6, 0.1]]),
+  // A band of light crossing the glass during the opening.
+  sweep: track([[0, -0.2], [2.4, 1.2, 'inOut']]),
+  greetings: [
+    { id: 'g0', x: 540, y: 300, size: 132, rot: -4, a: 2.75 },
+    { id: 'g1', x: 790, y: 1650, size: 104, rot: 3,  a: 3.15 },
+    { id: 'g2', x: 300, y: 1800, size: 96,  rot: -2, a: 3.5 },
+  ],
+  greetOut: [4.65, 5.2],
+  chapters: [
+    { id: 'ch-faith',     a: 7.35, d: 9.9 },
+    { id: 'ch-community', a: 10.75, d: 13.5 },
+    { id: 'ch-growth',    a: 15.0, d: 18.45 },
+  ],
+  end: [21.8, 22.8],
+  pieceStates(t) {
+    // Faith: prayer cells lift into a loose arc around the phone, then fly off with the whip.
+    const pOut = win(t, 7.0, 8.4, 9.95, 10.15, 'lin', 'lin');
+    const pr = groups.prayer, n = pr.length;
+    const fly = clamp01((t - 9.95)/0.25);
+    pr.forEach((pc, i) => {
+      const targets = [
+        { wx: 190, wy: 850,  z: 300, ry: 18,  rz: -7, s: 1.3 }, { wx: 880, wy: 830,  z: 360, ry: -16, rz: 6, s: 1.3 },
+        { wx: 120, wy: 1280, z: 420, ry: 22,  rz: 5,  s: 1.35 }, { wx: 905, wy: 1250, z: 380, ry: -20, rz: -6, s: 1.35 },
+        { wx: 190, wy: 1700, z: 340, ry: 14,  rz: -4, s: 1.3 }, { wx: 880, wy: 1690, z: 460, ry: -12, rz: 7, s: 1.35 },
+      ][i];
+      const p = t < 9.95 ? E.outBack(staggered(clamp01((t - 7.0)/1.4), i, n, 0.09)) : 1;
+      placePiece(pc, SC.prayer, t < 7.0 || t > 10.2 ? 0 : p, { ...targets, wx: targets.wx - fly*1400 }, t, i);
+    });
+    // Community: offer cards slide out of the screen into a staggered column on the right.
+    const of = groups.offer, m = of.length;
+    const inP = clamp01((t - 10.85)/1.5), outP = clamp01((t - 13.25)/0.55);
+    of.forEach((pc, i) => {
+      const pIn = E.outExpo(staggered(inP, i, m, 0.1));
+      const pBack = E.inOut(staggered(outP, m - 1 - i, m, 0.08));
+      const p = t < 10.85 ? 0 : t < 13.25 ? pIn : 1 - pBack;
+      placePiece(pc, SC.offer, p, { wx: 640 + (i % 2)*24, wy: 870 + i*178, z: 640 + i*30, ry: -14, rx: 4, rz: 0, s: 0.92, drift: 0.4 }, t, i);
+    });
+    // Growth: the ayah card rises out of the screen towards the camera.
+    const ay = groups.ayah[0];
+    const aIn = E.outExpo(clamp01((t - 14.95)/1.2)), aBack = E.inOut(clamp01((t - 18.35)/0.55));
+    const ap = t < 14.95 ? 0 : t < 18.35 ? aIn : 1 - aBack;
+    const push = clamp01((t - 15.5)/3.0);
+    placePiece(ay, SC.ayah, ap, { wx: 540, wy: 1290, z: 900 + push*70, rx: -8, ry: 0, rz: 0, s: 1.6, drift: 0.3 }, t, 0);
+  },
+};
+
+CUTS.hero = {
+  W: 1080, H: 1350, duration: 16, grain: 0.035, loop: true,
+  pose: track([
+    [0.0,  { x: 0, y: 10, s: 1.08, rx: 5, ry: -14, rz: -2 }],
+    [2.8,  { x: 0, y: 10, s: 1.1,  rx: 4, ry: -8,  rz: -1 }, 'inOut'],
+    [4.0,  { x: 0, y: 0,  s: 2.55, rx: 0, ry: 0,   rz: 0 }, 'inOutQuint'],
+    [4.9,  { x: 0, y: 40, s: 0.98, rx: 6, ry: 12,  rz: 1 }, 'outExpo'],
+    [7.3,  { x: 0, y: 30, s: 1.02, rx: 5, ry: 7,   rz: 0 }, 'inOut'],
+    [8.2,  { x: 0, y: 110, s: 0.92, rx: 12, ry: -6, rz: 0 }, 'inOut'],
+    [10.6, { x: 0, y: 120, s: 0.9, rx: 13, ry: -3,  rz: 0 }, 'inOut'],
+    [11.4, { x: 0, y: 20, s: 1.0,  rx: 5, ry: 14,  rz: 1 }, 'inOut'],
+    [13.9, { x: 0, y: 20, s: 1.02, rx: 5, ry: 10,  rz: 0 }, 'inOut'],
+    [16.0, { x: 0, y: 10, s: 1.08, rx: 5, ry: -14, rz: -2 }, 'inOut'],
+  ]),
+  phoneAlpha: () => 1,
+  scroll: track([
+    [0, SC.top], [2.9, SC.top], [3.95, SC.prayer, 'inOutQuint'],
+    [7.25, SC.prayer], [8.0, SC.ayah, 'inOutQuint'],
+    [10.75, SC.ayah], [11.4, SC.offer, 'inOutQuint'],
+    [14.2, SC.offer], [15.3, SC.top, 'inOutQuint'],
+  ]),
+  dim: track([[0, 0], [8.4, 0], [9.0, 0.55], [10.4, 0.55], [10.9, 0]]),
+  light: track([[0, { kx: 50, ky: 30 }], [4.9, { kx: 58, ky: 36 }], [8.6, { kx: 50, ky: 40 }], [11.6, { kx: 44, ky: 34 }], [16, { kx: 50, ky: 30 }]]),
+  spec: () => 0,
+  sweep: () => 0.5,
+  greetings: [
+    { id: 'g0', x: 195, y: 330, size: 62, rot: -4, a: 0.5 },
+    { id: 'g1', x: 915, y: 690, size: 60, rot: 3, a: 0.9 },
+    { id: 'g2', x: 165, y: 1050, size: 60, rot: -2, a: 1.25 },
+  ],
+  greetOut: [2.5, 3.0],
+  chapters: [],
+  end: null,
+  pieceStates(t) {
+    const pr = groups.prayer, n = pr.length;
+    const outP = clamp01((t - 6.55)/0.7);
+    pr.forEach((pc, i) => {
+      const targets = [
+        { wx: 165, wy: 300,  z: 300, ry: 18,  rz: -7, s: 1.25 }, { wx: 920, wy: 280,  z: 360, ry: -16, rz: 6, s: 1.25 },
+        { wx: 130, wy: 690,  z: 420, ry: 22,  rz: 5,  s: 1.3 },  { wx: 955, wy: 660,  z: 380, ry: -20, rz: -6, s: 1.3 },
+        { wx: 190, wy: 1070, z: 340, ry: 14,  rz: -4, s: 1.25 }, { wx: 900, wy: 1060, z: 460, ry: -12, rz: 7, s: 1.3 },
+      ][i];
+      const pIn = E.outBack(staggered(clamp01((t - 4.3)/1.3), i, n, 0.09));
+      const pBack = E.inOut(staggered(outP, n - 1 - i, n, 0.08));
+      const p = t < 4.3 ? 0 : t < 6.55 ? pIn : 1 - pBack;
+      placePiece(pc, SC.prayer, p, targets, t, i);
+    });
+    const ay = groups.ayah[0];
+    const aIn = E.outExpo(clamp01((t - 8.2)/1.1)), aBack = E.inOut(clamp01((t - 10.2)/0.6));
+    const ap = t < 8.2 ? 0 : t < 10.2 ? aIn : 1 - aBack;
+    placePiece(ay, SC.ayah, ap, { wx: 540, wy: 690, z: 760 + clamp01((t - 8.6)/1.6)*50, rx: -8, s: 1.42, drift: 0.3 }, t, 0);
+    const of = groups.offer, m = of.length;
+    const inP = clamp01((t - 11.6)/1.3), backP = clamp01((t - 13.5)/0.7);
+    of.forEach((pc, i) => {
+      const side = i % 2 ? 1 : -1;
+      const row = Math.floor(i/2);
+      const pIn = E.outExpo(staggered(inP, i, m, 0.1));
+      const pBack = E.inOut(staggered(backP, m - 1 - i, m, 0.08));
+      const p = t < 11.6 ? 0 : t < 13.5 ? pIn : 1 - pBack;
+      placePiece(pc, SC.offer, p, { wx: 540 + side*300, wy: 290 + row*385, z: 220 + row*60, ry: -side*18, rz: side*1.5, s: 0.95, drift: 0.4 }, t, i);
+    });
+  },
+};
+
+const cut = CUTS[CUT];
+const stage = document.getElementById('stage');
+stage.style.width = cut.W + 'px'; stage.style.height = cut.H + 'px';
+const rig = document.getElementById('rig');
+const scene = document.getElementById('scene');
+const sideFaces = [...phone.querySelectorAll('.side')];
+if (cut.end === null) document.getElementById('end').remove();
+if (!cut.chapters.length) document.querySelectorAll('.chapter').forEach(c => c.remove());
+
+// Grain: seeded per frame so renders are repeatable.
+const grain = document.getElementById('grain');
+grain.width = Math.round(cut.W/2); grain.height = Math.round(cut.H/2);
+const gctx = grain.getContext('2d');
+const gimg = gctx.createImageData(grain.width, grain.height);
+function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0)/4294967296; }; }
+function drawGrain(frame) {
+  const rnd = mulberry(frame*7919 + 13), d = gimg.data;
+  for (let i = 0; i < d.length; i += 4) { const v = 128 + (rnd() - 0.5)*255; d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255; }
+  gctx.putImageData(gimg, 0, 0);
+  grain.style.opacity = cut.grain;
+}
+
+// Speed of the screen content, for the directional blur the eye expects on a fast scroll.
+function screenSpeed(t) {
+  const dt = 1/120;
+  const v = (cut.scroll(t + dt) - cut.scroll(t - dt))/(2*dt);
+  return Math.abs(v)*cut.pose(t).s;
+}
+function rigSpeedX(t) {
+  const dt = 1/240, a = cut.pose(t - dt), b = cut.pose(t + dt);
+  if (Math.abs(b.x - a.x) > 800) return 0; // the cut inside a whip
+  return Math.abs(b.x - a.x)/(2*dt);
+}
+
+function setChapter(ch, t) {
+  const el = document.getElementById(ch.id);
+  const vis = win(t, ch.a, ch.a + 0.5, ch.d - 0.35, ch.d, 'out', 'in');
+  el.style.opacity = vis;
+  el.style.transform = `translateY(${(1 - clamp01((t - ch.a)/0.9))*24 - clamp01((t - (ch.d - 0.35))/0.35)*30}px)`;
+  el.querySelector('.eyebrow').style.setProperty('--rule', E.outExpo(clamp01((t - ch.a)/0.8)));
+  el.querySelectorAll('.line > span').forEach((s, i) => {
+    const p = E.outExpo(clamp01((t - ch.a - 0.12 - i*0.11)/0.95));
+    s.style.transform = `translateY(${(1 - p)*110}%)`;
+  });
+}
+
+function setGreeting(g, t) {
+  const el = document.getElementById(g.id);
+  el.style.fontSize = g.size + 'px';
+  // Write on from right to left, the direction the script is written.
+  const p = E.out(clamp01((t - g.a)/1.05));
+  const out = clamp01((t - cut.greetOut[0])/(cut.greetOut[1] - cut.greetOut[0]));
+  const edge = (1 - p)*120 - 10;
+  el.style.webkitMaskImage = el.style.maskImage = `linear-gradient(to left, #000 ${100 - edge - 12}%, transparent ${100 - edge}%)`;
+  el.style.opacity = p > 0 ? 1 - E.in(out) : 0;
+  el.style.filter = `blur(${out*14}px)`;
+  const w = el.offsetWidth;
+  el.style.transform = `translate(${g.x - w/2}px, ${g.y - g.size*0.65 - out*40 + Math.sin(t*0.8 + g.a)*4}px) rotate(${g.rot}deg)`;
+}
+
+window.renderAt = (t, frame = 0) => {
+  const W = cut.W, H = cut.H;
+  const L = cut.duration;
+  const pose = cut.pose(t);
+  // A slow float, periodic over the cut so the hero loop has no seam.
+  const bob = Math.sin(t/L*Math.PI*2*(cut.loop ? 2 : 3))*9;
+  const sway = Math.sin(t/L*Math.PI*2)*1.6;
+  rig.style.transform = `translate3d(${W/2 + pose.x}px, ${H/2 + pose.y + bob}px, 0) rotateX(${pose.rx}deg) rotateY(${pose.ry + sway}deg) rotateZ(${pose.rz}deg) scale3d(${pose.s}, ${pose.s}, ${pose.s})`;
+  rig.style.opacity = cut.phoneAlpha(t);
+  CUR.cx = W/2 + pose.x; CUR.cy = H/2 + pose.y + bob; CUR.s = pose.s;
+
+  const sc = cut.scroll(t);
+  strip.style.transform = `translate3d(0, ${-sc}px, 0)`;
+  const vb = Math.min(36, screenSpeed(t)/30*0.16/pose.s);
+  document.getElementById('vblurDev').setAttribute('stdDeviation', `0 ${vb.toFixed(2)}`);
+  strip.style.filter = vb > 0.3 ? 'url(#vblur)' : 'none';
+  const hb = Math.min(60, rigSpeedX(t)/30*0.16);
+  document.getElementById('hblurDev').setAttribute('stdDeviation', `${hb.toFixed(2)} 0`);
+  scene.style.filter = hb > 0.5 ? 'url(#hblur)' : 'none';
+
+  // Specular sweep across the frame edge (the reel's macro opening) and the glass.
+  const spec = cut.spec(t);
+  sideFaces.forEach(f => f.style.setProperty('--spec', spec));
+  sideFaces.forEach(f => f.style.backgroundPosition = `0 ${t*40}px`);
+  const glare = document.getElementById('glare');
+  glare.style.setProperty('--ga', `${110 + (pose.ry + sway)*1.6}deg`);
+  glare.style.setProperty('--gp', `${(1 - cut.sweep(t))*100}%`);
+  document.getElementById('dim').style.opacity = cut.dim(t);
+
+  const lt = cut.light(t);
+  stage.style.setProperty('--kx', lt.kx + '%'); stage.style.setProperty('--ky', lt.ky + '%');
+
+  cut.pieceStates(t);
+  cut.greetings.forEach(g => setGreeting(g, t));
+  cut.chapters.forEach(ch => setChapter(ch, t));
+  if (cut.end) {
+    const e = document.getElementById('end');
+    const p = clamp01((t - cut.end[0])/(cut.end[1] - cut.end[0]));
+    e.style.opacity = E.out(p);
+    e.style.transform = `translateY(${(1 - E.outExpo(p))*40}px) scale(${1 + clamp01((t - cut.end[0])/3)*0.03})`;
+    e.querySelector('img').style.filter = `blur(${(1 - E.out(p))*10}px)`;
+  }
+  drawGrain(frame);
+};
+
+window.filmReady = (async () => {
+  LAYOUT = await (await fetch('screens/layout.json')).json().catch(() => null);
+  makeGroup('prayer', 'prayer-cell', LAYOUT.prayer);
+  makeGroup('ayah', 'ayah-card', LAYOUT.ayah);
+  makeGroup('offer', 'offer', LAYOUT.offer);
+  await document.fonts.load('700 100px "Aref Ruqaa"', 'السلام عليكم');
+  await document.fonts.load('600 90px "Playfair Display"');
+  await document.fonts.load('italic 500 90px "Playfair Display"');
+  await document.fonts.load('600 25px "DM Sans"');
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i => i.decode().catch(() => {})));
+  window.renderAt(0);
+  return { W: cut.W, H: cut.H, duration: cut.duration };
+})();
+
+// Preview: ?scrub adds a slider; ?t=12.3 jumps to a time.
+if (params.has('scrub') || params.has('t')) {
+  window.filmReady.then(() => {
+    const t0 = parseFloat(params.get('t') || '0');
+    window.renderAt(t0);
+    if (params.has('scrub')) {
+      const s = document.createElement('input'); s.type = 'range'; s.id = 'scrub'; s.min = 0; s.max = cut.duration; s.step = 1/30; s.value = t0;
+      s.oninput = () => window.renderAt(+s.value);
+      document.body.appendChild(s);
+    }
+  });
+}
+</script>
+</body>
+</html>

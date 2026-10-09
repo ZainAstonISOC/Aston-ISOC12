@@ -1,0 +1,14 @@
+{
+  "name": "aston-isoc-film",
+  "private": true,
+  "type": "module",
+  "description": "Renders the Aston ISOC launch film from the live site. Not part of the Next.js build.",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "render": "node render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1",
+    "sharp": "0.34.5"
+  }
+}

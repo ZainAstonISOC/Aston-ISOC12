@@ -30,6 +30,12 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }],
       },
       {
+        // The homepage film is a few MB and rarely changes. A day fresh, then a
+        // week of serving the cached copy while a re-render is fetched.
+        source: "/hero/:file*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
+      },
+      {
         source: "/:path*",
         headers: [
           // Prevent clickjacking

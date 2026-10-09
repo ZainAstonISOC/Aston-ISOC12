@@ -6,6 +6,7 @@ import { getActiveCampaigns } from "@/data/donations";
 import { getBySection } from "@/data/committee";
 import { EventCard, MemberCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
+import HeroFilm from "@/components/ui/HeroFilm";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import InstagramFeed from "@/components/ui/InstagramFeed";
 import AyahOfTheDay from "@/components/quran/AyahOfTheDay";
@@ -39,55 +40,51 @@ export default async function HomePage() {
     <div>
       {/* ══ HERO ══════════════════════════════════════════════════════════ */}
       <section className="hero" style={{ position: "relative", paddingTop: "clamp(8rem,16vw,12rem)", paddingBottom: "clamp(4rem,8vw,7rem)", overflow: "hidden" }}>
-        {/* Rotating geometric ornament */}
-        <div aria-hidden="true" style={{ position: "absolute", right: "-8%", top: "10%", width: "min(46vw,560px)", aspectRatio: "1", zIndex: -1, opacity: 0.28, color: "#d8af72", animation: "spin 80s linear infinite" }}>
-          <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" strokeWidth="0.8" style={{ width: "100%", height: "100%" }}>
-            <circle cx="100" cy="100" r="98"/>
-            <circle cx="100" cy="100" r="72"/>
-            <polygon points="180,100 100,180 20,100 100,20"/>
-            <polygon points="156.6,156.6 43.4,156.6 43.4,43.4 156.6,43.4"/>
-            <polygon points="150,100 100,150 50,100 100,50"/>
-            <polygon points="135.4,135.4 64.6,135.4 64.6,64.6 135.4,64.6"/>
-          </svg>
-        </div>
+        <div className="container hero-grid">
+          <div className="hero-grid__intro">
+            {/* Bismillah */}
+            <Reveal>
+              <p style={{ fontFamily: "'Noto Naskh Arabic', serif", direction: "rtl", color: "#d8af72", fontSize: "clamp(1.6rem,4vw,2.4rem)", marginBottom: "1.2rem", opacity: 0.9 }}>
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+              </p>
+            </Reveal>
 
-        <div className="container">
-          {/* Bismillah */}
-          <Reveal>
-            <p style={{ fontFamily: "'Noto Naskh Arabic', serif", direction: "rtl", color: "#d8af72", fontSize: "clamp(1.6rem,4vw,2.4rem)", marginBottom: "1.2rem", opacity: 0.9 }}>
-              بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-            </p>
-          </Reveal>
+            <Reveal delay={60}>
+              <p className="eyebrow">Aston University · Birmingham</p>
+            </Reveal>
 
-          <Reveal delay={60}>
-            <p className="eyebrow">Aston University · Birmingham</p>
-          </Reveal>
+            <Reveal delay={120}>
+              <h1 style={{ fontFamily: PF, fontWeight: 600, maxWidth: "16ch", lineHeight: 1.1, marginBottom: "0" }}>
+                A home away from home for{" "}
+                <em style={{ fontStyle: "italic", color: "#d8af72", fontWeight: 500 }}>every</em>{" "}
+                Muslim student.
+              </h1>
+            </Reveal>
 
-          <Reveal delay={120}>
-            <h1 style={{ fontFamily: PF, fontWeight: 600, maxWidth: "16ch", lineHeight: 1.1, marginBottom: "0" }}>
-              A home away from home for{" "}
-              <em style={{ fontStyle: "italic", color: "#d8af72", fontWeight: 500 }}>every</em>{" "}
-              Muslim student.
-            </h1>
-          </Reveal>
+            <Reveal delay={200}>
+              <p className="lede" style={{ marginTop: "1.6rem" }}>
+                Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities for daily prayer, weekly classes, charity, and a community that lasts a lifetime.
+              </p>
+            </Reveal>
 
-          <Reveal delay={200}>
-            <p className="lede" style={{ marginTop: "1.6rem" }}>
-              Faith, friendship and belonging at the heart of campus. Join one of Aston&apos;s most active student communities for daily prayer, weekly classes, charity, and a community that lasts a lifetime.
-            </p>
-          </Reveal>
+            <Reveal delay={280}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "2.4rem" }}>
+                <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-gold btn-lg">
+                  Become a Member
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <Link href="/prayer-times" className="btn btn-ghost btn-lg">View Prayer Times</Link>
+              </div>
+            </Reveal>
+          </div>
 
-          <Reveal delay={280}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", marginTop: "2.4rem" }}>
-              <a href={MEMBERSHIP.join} target="_blank" rel="noopener noreferrer" className="btn btn-gold btn-lg">
-                Become a Member
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-              <Link href="/prayer-times" className="btn btn-ghost btn-lg">View Prayer Times</Link>
-            </div>
-          </Reveal>
+          {/* The film: this site on a phone, rendered from film/. Phones see it
+              between the buttons and the numbers; wide screens beside the text. */}
+          <div className="hero-grid__film">
+            <HeroFilm />
+          </div>
 
-          <Reveal delay={340}>
+          <Reveal delay={340} className="hero-grid__stats">
             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(1.5rem,5vw,3.5rem)", marginTop: "3.5rem", paddingTop: "2.2rem", borderTop: "1px solid rgba(216,175,114,0.12)" }}>
               {[
                 { n: "1,000+", label: "Members" },
