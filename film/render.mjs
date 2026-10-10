@@ -1,6 +1,6 @@
 // Renders film.html frame by frame and encodes it with macOS AVFoundation.
 //
-//   node render.mjs reel                 → out/aston-isoc-reel.mp4 (1080×1920)
+//   node render.mjs reel                 → out/aston-isoc-reel-silent.mp4 (1080×1920; add sound with audio.mjs + mux.swift)
 //   node render.mjs hero                 → public/hero/*.mp4 + poster (the website loop)
 //   node render.mjs reel --stills 3,7.5  → out/stills/reel-3.png … (quick look, no video)
 //
@@ -89,7 +89,8 @@ if (stills) {
   };
   if (cutName === 'reel') {
     await mkdir(path.join(HERE, 'out'), { recursive: true });
-    encode(path.join(HERE, 'out', 'aston-isoc-reel.mp4'), 1080, 1920, 12000);
+    // 6.5 Mbps keeps the Reel (with sound) under 30 MB; Instagram re-encodes anyway.
+    encode(path.join(HERE, 'out', 'aston-isoc-reel-silent.mp4'), 1080, 1920, 6500);
   } else {
     const pub = path.join(ROOT, 'public', 'hero');
     await mkdir(pub, { recursive: true });

@@ -14,14 +14,16 @@ techniques in Aston ISOC's colours (deep purple, gold, Playfair Display and DM
 Sans).
 
 Its footage is **astonisoc.com itself**, captured by script, so nothing in it is
-staged or invented. It follows three chapters, each built from real content on the
-homepage:
+staged or invented. The Reel follows these chapters, each built from real pages of
+the site:
 
 | Chapter   | What you see |
 |-----------|-------------|
-| Opening   | Macro on the Bismillah at the top of the homepage; the light crosses the glass and the camera pulls back. *As-salāmu ʿalaykum*, *Ahlan wa sahlan* and *Marḥaban bikum* are written in around the phone (Aref Ruqaa). |
+| Opening   | Macro on the Bismillah at the top of the homepage; the light crosses the glass and the camera pulls back. *As-salāmu ʿalaykum*, *Ahlan wa sahlan* and *Marḥaban bikum* are written in around the phone, in Reem Kufi Bold with a metallic gold fill. |
 | Faith     | A push into the live prayer board. The six prayer cells lift out of the screen. |
 | Community | A whip-pan to "What we offer". The six cards slide out into a column. |
+| Events    | A whip to a real event page. The phone scrolls to "Add to your calendar" and taps "Apple / Outlook"; the event's date card flies into an October calendar and the 13th lights up. |
+| Zakat     | A push into the Zakat calculator, filled with illustrative amounts (£4,800 cash, £1,200 investments). The fields lift out, then the Zakat Due card comes forward and counts up to £150.00. |
 | Growth    | The Daily Ayah card rises towards the camera while the phone sinks into shadow. |
 | Close     | A whip back to the top of the site, then the society lockup with *Faith · Community · Growth* and astonisoc.com. |
 
@@ -32,10 +34,12 @@ already has a headline. It is a seamless loop: the last frame is the first.
 
 | File | Purpose |
 |------|---------|
-| `capture.mjs` | Screenshots the live homepage at iPhone size (390×844 @3x) into `screens/`: one tall strip, plus each prayer cell, offer card and the ayah card as a transparent PNG, with their positions in `layout.json`. |
+| `capture.mjs` | Screenshots the live site at iPhone size (390×844 @3x) into `screens/`: a tall strip per page (home, one event, the Zakat calculator), plus each piece that lifts out as a transparent PNG, with positions in `layout.json`. `node capture.mjs event zakat` re-shoots only those pages. |
 | `film.html` | The film. A deterministic timeline: `renderAt(seconds)` sets every transform, so any frame can be re-rendered exactly. Both cuts live here (`CUTS.reel`, `CUTS.hero`). |
 | `render.mjs` | Steps through the timeline in Chromium, averaging 6 sub-frames over a 180° shutter wherever something moves (real motion blur), then encodes with `encode.swift`. |
 | `encode.swift` | H.264 MP4 encoder using macOS AVFoundation, with the moov atom first for streaming. No ffmpeg needed. |
+| `audio.mjs` | The Reel's sound, synthesised on the film's timeline. `--no-music` writes a mix with no pad or chords. |
+| `mux.swift` | Puts the AAC audio under the video without re-encoding either. |
 
 ## Re-rendering (when the site changes)
 
@@ -47,8 +51,15 @@ npm install                 # Playwright + sharp, local to this folder
 npx playwright install chromium
 npm run capture             # re-shoot astonisoc.com
 node render.mjs hero        # → public/hero/isoc-film-{1080,720}.mp4 + poster (~16 min)
-node render.mjs reel        # → film/out/aston-isoc-reel.mp4 (~25 min)
+node render.mjs reel        # → film/out/aston-isoc-reel-silent.mp4 (~55 min; run it alone)
+node audio.mjs && node audio.mjs --no-music
+afconvert -f m4af -d aac -b 256000 -q 127 out/aston-isoc-reel-audio.wav out/aston-isoc-reel-audio.m4a
+swift mux.swift out/aston-isoc-reel-silent.mp4 out/aston-isoc-reel-audio.m4a out/aston-isoc-reel.mp4
 ```
+
+The Events chapter is tied to one event (`FILM_EVENT` in `capture.mjs`, and its
+date in the calendar `buildCalendar()` draws). When re-capturing for a new term,
+pick an upcoming event and update both.
 
 To look at a moment before committing to a full render:
 
@@ -79,12 +90,20 @@ agree to be filmed out of frame.
 ## Sound
 
 The website film is silent on purpose: browsers block autoplaying sound, and a
-hero should never make noise. For the Reel, add audio inside Instagram:
+hero should never make noise.
 
-- Use a nasheed or a voice-only track from Instagram's library, or a
-  sound-design bed: room tone, soft whooshes on the whips (≈6.5 s, 10.2 s,
-  19.2 s), a low swell under the ayah (15–18.5 s) and a single resolving tone on
-  the lockup (21.8 s).
-- If the committee's position is no instruments, use voice only. Check before
-  posting.
-- Do not use commercial music outside Instagram's licensed library.
+The Reel has original sound, synthesised by `audio.mjs`: no samples, no library
+music, so nothing to license. Air moves with every push and whip, the phone lands
+on soft low impacts, cards settle with glass pings, the tap clicks, the event
+lands on the calendar with a chime, the Zakat figure ticks as it counts, and a
+slow pad moves one chord per chapter and resolves on the lockup.
+
+Two mixes are made:
+
+- `aston-isoc-reel.mp4`: pad and sound design.
+- `aston-isoc-reel-sfx-only.mp4`: sound design only, with no pad and no chords
+  (pings become pitchless clicks). Use this if the committee would rather the
+  Reel carried no music.
+
+You can still swap in a nasheed or voice-only track from Instagram's library
+over the silent file. Do not use commercial music outside that library.
