@@ -39,9 +39,9 @@ export const committeeMembers: CommitteeMember[] = [
   { id: "education-head", name: "Yousaf Ali", role: "Head of Education", year: "2026/27", bio: "Leads the ISOC Islamic education programme: weekly Roots classes, lecture series, and speaker events.", section: "education" },
   { id: "education-brothers-1", name: "Zahi Manakkal", role: "Education Brothers Officer", year: "2026/27", bio: "Organises brothers' Islamic learning and supports the education programme.", section: "education" },
   { id: "education-brothers-2", name: "Ismaeel", role: "Education Brothers Officer", year: "2026/27", bio: "Coordinates brothers' educational workshops and classes.", section: "education" },
-  { id: "education-brothers-3", name: "Rahfay", role: "Education Brothers Officer", year: "2026/27", bio: "Supports the brothers' Islamic education programme.", section: "education" },
+  { id: "education-brothers-3", name: "Rafhay", role: "Education Brothers Officer", year: "2026/27", bio: "Supports the brothers' Islamic education programme.", section: "education" },
   { id: "education-sisters-1", name: "Zainab Khan", role: "Education Sisters Officer", year: "2026/27", bio: "Leads sisters' Islamic knowledge sessions.", section: "education" },
-  { id: "education-sisters-2", name: "Madheeha", role: "Education Sisters Officer", year: "2026/27", bio: "Organises sisters educational events and supports the education programme.", section: "education" },
+  { id: "education-sisters-2", name: "Madeeha", role: "Education Sisters Officer", year: "2026/27", bio: "Organises sisters educational events and supports the education programme.", section: "education" },
 
   // ADVOCACY
   { id: "advocacy-head", name: "Shayma", role: "Head of Advocacy", year: "2026/27", bio: "Leads ISOC advocacy work, representing Muslim students' interests within the university and beyond.", section: "advocacy" },
