@@ -1,6 +1,6 @@
 export type CommitteeSection =
   | "executive" | "academic" | "jummah" | "marketing"
-  | "social_media" | "education" | "advocacy"
+  | "social_media" | "education" | "advocacy" | "ambassadors"
   | "sisters" | "brothers" | "general";
 
 export interface CommitteeMember {

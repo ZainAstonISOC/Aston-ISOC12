@@ -19,7 +19,8 @@ export default function CommitteePage() {
   const viceBrother = committeeMembers.find(m => m.id === "vice-brother");
   const viceSister  = committeeMembers.find(m => m.id === "vice-sister");
   const treasurer   = committeeMembers.find(m => m.id === "treasurer");
-  const genSec      = committeeMembers.find(m => m.id === "general-secretary");
+  // There can be more than one General Secretary (2026/27 has two).
+  const genSecs     = committeeMembers.filter(m => m.role === "General Secretary");
 
   const accordionSections = SECTION_ORDER
     .filter(s => s !== "executive")
@@ -69,12 +70,12 @@ export default function CommitteePage() {
             </div>
           </Reveal>
 
-          {/* Row 3 Treasurer & General Secretary */}
+          {/* Row 3 Treasurer & General Secretaries */}
           <Reveal delay={180}>
             <div style={{ marginBottom: "3.5rem" }}>
               <p style={{ fontFamily: DM, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted-2)", marginBottom: "0.75rem" }}>Operations</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                {[treasurer, genSec].filter(Boolean).map(m => m && <MemberCard key={m.id} member={m} />)}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))", gap: "1rem" }}>
+                {[treasurer, ...genSecs].filter(Boolean).map(m => m && <MemberCard key={m.id} member={m} />)}
               </div>
             </div>
           </Reveal>

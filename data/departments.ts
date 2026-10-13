@@ -51,7 +51,7 @@ export const departments: Department[] = [
     initiatives: [
       { title: "Event Campaigns", desc: "Posters, graphics and countdowns for every event, so nothing gets announced at the last minute." },
       { title: "Brand & Design", desc: "The ISOC look — logo, colours and templates used across Instagram, print and the website." },
-      { title: "Sisters' & Brothers' Promotion", desc: "Dedicated officers producing content for each community's own programmes and events." },
+      { title: "Sisters' & Brothers' Promotion", desc: "Content for each community's own programmes and events." },
       { title: "Flagship Campaigns", desc: "Freshers, Charity Week, Discover Islam Week and Ramadan — the campaigns that need the biggest push." },
     ],
   },
