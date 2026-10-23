@@ -66,9 +66,10 @@ export async function getEventById(id: string): Promise<Event | undefined> {
 export async function getFeaturedEvents(count = 3): Promise<Event[]> {
   const upcoming = await getUpcomingEvents();
   const featured = upcoming.filter(e => e.isFeatured);
-  // Pad with the soonest non-featured events so the homepage row is never thin.
+  // Pad with the soonest non-featured events so the homepage row is never thin,
+  // then show the chosen few in date order, not featured-first.
   const rest = upcoming.filter(e => !e.isFeatured);
-  return [...featured, ...rest].slice(0, count);
+  return [...featured, ...rest].slice(0, count).sort(byDateTime);
 }
 
 export async function getSisterEvents(count?: number): Promise<Event[]> {
