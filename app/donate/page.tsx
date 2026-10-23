@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import DonationWidget from "@/components/ui/DonationWidget";
-import { getActiveCampaigns } from "@/data/donations";
+import { getActiveFundraisers, getGivingOptions } from "@/lib/content";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Donate", description: "Support Aston ISOC one-time, weekly Jumu'ah giving, or monthly supporter programme." };
@@ -12,15 +12,8 @@ export const metadata: Metadata = { title: "Donate", description: "Support Aston
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
-const OTHER_WAYS = [
-  { title: "Zakat & Sadaqah",  desc: "We work with NZF to ensure correct Zakat distribution." },
-  { title: "Gift Aid",         desc: "UK taxpayers can increase their donation by 25% at no extra cost." },
-  { title: "Sponsor an Event", desc: "Partner with ISOC by sponsoring a specific event or initiative." },
-  { title: "Legacy Giving",    desc: "Consider including Aston ISOC in charitable giving plans." },
-];
-
-export default function DonatePage() {
-  const active = getActiveCampaigns();
+export default async function DonatePage() {
+  const [active, otherWays] = await Promise.all([getActiveFundraisers(), getGivingOptions()]);
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Donate" }]} />
@@ -63,8 +56,8 @@ export default function DonatePage() {
       </Reveal>
       <Reveal delay={80}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.25rem", marginBottom: "2rem" }}>
-          {OTHER_WAYS.map(item => (
-            <div key={item.title} className="card">
+          {otherWays.map(item => (
+            <div key={item.id} className="card">
               <p style={{ fontFamily: DM, fontWeight: 600, color: "#fff", marginBottom: "0.5rem" }}>{item.title}</p>
               <p style={{ fontFamily: DM, fontSize: "0.83rem", color: "var(--muted)", lineHeight: 1.7 }}>{item.desc}</p>
             </div>

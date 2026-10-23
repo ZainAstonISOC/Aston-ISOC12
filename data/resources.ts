@@ -165,5 +165,3 @@ export const RESOURCE_CATEGORY_ORDER: Resource["category"][] = [
   "wellbeing", "student-finance", "community",
 ];
 
-export const getResourcesByCategory = (cat: Resource["category"]) =>
-  resources.filter(r => r.category === cat);

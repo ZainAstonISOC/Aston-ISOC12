@@ -1,5 +1,20 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## For the committee: editing the site
+
+Log in at `/admin` with the committee password. From there you can change, without touching code:
+
+- **Events** and **Jumu'ah times**
+- **Committee**: names, roles, bios (the home, about, sisters and brothers pages follow automatically)
+- **Flagship campaigns**: Ramadan, Discover Islam Week, Charity Week: status, dates, volunteer roles, sign-up link
+- **Fundraisers**, **charity partners** and **other ways to give**
+- **Weekly programme**, **halal food**, **sponsors**
+- **Site banner** (a notice on every page, with an optional end date) and **headline numbers**
+
+Saves go live straight away. Every list has an "Undo last change" button.
+
+Checks: `npm run audit:prod` opens the key pages in a real browser and reports layout problems; `npm run links:check` tests every link on `/links`.
+
 ## Getting Started
 
 First, run the development server:

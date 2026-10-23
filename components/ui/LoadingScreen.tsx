@@ -1,5 +1,4 @@
 "use client";
-/* eslint-disable @next/next/no-img-element -- intentional: stacked raw <img> layers power the chromatic-aberration / slice glitch effect */
 
 /* ════════════════════════════════════════════════════════════
    Aston ISOC Intro Loading Screen
@@ -9,10 +8,13 @@
    ════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
-const OLD = "/loader-old.png";
-const NEW = "/loader-new.png";
+// Background images, not <img>: a browser still downloads an <img> inside a
+// display:none loader, but skips a hidden element's background. Returning
+// visitors therefore fetch nothing.
+const OLD = "/loader-old.webp";
+const NEW = "/loader-new.webp";
+const EXIT_MS = 600;
 
 // Timeline (ms)
 const GLITCH_START = 1550;   // calm old logo lingers → begin fracturing
@@ -26,6 +28,7 @@ export default function LoadingScreen() {
   // Rendered immediately (SSR) so the loader is the FIRST thing painted -
   // it covers the page before any website content can flash through.
   const [show, setShow]               = useState(true);
+  const [leaving, setLeaving]         = useState(false);
   const [logo, setLogo]               = useState<Logo>("old");
   const [glitch, setGlitch]           = useState(false);
   const [flash, setFlash]             = useState(false);
@@ -55,13 +58,15 @@ export default function LoadingScreen() {
     if (prefersReduced) {
       // Calm cross-fade no glitch.
       push(() => setLogo("new"), 1700);
-      push(() => { setShow(false); markLoaded(); }, 3400);
+      push(() => { setLeaving(true); markLoaded(); }, 3400);
+      push(() => setShow(false), 3400 + EXIT_MS);
     } else {
       push(() => setGlitch(true), GLITCH_START);
       push(() => { setLogo("new"); setFlash(true); }, SWAP);
       push(() => setFlash(false), SWAP + 180);
       push(() => setGlitch(false), RESOLVE);
-      push(() => { setShow(false); markLoaded(); }, FADE_OUT);
+      push(() => { setLeaving(true); markLoaded(); }, FADE_OUT);
+      push(() => setShow(false), FADE_OUT + EXIT_MS);
     }
 
     const captured = timers.current;
@@ -71,14 +76,8 @@ export default function LoadingScreen() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <AnimatePresence>
-        {show && (
-          <motion.div
-            key="isoc-loader"
-            className="isoc-loader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
-          >
+      {show && (
+          <div className={leaving ? "isoc-loader is-leaving" : "isoc-loader"}>
             {/* Ambient glow */}
             <div className="isoc-loader__glow" />
 
@@ -104,17 +103,11 @@ export default function LoadingScreen() {
             </div>
 
             {/* Wordmark / loading cue */}
-            <motion.div
-              className="isoc-cue"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: logo === "new" && !glitch ? 1 : 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <div className={logo === "new" && !glitch ? "isoc-cue is-on" : "isoc-cue"}>
               <span>ASTON&nbsp;ISLAMIC&nbsp;SOCIETY</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 }
@@ -133,12 +126,12 @@ function Mark({
       ].join(" ")}
     >
       {/* base */}
-      <img src={src} alt="" className="isoc-img isoc-img--base" draggable={false} />
+      <div className="isoc-img isoc-img--base" style={{ backgroundImage: `url(${src})` }} aria-hidden="true" />
       {/* chromatic aberration ghost */}
-      <img src={src} alt="" className="isoc-img isoc-img--ca" aria-hidden="true" draggable={false} />
+      <div className="isoc-img isoc-img--ca" style={{ backgroundImage: `url(${src})` }} aria-hidden="true" />
       {/* fractured slices */}
-      <img src={src} alt="" className="isoc-img isoc-img--s1" aria-hidden="true" draggable={false} />
-      <img src={src} alt="" className="isoc-img isoc-img--s2" aria-hidden="true" draggable={false} />
+      <div className="isoc-img isoc-img--s1" style={{ backgroundImage: `url(${src})` }} aria-hidden="true" />
+      <div className="isoc-img isoc-img--s2" style={{ backgroundImage: `url(${src})` }} aria-hidden="true" />
     </div>
   );
 }
@@ -153,7 +146,9 @@ html[data-isoc-loaded="1"] .isoc-loader{ display:none !important; }
   background:#130d28;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   overflow:hidden;
+  transition:opacity .6s cubic-bezier(.16,1,.3,1);
 }
+.isoc-loader.is-leaving{ opacity:0; pointer-events:none; }
 .isoc-loader__glow{
   position:absolute; width:540px; height:540px; border-radius:50%;
   background:radial-gradient(circle, rgba(216,175,114,0.10) 0%, rgba(110,70,200,0.07) 42%, transparent 70%);
@@ -185,7 +180,7 @@ html[data-isoc-loaded="1"] .isoc-loader{ display:none !important; }
 
 .isoc-img{
   position:absolute; inset:0; width:100%; height:100%;
-  object-fit:contain; user-select:none; -webkit-user-drag:none;
+  background:center / contain no-repeat; user-select:none;
 }
 .isoc-img--ca,.isoc-img--s1,.isoc-img--s2{ opacity:0; }
 
@@ -258,7 +253,9 @@ html[data-isoc-loaded="1"] .isoc-loader{ display:none !important; }
   font-family:'DM Sans',sans-serif; font-size:.68rem; font-weight:600;
   letter-spacing:.42em; text-transform:uppercase; color:#d8af72;
   text-indent:.42em;
+  opacity:0; transition:opacity .5s ease;
 }
+.isoc-cue.is-on{ opacity:1; }
 
 @media (prefers-reduced-motion: reduce){
   .isoc-mark{ transition:opacity .5s ease; transform:none; }

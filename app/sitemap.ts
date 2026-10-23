@@ -12,6 +12,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/prayer-times`,                                  changeFrequency: "daily",    priority: 0.9 },
     { url: `${BASE}/events`,                                        changeFrequency: "weekly",   priority: 0.9 },
     { url: `${BASE}/freshers`,                                      changeFrequency: "monthly",  priority: 0.9 },
+    { url: `${BASE}/halal-food`,                                    changeFrequency: "monthly",  priority: 0.7 },
+    { url: `${BASE}/search`,                                        changeFrequency: "monthly",  priority: 0.4 },
     { url: `${BASE}/committee`,                                     changeFrequency: "yearly",   priority: 0.7 },
     { url: `${BASE}/sisters`,                                       changeFrequency: "weekly",   priority: 0.8 },
     { url: `${BASE}/brothers`,                                      changeFrequency: "weekly",   priority: 0.8 },

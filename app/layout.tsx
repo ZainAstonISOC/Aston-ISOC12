@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import SiteBanner from "@/components/layout/SiteBanner";
+import { getBanner } from "@/lib/content";
 import { SITE_URL } from "@/lib/site";
 import { SOCIAL } from "@/lib/social";
 
@@ -43,7 +45,8 @@ const organizationJsonLd = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const banner = await getBanner();
   return (
     // `suppressHydrationWarning`: the head script below stamps data-isoc-loaded
     // on <html> before React hydrates, which is a deliberate mismatch.
@@ -68,10 +71,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
         />
+        <a href="#main" className="skip-link">Skip to content</a>
         <LoadingScreen />
         <Navbar />
-        <main>{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <Footer />
+        {banner && <SiteBanner banner={banner} />}
       </body>
     </html>
   );

@@ -1,5 +1,9 @@
 import { CommitteeMember } from "@/types";
 
+/**
+ * Starting values only: the committee edits this list at /admin/content/committee,
+ * and once it has been saved there this file is no longer read.
+ */
 export const committeeMembers: CommitteeMember[] = [
   // EXECUTIVE
   { id: "head-sister", name: "Aminah", role: "Head Sister", year: "2026/27", bio: "Leads the sisters community at Aston ISOC, overseeing all sisters programmes, events, and wellbeing.", section: "executive" },
@@ -57,9 +61,6 @@ export const committeeMembers: CommitteeMember[] = [
   { id: "ambassador-sisters-1", name: "Jasmin", role: "Sisters Ambassador", year: "2026/27", bio: "Represents Aston ISOC across campus and helps new sisters find their way in.", section: "ambassadors" },
 ];
 
-export const getBySection = (section: CommitteeMember["section"]) =>
-  committeeMembers.filter(m => m.section === section);
-export const getExecutive = () => getBySection("executive");
 
 export const SECTION_LABELS: Record<string, string> = {
   executive:    "Core Committee",

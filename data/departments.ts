@@ -136,4 +136,3 @@ export const departments: Department[] = [
   },
 ];
 
-export const getDepartment = (key: string) => departments.find(d => d.key === key);

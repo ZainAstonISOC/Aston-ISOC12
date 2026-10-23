@@ -4,6 +4,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { getSisterEvents } from "@/lib/events";
+import { getLeaders, ledBy } from "@/lib/content";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
@@ -19,7 +20,8 @@ const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
 ];
 
 export default async function SistersPage() {
-  const sistersEvents = await getSisterEvents(3);
+  const [sistersEvents, leaders] = await Promise.all([getSisterEvents(3), getLeaders()]);
+  const leads = ledBy(leaders.headSister, leaders.viceSister);
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
       <div className="interior-hero" style={{ background: "linear-gradient(160deg, rgba(244,114,182,0.06) 0%, rgba(19,13,40,0.98) 60%)" }}>
@@ -31,7 +33,7 @@ export default async function SistersPage() {
           </h1>
           <span className="gold-rule" />
           <p className="max-w-lg leading-relaxed mb-8" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
-            A dedicated, welcoming space for Muslim sisters at Aston. Our Sisters&apos; Section runs its own events and mentorship programmes, and has a warm, supportive community led by Aminah &amp; Yusra.
+            A dedicated, welcoming space for Muslim sisters at Aston. Our Sisters&apos; Section runs its own events and mentorship programmes, and has a warm, supportive community{leads ? ` led by ${leads}` : ""}.
           </p>
           <div className="flex gap-3 flex-wrap">
             {WHATSAPP.sistersFreshers ? (

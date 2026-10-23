@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/layout/PageShell";
-import Breadcrumb from "@/components/ui/Breadcrumb";
 import JumuahForm from "@/components/admin/JumuahForm";
+import { AdminNav, AdminStyles } from "@/components/admin/AdminChrome";
 import { requireAdmin } from "@/lib/admin/auth";
 import { getSetting } from "@/lib/events/store";
 import { parseJumuah } from "@/lib/jumuah";
@@ -20,7 +20,8 @@ export default async function AdminJumuahPage() {
   const j = parseJumuah(raw);
   return (
     <PageShell>
-      <Breadcrumb crumbs={[{ label: "Admin", href: "/admin" }, { label: "Jumu'ah" }]} />
+      <AdminStyles />
+      <AdminNav current="jumuah" />
       <div style={{ maxWidth: 760 }}>
         <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(2rem, 5vw, 2.6rem)", marginBottom: "0.5rem" }}>
           Jumu&apos;ah times

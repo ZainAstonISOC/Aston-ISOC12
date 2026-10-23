@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Event, BlogPost, CommitteeMember, Resource, Lecture } from "@/types";
+import { Event, CommitteeMember, Resource, Lecture } from "@/types";
 import Icon from "./Icon";
 import { CATEGORY_LABELS } from "@/lib/events/categories";
 import { formatEventDate } from "@/lib/events/time";
@@ -90,26 +90,6 @@ export function EventCard({ event }: { event: Event }) {
           <span style={{ color: "#d8af72", transition: "transform 0.2s", transform: hovered ? "translateX(4px)" : "none" }}>→</span>
         </div>
       </div>
-    </Link>
-  );
-}
-
-/* ── BLOG CARD ───────────────────────────────────────────────────────────── */
-export function BlogCard({ post }: { post: BlogPost }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <Link href={`/blog/${post.slug}`} style={{ display: "block", textDecoration: "none" }}>
-      <article className="card link"
-        style={{ borderColor: hovered ? "rgba(216,175,114,0.35)" : undefined, transform: hovered ? "translateY(-4px)" : undefined }}
-        onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-        <span className="badge badge-muted" style={{ marginBottom: "1rem", display: "inline-block" }}>{post.category}</span>
-        <h3 style={{ fontFamily: PF, fontSize: "1.2rem", fontWeight: 500, color: "#fff", marginBottom: "0.75rem", lineHeight: 1.25 }}>{post.title}</h3>
-        <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.7, marginBottom: "1.2rem" }} className="line-clamp-3">{post.excerpt}</p>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: "var(--muted-2)", fontFamily: DM }}>
-          <span>{post.author}</span>
-          <span>{new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
-        </div>
-      </article>
     </Link>
   );
 }

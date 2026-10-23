@@ -4,6 +4,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { getBrotherEvents } from "@/lib/events";
+import { getLeaders, ledBy } from "@/lib/content";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
@@ -19,7 +20,8 @@ const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
 ];
 
 export default async function BrothersPage() {
-  const brothersEvents = await getBrotherEvents(3);
+  const [brothersEvents, leaders] = await Promise.all([getBrotherEvents(3), getLeaders()]);
+  const leads = ledBy(leaders.headBrother, leaders.viceBrother);
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
       <div className="interior-hero" style={{ background: "linear-gradient(160deg, rgba(99,102,241,0.06) 0%, rgba(19,13,40,0.98) 60%)" }}>
@@ -31,7 +33,7 @@ export default async function BrothersPage() {
           </h1>
           <span className="gold-rule" />
           <p className="max-w-lg leading-relaxed mb-8" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem" }}>
-            Brotherhood, sports, talks, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston led by Abdikarim &amp; Shahz.
+            Brotherhood, sports, talks, and real community. The Brothers&apos; Section is your home for faith, friendship, and purpose at Aston{leads ? ` led by ${leads}` : ""}.
           </p>
           <div className="flex gap-3 flex-wrap">
             <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-outline-gold" style={{ borderColor: "rgba(165,180,252,0.4)", color: "#a5b4fc" }}>Join Brothers WhatsApp</a>

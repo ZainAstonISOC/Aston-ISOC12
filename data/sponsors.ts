@@ -1,5 +1,9 @@
 import { Sponsor } from "@/types";
 
+/**
+ * Starting values only: the committee edits this list at /admin/content/sponsors,
+ * and once it has been saved there this file is no longer read.
+ */
 export const sponsors: Sponsor[] = [
   { id: "aston-su",      name: "Aston Students Union",    tier: "gold",      website: "https://www.astonsu.com",         description: "Our primary institutional partner and the home of ISOC official membership." },
   { id: "one-ummah",     name: "One Ummah",               tier: "gold",      website: "https://oneummah.org.uk/",        description: "Supporting the global Muslim community through education, relief, and advocacy." },

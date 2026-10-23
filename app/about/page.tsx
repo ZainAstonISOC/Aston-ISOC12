@@ -4,17 +4,9 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { committeeMembers } from "@/data/committee";
+import { getCommittee, getStats } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About Us", description: "Learn about Aston University Islamic Society our mission, history, and the community we've built." };
-
-const STATS = [
-  { value: "1,000+", label: "Active Members" },
-  // Counted from data/committee.ts so it can never drift from the committee page.
-  { value: String(committeeMembers.length), label: "Committee Members" },
-  { value: "50+", label: "Events Per Semester" },
-  { value: "£100k+", label: "Raised for Charity Last Year" },
-];
 
 const MISSION = [
   "Facilitate the five daily prayers and Friday Jumu'ah on campus",
@@ -25,7 +17,15 @@ const MISSION = [
   "Create career and networking opportunities aligned with Islamic values",
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const [committee, stats] = await Promise.all([getCommittee(), getStats()]);
+  const STATS = [
+    { value: stats.members, label: "Active Members" },
+    // Counted from the committee list so it can never drift from the committee page.
+    { value: String(committee.length), label: "Committee Members" },
+    { value: stats.events, label: "Events Per Semester" },
+    { value: stats.raised, label: "Raised for Charity Last Year" },
+  ];
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "About Us" }]} />

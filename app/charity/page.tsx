@@ -3,14 +3,14 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { donationCampaigns } from "@/data/donations";
+import { getActiveFundraisers, getCharityPartners, getStats } from "@/lib/content";
 
 export const metadata: Metadata = { title: "Charity Initiatives", description: "Aston ISOC charity campaigns, Charity Week, Ramadan fundraising and the causes we support." };
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
-export default function CharityPage() {
-  const active = donationCampaigns.filter(c => c.status === "active");
+export default async function CharityPage() {
+  const [active, partners, stats] = await Promise.all([getActiveFundraisers(), getCharityPartners(), getStats()]);
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Charity Initiatives" }]} />
@@ -19,9 +19,9 @@ export default function CharityPage() {
       <Reveal>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-16">
           {[
-            { value: "£100k+", label: "Raised last year" },
+            { value: stats.raised, label: "Raised last year" },
             { value: `${active.length}`, label: "Active Campaigns" },
-            { value: "6+", label: "Partner Orgs" },
+            { value: stats.partners, label: "Partner Orgs" },
             { value: "100%", label: "Transparent" },
           ].map(s => (
             <div key={s.label} className="card text-center p-6">
@@ -56,16 +56,9 @@ export default function CharityPage() {
       <Reveal>
         <p className="eyebrow mb-6">Charity Partners</p>
         <div className="grid sm:grid-cols-3 gap-3 mb-14">
-          {[
-            { name: "National Zakat Foundation", desc: "UK Zakat collection & distribution", url: "https://nzf.org.uk" },
-            { name: "Human Appeal",              desc: "Emergency relief and development",    url: "https://humanappeal.org.uk" },
-            { name: "One Ummah",                 desc: "Global Muslim community support",     url: "https://oneummah.org.uk" },
-            { name: "Global Rahma Foundation",   desc: "Humanitarian aid and development",    url: "https://grfuk.org" },
-            { name: "Birmingham Food Bank",      desc: "Local emergency food parcels",        url: "https://birmingham.foodbank.org.uk" },
-            { name: "GoFundMe",                  desc: "Direct community fundraising",         url: "https://www.gofundme.com" },
-          ].map(p => (
-            <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className="card link block p-4">
-              <p className="text-sm font-medium" style={{ color: "#fff", fontFamily: DM }}>{p.name}</p>
+          {partners.map(p => (
+            <a key={p.id} href={p.url} target="_blank" rel="noopener noreferrer" className="card link block p-4">
+              <p className="text-sm font-medium" style={{ color: "#fff", fontFamily: DM }}>{p.title}</p>
               <p className="text-xs mt-0.5" style={{ color: "var(--muted-2)", fontFamily: DM }}>{p.desc}</p>
             </a>
           ))}

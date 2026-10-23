@@ -3,8 +3,8 @@
  * ─────────────────────────────────────────────────────
  * Source: https://linktr.ee/astonisoc (verified May 2026)
  *
- * To add/archive a campaign: edit this file only.
- * Page layouts will update automatically.
+ * These are only the starting values: the committee manages fundraisers at
+ * /admin/content/fundraisers, and once saved there this file is not read.
  */
 
 import { DonationCampaign } from "@/types";
@@ -17,7 +17,8 @@ export const donationCampaigns: DonationCampaign[] = [
     description:
       "With immense joy and gratitude to Allah (SWT), Aston ISOC is raising funds to provide Iftaar meals for students and the local community during Ramadan. Your donation directly feeds our brothers and sisters breaking their fast.",
     donationUrl: DONATIONS.ramadanFundraiser,
-    status: "active",
+    // Ramadan 2026 ended in March. Switch it back on from /admin next Ramadan.
+    status: "completed",
     isFeatured: true,
     organisation: "GoFundMe Aston ISOC",
   },
@@ -32,8 +33,3 @@ export const donationCampaigns: DonationCampaign[] = [
   },
 ];
 
-export const getActiveCampaigns = () =>
-  donationCampaigns.filter((c) => c.status === "active");
-
-export const getFeaturedCampaign = () =>
-  donationCampaigns.find((c) => c.isFeatured && c.status === "active");

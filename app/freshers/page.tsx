@@ -5,18 +5,12 @@ import { EventCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { getFeaturedEvents } from "@/lib/events";
+import { getHalalPlaces } from "@/lib/content";
+import HalalList from "@/components/ui/HalalList";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Freshers Hub", description: "New to Aston? Prayer rooms, halal food, welcome events, and your ISOC community all in one place." };
 
-const HALAL_FOOD = [
-  { name: "Sultan's Kitchen",      type: "Pakistani / Desi",  distance: "5 min",       notes: "Student lunch deals" },
-  { name: "Dixy Chicken",          type: "Fried Chicken",     distance: "3 min",       notes: "Halal certified" },
-  { name: "The Yemeni Kitchen",    type: "Middle Eastern",    distance: "8 min",       notes: "Generous portions" },
-  { name: "Subway Digbeth",        type: "Sandwiches",        distance: "7 min",       notes: "Full halal branch" },
-  { name: "Co-op (Campus)",        type: "Supermarket",       distance: "2 min",       notes: "Halal certified products" },
-  { name: "Birmingham City Centre",type: "Various",           distance: "15 min walk", notes: "Extensive halal dining" },
-];
 
 const GUIDE: { icon: IconName; title: string; desc: string; href: string; external: boolean }[] = [
   { icon: "card",      title: "Join ISOC",          desc: "Full year membership via Aston SU",       href: MEMBERSHIP.join,               external: true },
@@ -28,7 +22,7 @@ const GUIDE: { icon: IconName; title: string; desc: string; href: string; extern
 ];
 
 export default async function FreshersPage() {
-  const featuredEvents = await getFeaturedEvents();
+  const [featuredEvents, halal] = await Promise.all([getFeaturedEvents(), getHalalPlaces()]);
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
       <div className="interior-hero"
@@ -94,18 +88,10 @@ export default async function FreshersPage() {
         <Reveal>
           <p className="eyebrow mb-4">Birmingham Halal Food Guide</p>
           <p className="text-sm mb-5" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>Closest halal options to campus always verify certification in-store.</p>
-          <div className="overflow-hidden mb-16" style={{ border: "1px solid rgba(216,175,114,0.1)", borderRadius: "1rem" }}>
-            {HALAL_FOOD.map((f, i) => (
-              <div key={f.name} className="flex justify-between items-start gap-4 px-6 py-4"
-                style={{ borderBottom: i < HALAL_FOOD.length - 1 ? "1px solid rgba(216,175,114,0.06)" : "none" }}>
-                <div>
-                  <p className="text-sm font-medium" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{f.name}</p>
-                  <p className="text-xs mt-0.5" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{f.type} · {f.notes}</p>
-                </div>
-                <span className="text-xs shrink-0" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{f.distance}</span>
-              </div>
-            ))}
-          </div>
+          <div className="mb-4"><HalalList places={halal.slice(0, 6)} /></div>
+          <p className="mb-16 text-sm" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+            <Link href="/halal-food" className="tap" style={{ color: "#d8af72" }}>Full halal food guide →</Link>
+          </p>
         </Reveal>
 
         {featuredEvents.length > 0 && (

@@ -85,7 +85,7 @@ export default function JoinPage() {
                 <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.title}</p>
                 <p className="text-sm" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>{s.desc}</p>
               </div>
-              <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold tracking-widest uppercase shrink-0" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{s.cta}</a>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" className="tap text-xs font-semibold tracking-widest uppercase shrink-0" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{s.cta}</a>
             </div>
           ))}
         </div>

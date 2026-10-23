@@ -3,7 +3,7 @@ import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import { PageHeader } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
-import { sponsors } from "@/data/sponsors";
+import { getSponsors } from "@/lib/content";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = { title: "Sponsorships & Partners", description: "Partner with Aston ISOC — reach a large, active Muslim student community at Aston University, Birmingham." };
@@ -11,7 +11,8 @@ export const metadata: Metadata = { title: "Sponsorships & Partners", descriptio
 const TIERS = ["gold","silver","bronze","community"] as const;
 const TIER_LABELS = { gold: "Gold Partners", silver: "Silver Partners", bronze: "Bronze Partners", community: "Community Partners" };
 
-export default function SponsorsPage() {
+export default async function SponsorsPage() {
+  const sponsors = await getSponsors();
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "About", href: "/about" }, { label: "Sponsors & Partners" }]} />
@@ -28,12 +29,18 @@ export default function SponsorsPage() {
                 <h2 className="eyebrow">{TIER_LABELS[tier]}</h2>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {list.map(s => (
-                  <a key={s.id} href={s.website} target="_blank" rel="noopener noreferrer" className="card link block p-6">
-                    <p className="font-medium mb-1.5" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.name}</p>
-                    <p className="text-xs leading-relaxed" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{s.description}</p>
-                  </a>
-                ))}
+                {list.map(s => {
+                  const body = (
+                    <>
+                      <p className="font-medium mb-1.5" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.name}</p>
+                      <p className="text-xs leading-relaxed" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>{s.description}</p>
+                    </>
+                  );
+                  // A sponsor without a website is a card, not a dead link.
+                  return s.website
+                    ? <a key={s.id} href={s.website} target="_blank" rel="noopener noreferrer" className="card link block p-6">{body}</a>
+                    : <div key={s.id} className="card block p-6">{body}</div>;
+                })}
               </div>
             </Reveal>
           </section>

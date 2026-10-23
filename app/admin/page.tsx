@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import DeleteEventButton from "@/components/admin/DeleteEventButton";
+import { AdminNav, AdminStyles } from "@/components/admin/AdminChrome";
+import { COLLECTIONS } from "@/lib/content/schema";
 import { requireAdmin } from "@/lib/admin/auth";
 import { logout } from "./actions";
 import { CATEGORY_LABELS } from "@/lib/events";
@@ -12,7 +14,7 @@ import { formatEventDate, londonNow } from "@/lib/events/time";
 import type { Event } from "@/types";
 
 // absolute: the layout template does not apply to a page in its own segment
-export const metadata: Metadata = { title: { absolute: "Events | Aston ISOC Admin" } };
+export const metadata: Metadata = { title: { absolute: "Dashboard | Aston ISOC Admin" } };
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
@@ -81,10 +83,12 @@ export default async function AdminPage({
 
   return (
     <PageShell>
+      <AdminStyles />
+      <AdminNav current="events" />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: "1rem", flexWrap: "wrap", marginBottom: "2rem" }}>
         <div>
           <p className="eyebrow">Admin</p>
-          <h1 style={{ fontFamily: PF, fontSize: "clamp(2rem, 5vw, 2.8rem)" }}>Events</h1>
+          <h1 style={{ fontFamily: PF, fontSize: "clamp(2rem, 5vw, 2.8rem)" }}>Dashboard</h1>
         </div>
         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
           <Link href="/admin/events/new" className="btn btn-gold">+ New event</Link>
@@ -145,7 +149,26 @@ export default async function AdminPage({
       </section>
 
       <section style={{ marginBottom: "3rem" }}>
-        <h2 className="eyebrow">Upcoming</h2>
+        <h2 className="eyebrow">Website content</h2>
+        <p style={{ fontFamily: DM, fontSize: "0.88rem", color: "var(--muted)", marginBottom: "1rem", maxWidth: "62ch" }}>
+          Everything below goes live as soon as you save. Each list has an &ldquo;Undo last change&rdquo; button.
+        </p>
+        <div className="admin-tiles">
+          {COLLECTIONS.map(c => (
+            <Link key={c.key} href={`/admin/content/${c.key}`} className="card link admin-tile">
+              <span style={{ fontFamily: PF, color: "#fff", fontSize: "1.05rem" }}>{c.title}</span>
+              <span style={{ fontFamily: DM, fontSize: "0.8rem", color: "var(--muted-2)", lineHeight: 1.5 }}>{c.description}</span>
+            </Link>
+          ))}
+        </div>
+        <style>{`
+          .admin-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 0.75rem; }
+          .admin-tile { display: flex; flex-direction: column; gap: 0.35rem; padding: 1rem 1.15rem !important; }
+        `}</style>
+      </section>
+
+      <section style={{ marginBottom: "3rem" }}>
+        <h2 className="eyebrow">Upcoming events</h2>
         {upcoming.length === 0 ? (
           <p style={{ fontFamily: DM, color: "var(--muted)" }}>
             No upcoming events yet. <Link href="/admin/events/new" style={{ color: "var(--gold)" }}>Add the first one →</Link>
@@ -167,17 +190,6 @@ export default async function AdminPage({
         </section>
       )}
 
-      <style>{`
-        .admin-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-        .admin-event {
-          display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
-          padding: 1rem 1.25rem; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); background: var(--surface);
-        }
-        .admin-flash { padding: 0.9rem 1.1rem !important; margin-bottom: 1.25rem; font-family: ${DM}; font-size: 0.9rem; color: var(--text); line-height: 1.6; }
-        .admin-flash:hover { transform: none !important; }
-        .admin-flash--error { border-color: rgba(248,113,113,0.4) !important; color: #fca5a5; }
-        .admin-flash code { font-size: 0.85em; color: var(--gold-soft); }
-      `}</style>
     </PageShell>
   );
 }

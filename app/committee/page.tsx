@@ -2,25 +2,35 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
 import CommitteeAccordion from "@/components/ui/CommitteeAccordion";
-import { committeeMembers, SECTION_LABELS, SECTION_ORDER } from "@/data/committee";
+import { SECTION_LABELS, SECTION_ORDER } from "@/data/committee";
+import { getCommittee } from "@/lib/content";
 import { SOCIAL } from "@/lib/social";
 import MemberCard from "@/components/ui/MemberCard";
 import { departments } from "@/data/departments";
 import Icon from "@/components/ui/Icon";
 
-export const metadata: Metadata = { title: "Committee Team", description: "Meet the Aston ISOC 2026/27 committee." };
+export async function generateMetadata(): Promise<Metadata> {
+  const year = (await getCommittee()).find(m => m.year)?.year;
+  return { title: "Committee Team", description: `Meet the Aston ISOC ${year ? `${year} ` : ""}committee.` };
+}
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
-export default function CommitteePage() {
-  const headBrother = committeeMembers.find(m => m.id === "head-brother");
-  const headSister  = committeeMembers.find(m => m.id === "head-sister");
-  const viceBrother = committeeMembers.find(m => m.id === "vice-brother");
-  const viceSister  = committeeMembers.find(m => m.id === "vice-sister");
-  const treasurer   = committeeMembers.find(m => m.id === "treasurer");
-  // There can be more than one General Secretary (2026/27 has two).
-  const genSecs     = committeeMembers.filter(m => m.role === "General Secretary");
+export default async function CommitteePage() {
+  const committeeMembers = await getCommittee();
+  // Matched by role, not id: members added from /admin get ids from their names.
+  const byRole = (role: string) => committeeMembers.find(m => m.role.trim().toLowerCase() === role.toLowerCase());
+  const headBrother = byRole("Head Brother");
+  const headSister  = byRole("Head Sister");
+  const viceBrother = byRole("Vice Brother");
+  const viceSister  = byRole("Vice Sister");
+  const treasurer   = byRole("Treasurer");
+  // There can be more than one General Secretary.
+  const genSecs     = committeeMembers.filter(m => m.role.trim().toLowerCase() === "general secretary");
+  // Any other Core Committee role added from /admin still gets a place.
+  const placed = new Set([headBrother, headSister, viceBrother, viceSister, treasurer, ...genSecs].filter(Boolean).map(m => m!.id));
+  const otherExec = committeeMembers.filter(m => m.section === "executive" && !placed.has(m.id));
 
   const accordionSections = SECTION_ORDER
     .filter(s => s !== "executive")
@@ -33,7 +43,7 @@ export default function CommitteePage() {
         <div className="container">
           <Breadcrumb crumbs={[{ label: "About", href: "/about" }, { label: "Committee" }]} />
           <p className="eyebrow" style={{ justifyContent: "center" }}>Leadership</p>
-          <h1 style={{ fontFamily: PF }}>Committee 2026/27</h1>
+          <h1 style={{ fontFamily: PF }}>Committee {committeeMembers.find(m => m.year)?.year}</h1>
           <p className="lede" style={{ margin: "1.4rem auto 0" }}>
             Your elected student leadership team. Every member volunteers their time to serve the Aston Muslim community.
           </p>
@@ -75,7 +85,7 @@ export default function CommitteePage() {
             <div style={{ marginBottom: "3.5rem" }}>
               <p style={{ fontFamily: DM, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted-2)", marginBottom: "0.75rem" }}>Operations</p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))", gap: "1rem" }}>
-                {[treasurer, ...genSecs].filter(Boolean).map(m => m && <MemberCard key={m.id} member={m} />)}
+                {[treasurer, ...genSecs, ...otherExec].filter(Boolean).map(m => m && <MemberCard key={m.id} member={m} />)}
               </div>
             </div>
           </Reveal>

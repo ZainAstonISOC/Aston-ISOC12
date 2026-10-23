@@ -2,14 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getFeaturedEvents } from "@/lib/events";
 import { fetchLivePrayerTimes } from "@/data/prayer";
-import { getActiveCampaigns } from "@/data/donations";
-import { getBySection } from "@/data/committee";
+import { getActiveFundraisers, getCommittee, getStats, getWeeklyProgramme, ledBy } from "@/lib/content";
 import { EventCard, MemberCard, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import HeroFilm from "@/components/ui/HeroFilm";
 import PrayerTimesDisplay from "@/components/ui/PrayerTimesDisplay";
 import InstagramFeed from "@/components/ui/InstagramFeed";
 import AyahOfTheDay from "@/components/quran/AyahOfTheDay";
+import WeekAtIsoc from "@/components/ui/WeekAtIsoc";
+import SubscribeCalendar from "@/components/events/SubscribeCalendar";
 import { getJumuah, jamaatList } from "@/lib/jumuah";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
@@ -23,18 +24,23 @@ const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
 export default async function HomePage() {
-  const [prayers, featuredEvents, campaigns, jumuah] = await Promise.all([
+  const [prayers, featuredEvents, campaigns, jumuah, committee, stats, weekly] = await Promise.all([
     fetchLivePrayerTimes(),
     getFeaturedEvents(),
-    Promise.resolve(getActiveCampaigns()),
+    getActiveFundraisers(),
     getJumuah(),
+    getCommittee(),
+    getStats(),
+    getWeeklyProgramme(),
   ]);
   // Homepage shows Head Brother + Head Sister only (the two society leads)
-  const allExec = getBySection("executive");
-  const core = [
-    allExec.find(m => m.id === "head-brother"),
-    allExec.find(m => m.id === "head-sister"),
-  ].filter(Boolean) as typeof allExec;
+  const core = ["head brother", "head sister"]
+    .map(role => committee.find(m => m.role.trim().toLowerCase() === role))
+    .filter((m): m is NonNullable<typeof m> => !!m);
+  const roleOf = (r: string) => committee.find(m => m.role.trim().toLowerCase() === r);
+  const sistersLeads = ledBy(roleOf("head sister"), roleOf("vice sister"));
+  const brothersLeads = ledBy(roleOf("head brother"), roleOf("vice brother"));
+  const committeeYear = committee.find(m => m.year)?.year ?? "";
 
   return (
     <div>
@@ -87,10 +93,10 @@ export default async function HomePage() {
           <Reveal delay={340} className="hero-grid__stats">
             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(1.5rem,5vw,3.5rem)", marginTop: "3.5rem", paddingTop: "2.2rem", borderTop: "1px solid rgba(216,175,114,0.12)" }}>
               {[
-                { n: "1,000+", label: "Members" },
+                { n: stats.members, label: "Members" },
                 { n: "5×", label: "Daily prayers on campus" },
-                { n: "£100k+", label: "Raised for charity last year" },
-                { n: "50+", label: "Events each semester" },
+                { n: stats.raised, label: "Raised for charity last year" },
+                { n: stats.events, label: "Events each semester" },
               ].map(s => (
                 <div key={s.label}>
                   <b style={{ fontFamily: PF, fontSize: "clamp(1.8rem,3vw,2.4rem)", color: "#fff", display: "block" }}>{s.n}</b>
@@ -182,9 +188,29 @@ export default async function HomePage() {
           <Reveal delay={120}>
             <div style={{ marginTop: "1.5rem", padding: "1rem 1.5rem", borderRadius: "12px", border: "1px solid rgba(216,175,114,0.12)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
               <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)" }}>More events announced on Instagram</p>
-              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>@astonisoc →</a>
+              <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="tap" style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>@astonisoc →</a>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ══ THE WEEK ══════════════════════════════════════════════════════ */}
+      {weekly.length > 0 && (
+        <section id="week" className="section section--tight">
+          <div className="container">
+            <div style={{ marginBottom: "2.5rem" }}>
+              <Reveal><p className="eyebrow">Every Week</p></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>A Week at ISOC</h2></Reveal>
+            </div>
+            <Reveal delay={120}><WeekAtIsoc sessions={weekly} jumuah={jumuah} /></Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* ══ CALENDAR SUBSCRIBE ════════════════════════════════════════════ */}
+      <section className="section section--tight">
+        <div className="container">
+          <Reveal><SubscribeCalendar /></Reveal>
         </div>
       </section>
 
@@ -205,7 +231,7 @@ export default async function HomePage() {
               <div className="card card--stack hover-sisters" style={{ borderColor: "rgba(244,114,182,0.15)" }}>
                 <p className="eyebrow" style={{ color: "rgba(249,168,212,0.8)" }}>For Sisters</p>
                 <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Sisters&apos; <em style={{ color: "#f9a8d4" }}>Section</em></h3>
-                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Dedicated events, mentorship, and a strong sisterhood led by Aminah &amp; Yusra.</p>
+                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Dedicated events, mentorship, and a strong sisterhood{sistersLeads ? ` led by ${sistersLeads}` : ""}.</p>
                 <div className="card__push" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                   <Link href="/sisters" className="btn btn-ghost" style={{ borderColor: "rgba(249,168,212,0.3)", color: "#f9a8d4" }}>Sisters&apos; Section</Link>
                   <a href={WHATSAPP.sistersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
@@ -216,7 +242,7 @@ export default async function HomePage() {
               <div className="card card--stack hover-brothers" style={{ borderColor: "rgba(129,140,248,0.15)" }}>
                 <p className="eyebrow" style={{ color: "rgba(165,180,252,0.8)" }}>For Brothers</p>
                 <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.8rem" }}>Brothers&apos; <em style={{ color: "#a5b4fc" }}>Section</em></h3>
-                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Brotherhood events, sports, talks, and networking led by Abdikarim &amp; Shahz.</p>
+                <p style={{ fontFamily: DM, marginTop: "0.75rem", marginBottom: "1.5rem" }}>Brotherhood events, sports, talks, and networking{brothersLeads ? ` led by ${brothersLeads}` : ""}.</p>
                 <div className="card__push" style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
                   <Link href="/brothers" className="btn btn-ghost" style={{ borderColor: "rgba(165,180,252,0.3)", color: "#a5b4fc" }}>Brothers&apos; Section</Link>
                   <a href={WHATSAPP.brothersFreshers} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">WhatsApp</a>
@@ -274,7 +300,7 @@ export default async function HomePage() {
                   <div className="card card--stack">
                     {c.isFeatured && <span className="pill" style={{ marginBottom: "1rem", display: "inline-block" }}>Featured Campaign</span>}
                     <h3 style={{ fontFamily: PF, fontSize: "1.4rem", color: "#fff", marginBottom: "0.75rem" }}>{c.name}</h3>
-                    <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.75, marginBottom: "1.5rem" }}>{c.description.slice(0, 150)}…</p>
+                    <p style={{ fontFamily: DM, fontSize: "0.9rem", color: "var(--muted-2)", lineHeight: 1.75, marginBottom: "1.5rem" }}>{c.description.length > 150 ? `${c.description.slice(0, 150).trimEnd()}…` : c.description}</p>
                     {c.organisation && <p style={{ fontFamily: DM, fontSize: "0.78rem", color: "var(--muted-2)", marginBottom: "1.25rem" }}>Via {c.organisation}</p>}
                     <a href={c.donationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold card__push">Donate Now</a>
                   </div>
@@ -291,7 +317,7 @@ export default async function HomePage() {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem", marginBottom: "2.5rem" }}>
             <div>
               <Reveal><p className="eyebrow">Leadership</p></Reveal>
-              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Committee 2026/27</h2></Reveal>
+              <Reveal delay={80}><h2 style={{ fontFamily: PF }}>Committee {committeeYear}</h2></Reveal>
             </div>
             <Reveal><Link href="/committee" className="btn btn-ghost">Full Committee</Link></Reveal>
           </div>
@@ -336,9 +362,9 @@ export default async function HomePage() {
               </p>
               <span style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
                 <a href={WHATSAPP.community} target="_blank" rel="noopener noreferrer"
-                  style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>WhatsApp →</a>
+                  className="tap" style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>WhatsApp →</a>
                 <a href={SOCIAL.linktree} target="_blank" rel="noopener noreferrer"
-                  style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>Linktree →</a>
+                  className="tap" style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.08em", color: "#d8af72" }}>Linktree →</a>
               </span>
             </div>
           </Reveal>

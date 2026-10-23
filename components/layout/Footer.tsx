@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { footerLinks, SOCIAL, WHATSAPP } from "@/lib/nav";
+import { footerLinks } from "@/lib/nav";
+import { SOCIAL, WHATSAPP } from "@/lib/social";
 
 export default function Footer() {
   const socials = [

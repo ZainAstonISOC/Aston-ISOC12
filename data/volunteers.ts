@@ -2,8 +2,8 @@ import type { IconName } from "@/components/ui/Icon";
 
 /**
  * VOLUNTEER OPPORTUNITIES DATA
- * Add new campaigns here the volunteer page updates automatically.
- * To archive a campaign: set status to "archived".
+ * Starting values only: the committee manages these at
+ * /admin/content/campaigns, and once saved there this file is not read.
  */
 export interface VolunteerCampaign {
   id: string;
@@ -61,5 +61,3 @@ export const volunteerCampaigns: VolunteerCampaign[] = [
   },
 ];
 
-export const getActiveCampaigns = () =>
-  volunteerCampaigns.filter((c) => c.status === "active" || c.status === "upcoming");

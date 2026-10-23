@@ -121,6 +121,33 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+/* Keyboard users can jump past the navigation; invisible until focused. */
+.skip-link {
+  position: fixed; top: 0.75rem; left: 0.75rem; z-index: 10000;
+  padding: 0.7rem 1.1rem; border-radius: 999px;
+  background: var(--gold); color: #130d28; font-weight: 600; font-size: 0.9rem;
+  transform: translateY(-200%); transition: transform 0.15s ease;
+}
+.skip-link:focus { transform: none; }
+
+/* Committee announcement from /admin, pinned to the bottom of the screen. */
+.site-banner {
+  position: fixed; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); transform: translateX(-50%);
+  z-index: 45; width: min(calc(100% - 2rem), 720px);
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 0.75rem 0.75rem 1.25rem; border-radius: 1rem;
+  background: rgba(19, 13, 40, 0.94); border: 1px solid rgba(216, 175, 114, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45); backdrop-filter: blur(10px);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); line-height: 1.5;
+}
+.site-banner p { flex: 1; }
+.site-banner__link { color: var(--gold); font-weight: 600; white-space: nowrap; }
+.site-banner__close {
+  flex-shrink: 0; width: 2.25rem; height: 2.25rem; border-radius: 999px;
+  font-size: 1.3rem; line-height: 1; color: var(--muted);
+}
+.site-banner__close:hover { color: var(--gold); background: var(--surface); }
 ::selection { background: rgba(216,175,114,0.28); color: #fff; }
 
 /* ---------- Scrollbar ---------- */
@@ -527,6 +554,8 @@ p { color: var(--muted); line-height: 1.78; }
 .page-hero .lede { margin: 1.4rem auto 0; }
 .breadcrumb { font-size: 0.82rem; color: var(--muted-2); letter-spacing: 0.04em; margin-bottom: 1.2rem; }
 .breadcrumb a:hover { color: var(--gold); }
+/* Pads short standalone links to a 24px+ touch target without moving the text. */
+.breadcrumb a, .tap { display: inline-block; padding-block: 0.35rem; margin-block: -0.35rem; }
 
 /* ---------- Forms ---------- */
 .field-wrap { margin-bottom: 1.2rem; }

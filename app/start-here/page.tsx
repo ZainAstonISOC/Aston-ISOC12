@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getJumuah, jamaatList } from "@/lib/jumuah";
+import { getLeaders } from "@/lib/content";
 import Link from "next/link";
 import PageShell from "@/components/layout/PageShell";
 import Breadcrumb from "@/components/ui/Breadcrumb";
@@ -32,7 +33,8 @@ const FAQS = [
 ];
 
 export default async function StartHerePage() {
-  const jumuah = await getJumuah();
+  const [jumuah, leaders] = await Promise.all([getJumuah(), getLeaders()]);
+  const first = (m?: { name: string }) => (m ? `${m.name.split(" ")[0]} ` : "");
   const faqs = [
     ...FAQS,
     {
@@ -95,8 +97,8 @@ export default async function StartHerePage() {
         <p className="eyebrow mb-5">Need Support?</p>
         <div className="grid sm:grid-cols-3 gap-3">
           {[
-            { title: "Sisters' Support",  desc: "Contact Aminah (Head Sister) via Instagram DM",     href: SOCIAL.instagram },
-            { title: "Brothers' Support", desc: "Contact Abdikarim (Head Brother) via Instagram DM", href: SOCIAL.instagram },
+            { title: "Sisters' Support",  desc: `Contact ${first(leaders.headSister)}(Head Sister) via Instagram DM`,     href: SOCIAL.instagram },
+            { title: "Brothers' Support", desc: `Contact ${first(leaders.headBrother)}(Head Brother) via Instagram DM`, href: SOCIAL.instagram },
             { title: "General Enquiry",   desc: "Message @astonisoc replies within 24h",           href: SOCIAL.instagram },
           ].map(s => (
             <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="block p-5 card">

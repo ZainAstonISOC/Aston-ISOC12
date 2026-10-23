@@ -1,4 +1,4 @@
-import { SOCIAL, WHATSAPP, MEMBERSHIP } from "./social";
+import { SOCIAL } from "./social";
 
 export interface NavItem {
   label: string;
@@ -20,6 +20,7 @@ export const navItems: NavItem[] = [
     label: "Community", href: "/freshers", children: [
       { label: "Start Here", href: "/start-here" },
       { label: "Freshers Hub", href: "/freshers" },
+      { label: "Halal Food", href: "/halal-food" },
       { label: "Sisters' Section", href: "/sisters" },
       { label: "Brothers' Section", href: "/brothers" },
       { label: "Volunteer", href: "/volunteer" },
@@ -48,6 +49,7 @@ export const navItems: NavItem[] = [
       { label: "Contact Us", href: "/contact" },
       { label: "All Our Links", href: "/links" },
       { label: "Share Feedback", href: "/feedback" },
+      { label: "Search the Site", href: "/search" },
     ]
   },
 ];
@@ -58,6 +60,7 @@ export const footerLinks = {
     { label: "Committee Team", href: "/committee" },
     { label: "Start Here", href: "/start-here" },
     { label: "Freshers Hub", href: "/freshers" },
+    { label: "Halal Food", href: "/halal-food" },
     { label: "Sisters' Section", href: "/sisters" },
     { label: "Brothers' Section", href: "/brothers" },
     { label: "Volunteer", href: "/volunteer" },
@@ -80,6 +83,7 @@ export const footerLinks = {
     { label: "Contact Us", href: "/contact" },
     { label: "All Our Links", href: "/links" },
     { label: "Share Feedback", href: "/feedback" },
+    { label: "Search", href: "/search" },
     { label: "Sponsorships", href: "/sponsors" },
     { label: "Instagram", href: SOCIAL.instagram, external: true },
     { label: "LinkedIn", href: SOCIAL.linkedin, external: true },
@@ -92,8 +96,3 @@ export const footerLinks = {
   ],
 };
 
-export { SOCIAL, WHATSAPP, MEMBERSHIP };
-export const WHATSAPP_LINK = WHATSAPP.community;
-export const INSTAGRAM_URL = SOCIAL.instagram;
-export const EMAIL = "";
-export const DONATION_URL = "https://linktr.ee/astonisoc";

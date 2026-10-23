@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
 import Icon, { type IconName } from "@/components/ui/Icon";
-import { getActiveCampaigns } from "@/data/volunteers";
+import { getVolunteerCampaigns } from "@/lib/content";
+import { formatEventDate } from "@/lib/events/time";
 import { SOCIAL, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
@@ -22,8 +23,17 @@ const BENEFITS: { icon: IconName; title: string; desc: string }[] = [
   { icon: "sparkle", title: "Spiritual Reward", desc: "Volunteering for the sake of Allah is among the most rewarding actions a Muslim can take." },
 ];
 
-export default function VolunteerPage() {
-  const campaigns = getActiveCampaigns();
+/** "2–8 Feb 2027", "from 2 Feb 2027", or "" when no dates are set. */
+function campaignDates(startsOn: string, endsOn: string): string {
+  const fmt = (d: string) => formatEventDate(d, { day: "numeric", month: "short", year: "numeric" });
+  if (startsOn && endsOn) return `${fmt(startsOn)} – ${fmt(endsOn)}`;
+  if (startsOn) return `From ${fmt(startsOn)}`;
+  if (endsOn) return `Until ${fmt(endsOn)}`;
+  return "";
+}
+
+export default async function VolunteerPage() {
+  const campaigns = await getVolunteerCampaigns();
 
   return (
     <div style={{ background: "transparent", minHeight: "100vh" }}>
@@ -101,8 +111,15 @@ export default function VolunteerPage() {
                   {c.description}
                 </p>
 
+                {campaignDates(c.startsOn, c.endsOn) && (
+                  <p className="text-xs mb-5" style={{ display: "flex", gap: "0.5rem", alignItems: "center", color: "var(--gold-soft)", fontFamily: DM }}>
+                    <Icon name="calendar" size={14} style={{ flexShrink: 0, color: "var(--gold)" }} />
+                    {campaignDates(c.startsOn, c.endsOn)}
+                  </p>
+                )}
+
                 {/* Roles */}
-                <div className="mb-5">
+                {c.roles.length > 0 && <div className="mb-5">
                   <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "var(--muted-2)", fontFamily: DM }}>
                     Roles Available
                   </p>
@@ -111,18 +128,18 @@ export default function VolunteerPage() {
                       <span key={r} className="badge badge-muted" style={{ fontSize: "0.55rem" }}>{r}</span>
                     ))}
                   </div>
-                </div>
+                </div>}
 
                 {/* Meta */}
                 <div className="space-y-1.5 mb-6 text-xs" style={{ color: "var(--muted-2)", fontFamily: DM }}>
-                  <p style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                  {c.commitment && <p style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
                     <Icon name="clock" size={14} style={{ flexShrink: 0, marginTop: 2, color: "var(--gold)" }} />
                     {c.commitment}
-                  </p>
-                  <p style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+                  </p>}
+                  {c.impact && <p style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
                     <Icon name="sparkle" size={14} style={{ flexShrink: 0, marginTop: 2, color: "var(--gold)" }} />
                     {c.impact}
-                  </p>
+                  </p>}
                 </div>
 
                 <a
