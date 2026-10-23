@@ -1,5 +1,5 @@
 import { unstable_cache } from "next/cache";
-import type { CommitteeMember, DonationCampaign, Sponsor } from "@/types";
+import type { CommitteeMember, DonationCampaign, EventCategory, Sponsor } from "@/types";
 import type { IconName } from "@/components/ui/Icon";
 import { committeeMembers } from "@/data/committee";
 import { donationCampaigns } from "@/data/donations";
@@ -226,12 +226,23 @@ export async function getGivingOptions(): Promise<SimpleCard[]> {
   return (await getCollection("giving")).map(i => ({ id: i.id, title: s(i.title), desc: s(i.desc) }));
 }
 
-export interface WeeklySession { id: string; title: string; day: string; time: string; location: string; audience: string; note: string }
+export interface WeeklySession {
+  id: string; title: string; day: string;
+  /** "HH:MM" start and optional end, UK time. */
+  time: string; endTime: string;
+  location: string; category: EventCategory; note: string;
+}
+
+export function toWeeklySession(i: ContentItem): WeeklySession {
+  return {
+    id: i.id, title: s(i.title), day: s(i.day), time: s(i.time), endTime: s(i.endTime), location: s(i.location),
+    // Sessions saved before categories existed count as open to everyone.
+    category: (s(i.category) || "all") as EventCategory, note: s(i.note),
+  };
+}
 
 export async function getWeeklyProgramme(): Promise<WeeklySession[]> {
-  return (await getCollection("weekly")).map(i => ({
-    id: i.id, title: s(i.title), day: s(i.day), time: s(i.time), location: s(i.location), audience: s(i.audience), note: s(i.note),
-  }));
+  return (await getCollection("weekly")).map(toWeeklySession);
 }
 
 export interface HalalPlace { id: string; name: string; kind: string; walk: string; area: string; url: string; note: string }

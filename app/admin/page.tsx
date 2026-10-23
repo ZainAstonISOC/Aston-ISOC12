@@ -7,7 +7,8 @@ import { COLLECTIONS } from "@/lib/content/schema";
 import { requireAdmin } from "@/lib/admin/auth";
 import { logout } from "./actions";
 import { CATEGORY_LABELS } from "@/lib/events";
-import { getBuiltinEvents } from "@/data/events";
+import { getBuiltinEvents, getWeeklyEvents } from "@/data/events";
+import { readCollection, toWeeklySession, type WeeklySession } from "@/lib/content";
 import { getSetting, listStoredEvents, storageMode } from "@/lib/events/store";
 import { jamaatList, parseJumuah } from "@/lib/jumuah";
 import { formatEventDate, londonNow } from "@/lib/events/time";
@@ -42,6 +43,10 @@ function EventRow({ event, editable }: { event: Event; editable: boolean }) {
           </Link>
           <DeleteEventButton id={event.id} title={event.title} />
         </div>
+      ) : event.id.startsWith("weekly-") ? (
+        <Link href={`/admin/content/weekly/${encodeURIComponent(event.id.slice("weekly-".length))}`} className="btn btn-outline-gold" style={{ padding: "0.55rem 1rem", fontSize: "0.82rem" }}>
+          Edit in weekly programme
+        </Link>
       ) : (
         <span className="badge badge-muted" title="Generated from the Jumu'ah settings above">Weekly</span>
       )}
@@ -75,6 +80,14 @@ export default async function AdminPage({
     console.error("[admin] could not load jumuah settings:", err);
   }
   const jumuah = parseJumuah(jumuahRaw);
+
+  // Uncached, like the events above, so a session saved a moment ago shows.
+  let weekly: WeeklySession[] = [];
+  try {
+    weekly = (await readCollection("weekly")).items.map(toWeeklySession);
+  } catch (err) {
+    console.error("[admin] could not load weekly programme:", err);
+  }
 
   const today = londonNow().date;
   const byDate = (a: Event, b: Event) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`);
@@ -180,7 +193,10 @@ export default async function AdminPage({
 
       <section style={{ marginBottom: "3rem" }}>
         <h2 className="eyebrow">Every week</h2>
-        <ul className="admin-list">{getBuiltinEvents(jumuah).map(e => <EventRow key={e.id} event={e} editable={false} />)}</ul>
+        <ul className="admin-list">{[...getBuiltinEvents(jumuah), ...getWeeklyEvents(weekly)].map(e => <EventRow key={e.id} event={e} editable={false} />)}</ul>
+        <p style={{ fontFamily: DM, fontSize: "0.85rem", color: "var(--muted-2)", marginTop: "0.75rem" }}>
+          <Link href="/admin/content/weekly/new" style={{ color: "var(--gold)" }}>+ Add a weekly session</Link>: it appears here, in upcoming events and in subscribed calendars every week.
+        </p>
       </section>
 
       {past.length > 0 && (

@@ -46,17 +46,23 @@ export function addDays(date: string, days: number): string {
 }
 
 /**
- * The next Friday on or after today in London. If it is Friday and already
- * past `cutoff` (HH:MM), it rolls to the following week.
+ * The next given weekday (0 = Sunday … 6 = Saturday) on or after today in
+ * London. If it is that day and already past `cutoff` (HH:MM), it rolls to
+ * the following week.
  */
-export function nextFridayLondon(cutoff = "14:30", at: Date = new Date()): string {
+export function nextWeekdayLondon(weekday: number, cutoff: string, at: Date = new Date()): string {
   const now = londonNow(at);
-  let ahead = (5 - now.weekday + 7) % 7;
+  let ahead = (weekday - now.weekday + 7) % 7;
   if (ahead === 0) {
     const [ch, cm] = cutoff.split(":").map(Number);
     if (now.hour > ch || (now.hour === ch && now.minute > cm)) ahead = 7;
   }
   return addDays(now.date, ahead);
+}
+
+/** The next Friday on or after today in London; see nextWeekdayLondon. */
+export function nextFridayLondon(cutoff = "14:30", at: Date = new Date()): string {
+  return nextWeekdayLondon(5, cutoff, at);
 }
 
 /** "Friday 16 October" — formatted for display, never shifted by the server's zone. */

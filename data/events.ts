@@ -1,5 +1,6 @@
 import type { Event } from "@/types";
-import { nextFridayLondon } from "@/lib/events/time";
+import { nextFridayLondon, nextWeekdayLondon } from "@/lib/events/time";
+import type { WeeklySession } from "@/lib/content";
 import { jamaatList, type JumuahSettings } from "@/lib/jumuah";
 
 /**
@@ -63,4 +64,35 @@ export function getBuiltinEvents(jumuah: JumuahSettings): Event[] {
       source: "builtin",
     };
   });
+}
+
+const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;
+
+/**
+ * The committee's weekly programme (/admin/content/weekly) as recurring
+ * events, so each session shows in the events list, on the homepage, on the
+ * sisters' and brothers' pages and in subscribed calendars — the same way
+ * Jumu'ah does. Ids are "weekly-<id>" so they can never clash with a one-off
+ * event. A session without a valid start time stays off the events list.
+ */
+export function getWeeklyEvents(sessions: WeeklySession[]): Event[] {
+  return sessions
+    .filter(s => HHMM.test(s.time) && DAYS.includes(s.day))
+    .map(s => {
+      const end = HHMM.test(s.endTime) && s.endTime > s.time ? s.endTime : fromMinutes(Math.min(toMinutes(s.time) + 60, 23 * 60 + 59));
+      return {
+        id: `weekly-${s.id}`,
+        title: s.title,
+        date: nextWeekdayLondon(DAYS.indexOf(s.day), end),
+        time: s.time,
+        endTime: end,
+        location: s.location || "Aston University",
+        category: s.category,
+        description: [`Every ${s.day}${s.note ? ` (${s.note.replace(/\.$/, "")})` : ""}.`, "Confirm any changes via our Instagram @astonisoc."].join(" "),
+        isRecurring: true,
+        recurringNote: `Every ${s.day}${s.note ? ` · ${s.note}` : ""}`,
+        source: "builtin",
+      };
+    });
 }

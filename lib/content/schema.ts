@@ -9,7 +9,7 @@
  * Plain data only — this file is imported by client components.
  */
 
-export type FieldType = "text" | "textarea" | "url" | "email" | "select" | "date" | "checkbox" | "lines";
+export type FieldType = "text" | "textarea" | "url" | "email" | "select" | "date" | "time" | "checkbox" | "lines";
 
 export interface FieldSpec {
   name: string;
@@ -68,6 +68,17 @@ export const SECTION_OPTIONS = [
   { value: "education", label: "Education" },
   { value: "advocacy", label: "Advocacy" },
   { value: "ambassadors", label: "Ambassadors" },
+];
+
+/** Event categories a weekly session can have (Jumu'ah has its own settings). */
+const WEEKLY_CATEGORY_OPTIONS = [
+  { value: "all", label: "Everyone" },
+  { value: "sisters", label: "Sisters" },
+  { value: "brothers", label: "Brothers" },
+  { value: "sports", label: "Sports" },
+  { value: "social", label: "Social" },
+  { value: "speaker", label: "Talk / class" },
+  { value: "charity", label: "Charity" },
 ];
 
 export const DAY_OPTIONS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -143,19 +154,17 @@ export const COLLECTIONS: CollectionSpec[] = [
     key: "weekly",
     title: "Weekly programme",
     singular: "weekly session",
-    description: "The regular week (classes, sports, socials) shown on the homepage. Jumu'ah is added automatically.",
+    description: "Regular sessions (classes, sports, socials). Each one also appears in upcoming events and subscribed calendars, every week. Jumu'ah is added automatically.",
     titleField: "title",
-    subtitleFields: ["day", "time"],
-    pages: [{ label: "Homepage", href: "/#week" }],
+    subtitleFields: ["day", "time", "category"],
+    pages: [{ label: "Homepage", href: "/#week" }, { label: "Events", href: "/events" }],
     fields: [
       { name: "title", label: "Session", type: "text", required: true, max: 60, placeholder: "e.g. Roots class" },
       { name: "day", label: "Day", type: "select", required: true, options: DAY_OPTIONS },
-      { name: "time", label: "Time", type: "text", required: true, max: 20, placeholder: "e.g. 18:00 or Evenings" },
-      { name: "location", label: "Where", type: "text", max: 80 },
-      {
-        name: "audience", label: "For", type: "select", required: true,
-        options: [{ value: "all", label: "Everyone" }, { value: "brothers", label: "Brothers" }, { value: "sisters", label: "Sisters" }],
-      },
+      { name: "time", label: "Starts", type: "time", required: true },
+      { name: "endTime", label: "Ends", type: "time", help: "Optional. Calendars assume one hour without it." },
+      { name: "location", label: "Where", type: "text", max: 80, placeholder: "e.g. MB 163" },
+      { name: "category", label: "Who it's for", type: "select", required: true, options: WEEKLY_CATEGORY_OPTIONS },
       { name: "note", label: "Note", type: "text", max: 120, help: "Optional, e.g. \"Term time only\"." },
     ],
   },

@@ -48,6 +48,8 @@ export default function ContentForm({ spec, id, initial }: Props) {
         );
       case "date":
         return <input {...common} type="date" />;
+      case "time":
+        return <input {...common} type="time" step={300} style={{ maxWidth: 180 }} />;
       case "url":
         return <input {...common} type="text" inputMode="url" maxLength={f.max} />;
       case "email":

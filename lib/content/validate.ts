@@ -54,7 +54,16 @@ export function validateContent(spec: CollectionSpec, v: ContentFormValues): Con
     if (f.type === "url" && !validUrl(val)) errors[f.name] = "Use a full link starting https://, or a page here like /events.";
     if (f.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) errors[f.name] = "That email address doesn't look right.";
     if (f.type === "date" && !validDate(val)) errors[f.name] = "Pick a date.";
+    if (f.type === "time" && !/^([01]\d|2[0-3]):[0-5]\d$/.test(val)) errors[f.name] = "Use a 24-hour time, like 18:00.";
     if (f.type === "select" && !f.options?.some(o => o.value === val)) errors[f.name] = "Choose one of the options.";
+  }
+  return errors;
+}
+
+/** Rules that involve two fields at once. */
+export function validateCross(spec: CollectionSpec, v: ContentFormValues, errors: ContentErrors): ContentErrors {
+  if (spec.key === "weekly" && v.endTime && v.time && !errors.endTime && !errors.time && v.endTime <= v.time) {
+    errors.endTime = "End time must be after the start time.";
   }
   return errors;
 }

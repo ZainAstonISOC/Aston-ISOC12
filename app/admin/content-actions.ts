@@ -7,7 +7,8 @@ import { slugify } from "@/lib/admin/validate";
 import { StorageUnavailableError } from "@/lib/events/store";
 import { contentTag, readCollection, undoCollection, writeCollection } from "@/lib/content";
 import { collectionSpec } from "@/lib/content/schema";
-import { readContentForm, toContentItem, validateContent, type ContentErrors, type ContentFormValues } from "@/lib/content/validate";
+import { readContentForm, toContentItem, validateContent, validateCross, type ContentErrors, type ContentFormValues } from "@/lib/content/validate";
+import { EVENTS_TAG } from "@/lib/events";
 
 export interface ContentFormState {
   error?: string;
@@ -18,6 +19,8 @@ export interface ContentFormState {
 /** Every public page reads through the content cache, and most are prerendered. */
 function refresh(key: string): void {
   updateTag(contentTag(key));
+  // Weekly sessions are also events: refresh the events cache and calendar feed.
+  if (key === "weekly") updateTag(EVENTS_TAG);
   revalidatePath("/", "layout");
 }
 
@@ -39,7 +42,7 @@ export async function saveContentItem(_prev: ContentFormState, form: FormData): 
   const spec = specOrThrow(key);
 
   const values = readContentForm(spec, form);
-  const fieldErrors = validateContent(spec, values);
+  const fieldErrors = validateCross(spec, values, validateContent(spec, values));
   if (Object.keys(fieldErrors).length) return { error: "Some details need fixing.", fieldErrors, values };
 
   try {

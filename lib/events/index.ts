@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import type { Event } from "@/types";
-import { getBuiltinEvents } from "@/data/events";
+import { getBuiltinEvents, getWeeklyEvents } from "@/data/events";
+import { getWeeklyProgramme } from "@/lib/content";
 import { listStoredEvents } from "./store";
 import { londonNow } from "./time";
 import { getJumuah } from "@/lib/jumuah";
@@ -34,8 +35,12 @@ function byDateTime(a: Event, b: Event): number {
 
 /** Built-in + committee-added events, past and future, oldest first. */
 export async function getAllEvents(): Promise<Event[]> {
-  const [stored, jumuah] = await Promise.all([getCachedStoredEvents(), getJumuah()]);
-  return [...getBuiltinEvents(jumuah), ...stored.map(e => ({ ...e, source: "admin" as const }))].sort(byDateTime);
+  const [stored, jumuah, weekly] = await Promise.all([getCachedStoredEvents(), getJumuah(), getWeeklyProgramme()]);
+  return [
+    ...getBuiltinEvents(jumuah),
+    ...getWeeklyEvents(weekly),
+    ...stored.map(e => ({ ...e, source: "admin" as const })),
+  ].sort(byDateTime);
 }
 
 /**
