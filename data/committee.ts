@@ -15,10 +15,10 @@ export const committeeMembers: CommitteeMember[] = [
   { id: "general-secretary-2", name: "Dahlia", role: "General Secretary", year: "2026/27", bio: "Shares the society's administration, internal communications and meeting records.", section: "executive" },
 
   // ACADEMIC DEVELOPMENT
-  { id: "academic-head", name: "Zain-Ud-Deen Khan", role: "Head of Academic Development", year: "2026/27", bio: "Leads ISOC academic support initiatives, study events, and educational programmes for students.", section: "academic" },
+  { id: "academic-head", name: "Zahra Bukhari", role: "Head of Academic Development", year: "2026/27", bio: "Leads ISOC academic support initiatives, study events, and educational programmes for students.", section: "academic" },
   { id: "academic-brothers-1", name: "Shakir", role: "Academic Development Brothers Officer", year: "2026/27", bio: "Runs careers and academic support for brothers, from workshops to application help.", section: "academic" },
+  { id: "academic-brothers-2", name: "Zain-Ud-Deen Khan", role: "Academic Development Brothers Officer", year: "2026/27", bio: "Organises study sessions, academic workshops, and resources to support students throughout the year.", section: "academic" },
   { id: "academic-sisters-1", name: "Jamila", role: "Academic Development Sisters Officer", year: "2026/27", bio: "Runs careers and academic support for sisters, from workshops to application help.", section: "academic" },
-  { id: "academic-sisters-2", name: "Zahra Bukhari", role: "Academic Development Sisters Officer", year: "2026/27", bio: "Organises study sessions, academic workshops, and resources to support students throughout the year.", section: "academic" },
 
   // JUMMAH
   { id: "jummah-head", name: "Umar", role: "Jummah Head", year: "2026/27", bio: "Organises and coordinates Friday Jumu'ah prayer on campus, ensuring smooth logistics for the community.", section: "jummah" },
