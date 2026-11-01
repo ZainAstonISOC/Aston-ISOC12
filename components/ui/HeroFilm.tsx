@@ -32,7 +32,12 @@ export default function HeroFilm() {
 
     v.muted = true; // React sets `muted` as a property only; be explicit before play()
 
-    const play = () => { if (!userPaused.current) v.play().catch(() => {}); };
+    // iOS Low Power Mode (and some data savers) refuse autoplay without saying
+    // so; the poster just sits there. Try again on the visitor's first touch.
+    const retry = () => { if (!userPaused.current && v.paused) v.play().catch(() => {}); };
+    const gestures = ["pointerdown", "touchend", "keydown"] as const;
+    const armRetry = () => gestures.forEach(g => window.addEventListener(g, retry, { once: true, passive: true }));
+    const play = () => { if (!userPaused.current) v.play().catch(armRetry); };
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
     v.addEventListener("play", onPlay);
@@ -48,6 +53,7 @@ export default function HeroFilm() {
 
     return () => {
       observer?.disconnect();
+      gestures.forEach(g => window.removeEventListener(g, retry));
       v.removeEventListener("play", onPlay);
       v.removeEventListener("pause", onPause);
     };
