@@ -15,21 +15,21 @@ const PATHWAYS: { icon: IconName; title: string; desc: string; href: string; cta
   { icon: "seedling", title: "I'm a Fresher", desc: "Just arrived at Aston? Find your community, prayer facilities, halal food, and your first events.", href: "/freshers", cta: "Freshers Hub →", accent: "rgba(216,175,114,0.12)", border: "rgba(216,175,114,0.25)", tint: "#d8af72" },
   { icon: "mosque", title: "Returning Muslim", desc: "Reconnect with your faith and community through classes, events, and WhatsApp groups.", href: "/events", cta: "See Events →", accent: "rgba(99,102,241,0.08)", border: "rgba(99,102,241,0.2)", tint: "#a5b4fc" },
   { icon: "moon", title: "New Muslim", desc: "Alhamdulillah. We have dedicated support, resources, and a welcoming community for you.", href: "/resources", cta: "New Muslim Resources →", accent: "rgba(52,211,153,0.08)", border: "rgba(52,211,153,0.2)", tint: "#6ee7b7" },
-  { icon: "handshake", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn no pressure.", href: "/resources", cta: "Explore Resources →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)", tint: "#ddd6fe" },
+  { icon: "handshake", title: "Curious About Islam", desc: "Welcome. Open conversations, events, and resources for anyone wanting to learn, with no pressure.", href: "/resources", cta: "Explore Resources →", accent: "rgba(167,139,250,0.08)", border: "rgba(167,139,250,0.2)", tint: "#ddd6fe" },
 ];
 
 const STEPS = [
   { n: "01", title: "Buy Your Membership", desc: "Purchase ISOC membership on Aston SU for £5. This is how you officially become a member.", href: MEMBERSHIP.join, cta: "Buy Membership →", external: true },
   { n: "02", title: "Join WhatsApp", desc: "The fastest way to stay updated with events and announcements.", href: WHATSAPP.community, cta: "Join WhatsApp →", external: true },
-  { n: "03", title: "Follow Instagram", desc: "@astonisoc all events, news, and community in one place.", href: SOCIAL.instagram, cta: "Follow →", external: true },
+  { n: "03", title: "Follow Instagram", desc: "@astonisoc for all events, news, and community in one place.", href: SOCIAL.instagram, cta: "Follow →", external: true },
 ];
 
 const FAQS = [
   { q: "Do I need to be Muslim to attend ISOC events?", a: "Most events are open to everyone. We warmly welcome non-Muslim students to open lectures, social events, and educational talks." },
   { q: "How much does membership cost?", a: "ISOC membership is just £5 for the full academic year, paid through Aston Students' Union." },
-  { q: "I missed freshers week can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
+  { q: "I missed freshers week. Can I still join?", a: "Absolutely. You can join ISOC at any point during the year through Aston SU." },
   { q: "Is there a sisters-only space?", a: "Yes. The Sisters' Section has dedicated events, a private WhatsApp group, and committee members specifically there for sisters." },
-  { q: "I'm a new Muslim what support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
+  { q: "I'm a new Muslim. What support is available?", a: "We have dedicated resources, a warm and non-judgmental community, and committee members who have been through the same journey." },
 ];
 
 export default async function StartHerePage() {
@@ -45,7 +45,7 @@ export default async function StartHerePage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Start Here" }]} />
-      <PageHeader label="Welcome" title="Start Here" subtitle="Whether you're a fresher, new Muslim, returning to faith, or simply curious this is your starting point." />
+      <PageHeader label="Welcome" title="Start Here" subtitle="Whether you're a fresher, new Muslim, returning to faith, or simply curious, this is your starting point." />
 
       <Reveal>
         <h2 className="eyebrow mb-6">Where Do You Want to Start?</h2>
@@ -57,7 +57,7 @@ export default async function StartHerePage() {
               </span>
               <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.35rem", color: "#fff", marginBottom: "0.5rem" }}>{p.title}</h3>
               <p className="text-sm leading-relaxed mb-5" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>{p.desc}</p>
-              <Link href={p.href} className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{p.cta}</Link>
+              <Link href={p.href} className="tap text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{p.cta}</Link>
             </div>
           ))}
         </div>
@@ -73,7 +73,7 @@ export default async function StartHerePage() {
                 <p className="font-medium mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.title}</p>
                 <p className="text-sm" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>{s.desc}</p>
               </div>
-              <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold tracking-widest uppercase shrink-0" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{s.cta}</a>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" className="tap text-xs font-semibold tracking-widest uppercase shrink-0" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif" }}>{s.cta}</a>
             </div>
           ))}
         </div>
@@ -99,7 +99,7 @@ export default async function StartHerePage() {
           {[
             { title: "Sisters' Support",  desc: `Contact ${first(leaders.headSister)}(Head Sister) via Instagram DM`,     href: SOCIAL.instagram },
             { title: "Brothers' Support", desc: `Contact ${first(leaders.headBrother)}(Head Brother) via Instagram DM`, href: SOCIAL.instagram },
-            { title: "General Enquiry",   desc: "Message @astonisoc replies within 24h",           href: SOCIAL.instagram },
+            { title: "General Enquiry",   desc: "Message @astonisoc; we reply within 24h",           href: SOCIAL.instagram },
           ].map(s => (
             <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="block p-5 card">
               <p className="font-medium text-sm mb-1" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{s.title}</p>

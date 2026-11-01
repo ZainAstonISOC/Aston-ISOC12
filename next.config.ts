@@ -9,9 +9,15 @@ const nextConfig: NextConfig = {
   // domain ever had a problem, returning visitors would be stuck. Switch to
   // permanent once the domain has been stable for a few weeks.
   async redirects() {
+    // The template-era blog never had posts; old links land on Resources.
+    const retired = [
+      { source: "/blog", destination: "/resources", permanent: true },
+      { source: "/blog/:slug*", destination: "/resources", permanent: true },
+    ];
     const siteHost = new URL(SITE_URL).host;
-    if (siteHost === VERCEL_PRODUCTION_HOST) return [];
+    if (siteHost === VERCEL_PRODUCTION_HOST) return retired;
     return [
+      ...retired,
       {
         source: "/:path*",
         has: [{ type: "host", value: VERCEL_PRODUCTION_HOST }],
@@ -36,6 +42,11 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" }],
       },
       {
+        // Self-hosted fonts: file names carry a content hash, so they never change.
+        source: "/fonts/:file*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+      {
         source: "/:path*",
         headers: [
           // Prevent clickjacking
@@ -48,14 +59,15 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
           // Enforce HTTPS
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-          // Content Security Policy — allows self, Google Fonts, YouTube thumbnails, Stripe, Aladhan API
+          // Content Security Policy — allows self, YouTube thumbnails, Stripe, Aladhan API
           {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
+              // 'unsafe-eval' only for the dev server's hot reload; production bundles don't eval.
+              `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+              "style-src 'self' 'unsafe-inline'",
+              "font-src 'self'",
               // Instagram media is served from Meta's CDNs
               "img-src 'self' data: https://i.ytimg.com https://*.ytimg.com https://*.cdninstagram.com https://*.fbcdn.net",
               // Recitation audio comes from quran.com's CDN (and its quranicaudio

@@ -41,7 +41,8 @@ export function getBuiltinEvents(jumuah: JumuahSettings): Event[] {
         ? `Weekly Friday prayer on campus, with ${jamaats.length} jamaats: ${jamaatList(jamaats)}. This is the ${ORDINALS[i]}.`
         : "Weekly Friday congregational prayer on campus.",
       "Open to all.",
-      sisters ? `${sisters}.` : "",
+      // Labelled, so the sisters' space never reads as a second location for the jamaat.
+      sisters ? `Sisters: ${sisters}.` : "",
       note,
       "Confirm any changes via our Instagram @astonisoc.",
     ]

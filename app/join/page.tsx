@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import Reveal from "@/components/ui/Reveal";
 import { MEMBERSHIP, WHATSAPP, SOCIAL } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Join ISOC", description: "Join Aston ISOC for £5 full year membership." };
+export const metadata: Metadata = { title: "Join ISOC", description: "Join Aston ISOC for £5: full-year membership." };
 
 const BENEFITS = [
   "Access to all ISOC events throughout the year",
@@ -22,9 +22,9 @@ const BENEFITS = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Buy Your Membership", desc: "Go to Aston SU and purchase ISOC membership for £5. This is how you officially join without it you are not yet a member.", href: MEMBERSHIP.join, cta: "Buy Membership on Aston SU →", external: true },
+  { n: "01", title: "Buy Your Membership", desc: "Go to Aston SU and purchase ISOC membership for £5. This is how you officially join; without it you are not yet a member.", href: MEMBERSHIP.join, cta: "Buy Membership on Aston SU →", external: true },
   { n: "02", title: "Join the WhatsApp", desc: "Join your brothers' or sisters' freshers group to stay updated.", href: WHATSAPP.community, cta: "Join WhatsApp →", external: true },
-  { n: "03", title: "Follow Instagram", desc: "Follow @astonisoc all events, announcements, and community.", href: SOCIAL.instagram, cta: "Follow @astonisoc →", external: true },
+  { n: "03", title: "Follow Instagram", desc: "Follow @astonisoc for all events, announcements, and community.", href: SOCIAL.instagram, cta: "Follow @astonisoc →", external: true },
 ];
 
 export default function JoinPage() {

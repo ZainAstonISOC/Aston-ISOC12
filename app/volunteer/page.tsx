@@ -7,7 +7,7 @@ import { formatEventDate } from "@/lib/events/time";
 import { SOCIAL, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
-  title: "Volunteer We Need You",
+  title: "Volunteer With Us",
   description: "Volunteer with Aston ISOC. Join Ramadan, Discover Islam Week, and Charity Week campaigns. Make a real impact.",
 };
 
@@ -15,11 +15,11 @@ const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
 const BENEFITS: { icon: IconName; title: string; desc: string }[] = [
-  { icon: "seedling", title: "Real Leadership", desc: "Build genuine leadership skills managing events and people experience valued by employers." },
+  { icon: "seedling", title: "Real Leadership", desc: "Build genuine leadership skills managing events and people, experience valued by employers." },
   { icon: "handshake", title: "Deep Community", desc: "Form meaningful friendships through shared purpose and working together for something greater." },
   { icon: "chart", title: "CV & Portfolio", desc: "Event management, fundraising, and campaign coordination all strengthen your professional profile." },
   { icon: "trophy", title: "Recognition", desc: "Recognised volunteer certificates and references from the ISOC committee for outstanding volunteers." },
-  { icon: "globe", title: "Real Impact", desc: "Your hours translate directly into community events, funds raised, and lives touched measurably." },
+  { icon: "globe", title: "Real Impact", desc: "Your hours translate directly into community events, funds raised, and lives touched." },
   { icon: "sparkle", title: "Spiritual Reward", desc: "Volunteering for the sake of Allah is among the most rewarding actions a Muslim can take." },
 ];
 
@@ -51,7 +51,7 @@ export default async function VolunteerPage() {
           </h1>
           <span className="gold-rule" />
           <p className="max-w-xl leading-relaxed mb-10" style={{ color: "var(--muted)", fontFamily: DM, fontSize: "1.05rem" }}>
-            Aston ISOC runs on the dedication of volunteers. Whether it&apos;s Ramadan, Discover Islam Week, or Charity Week your time, energy and passion directly shape the experience of hundreds of Muslim students.
+            Aston ISOC runs on the dedication of volunteers. Whether it&apos;s Ramadan, Discover Islam Week, or Charity Week, your time, energy and passion directly shape the experience of hundreds of Muslim students.
           </p>
           <div className="flex gap-3 flex-wrap">
             <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-gold" style={{ fontSize: "0.75rem" }}>
@@ -125,7 +125,7 @@ export default async function VolunteerPage() {
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {c.roles.map((r) => (
-                      <span key={r} className="badge badge-muted" style={{ fontSize: "0.55rem" }}>{r}</span>
+                      <span key={r} className="badge badge-muted" style={{ fontSize: "0.68rem" }}>{r}</span>
                     ))}
                   </div>
                 </div>}
@@ -197,7 +197,7 @@ export default async function VolunteerPage() {
               <p className="label mb-5">How to Get Involved</p>
               <div className="grid sm:grid-cols-3 gap-6">
                 {[
-                  { n: "01", title: "Become a Member", desc: "Join ISOC for £5 membership is required for all volunteering roles.", href: MEMBERSHIP.join, external: true, cta: "Join ISOC →" },
+                  { n: "01", title: "Become a Member", desc: "Join ISOC for £5. Membership is required for all volunteering roles.", href: MEMBERSHIP.join, external: true, cta: "Join ISOC →" },
                   { n: "02", title: "Express Interest", desc: "DM @astonisoc on Instagram stating which campaign you'd like to volunteer for.", href: SOCIAL.instagram, external: true, cta: "Message Us →" },
                   { n: "03", title: "Get Involved", desc: "The relevant campaign lead will be in touch with onboarding details and your first shift.", href: "/contact", external: false, cta: "Contact Page →" },
                 ].map((s) => (
@@ -209,7 +209,7 @@ export default async function VolunteerPage() {
                       href={s.href}
                       target={s.external ? "_blank" : undefined}
                       rel={s.external ? "noopener noreferrer" : undefined}
-                      className="text-xs font-semibold tracking-widest uppercase"
+                      className="tap text-xs font-semibold tracking-widest uppercase"
                       style={{ color: "#d8af72", fontFamily: DM }}
                     >
                       {s.cta}

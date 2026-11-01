@@ -7,7 +7,7 @@ import DonationWidget from "@/components/ui/DonationWidget";
 import { getActiveFundraisers, getGivingOptions } from "@/lib/content";
 import { SOCIAL } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Donate", description: "Support Aston ISOC one-time, weekly Jumu'ah giving, or monthly supporter programme." };
+export const metadata: Metadata = { title: "Donate", description: "Support Aston ISOC: one-time, weekly Jumu'ah giving, or monthly supporter programme." };
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
@@ -17,7 +17,7 @@ export default async function DonatePage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Donate" }]} />
-      <PageHeader label="Support Aston ISOC" title="Give with Intention" subtitle="Every contribution however small helps sustain a thriving Muslim community at Aston University." />
+      <PageHeader label="Support Aston ISOC" title="Give with Intention" subtitle="Every contribution, however small, helps sustain a thriving Muslim community at Aston University." />
 
       <Reveal><DonationWidget /></Reveal>
 

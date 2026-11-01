@@ -90,7 +90,11 @@ export default function Footer() {
 
       <style>{`
         @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 2rem !important; } }
-        @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr !important; } }
+        /* Phones: brand on its own row, link groups two-up, so the footer isn't three screens of one column. */
+        @media (max-width: 480px) {
+          .footer-grid { gap: 2rem 1.25rem !important; }
+          .footer-grid > :first-child { grid-column: 1 / -1; }
+        }
       `}</style>
     </footer>
   );

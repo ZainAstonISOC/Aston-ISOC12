@@ -8,15 +8,15 @@ import { getLeaders, ledBy } from "@/lib/content";
 import Icon, { type IconName } from "@/components/ui/Icon";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Sisters' Section", description: "Aston ISOC Sisters' Section dedicated events, mentorship, and a welcoming community for Muslim sisters at Aston." };
+export const metadata: Metadata = { title: "Sisters' Section", description: "Aston ISOC Sisters' Section: dedicated events, mentorship, and a welcoming community for Muslim sisters at Aston." };
 
 const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "book", title: "Weekly Roots Classes", desc: "Structured Islamic learning in partnership with Roots Academy, building knowledge week by week." },
-  { icon: "coffee", title: "Monthly Brunch", desc: "Casual sisters' social brunch a relaxed space to connect and build genuine friendships." },
+  { icon: "coffee", title: "Monthly Brunch", desc: "Casual sisters' social brunch, a relaxed space to connect and build genuine friendships." },
   { icon: "heart", title: "Wellbeing Circle", desc: "A safe, private space to discuss mental health, faith, and university life." },
   { icon: "briefcase", title: "Careers Mentorship", desc: "Connecting sisters with Muslim women professionals for mentorship and networking." },
   { icon: "hands", title: "Charity Projects", desc: "Sisters-led fundraising and community service initiatives throughout the year." },
-  { icon: "phone", title: "Private WhatsApp", desc: "Sisters-only announcements and community group join via the link below." },
+  { icon: "phone", title: "Private WhatsApp", desc: "Sisters-only announcements and community group. Join via the link below." },
 ];
 
 export default async function SistersPage() {
@@ -65,7 +65,7 @@ export default async function SistersPage() {
             <Reveal>
               <div className="flex items-end justify-between mb-6">
                 <p className="eyebrow">Upcoming Sisters&apos; Events</p>
-                <Link href="/events" className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72" }}>All Events →</Link>
+                <Link href="/events" className="tap text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72" }}>All Events →</Link>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {sistersEvents.map((e) => <EventCard key={e.id} event={e} />)}
@@ -78,7 +78,7 @@ export default async function SistersPage() {
             <p className="eyebrow mb-3" style={{ color: "#34D399" }}>New Muslim Support</p>
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.6rem", fontWeight: 300, color: "#fff", marginBottom: "0.75rem" }}>A Welcoming Space for Every Sister</h3>
             <p className="text-sm leading-relaxed mb-6 max-w-lg" style={{ color: "var(--muted)", fontFamily: "'DM Sans', sans-serif" }}>
-              Whether you&apos;re a new Muslim, returning to faith, or simply curious our sisters&apos; community is patient, warm, and non-judgmental.
+              Whether you&apos;re a new Muslim, returning to faith, or simply curious, our sisters&apos; community is patient, warm, and non-judgmental.
             </p>
             <div className="flex gap-3 flex-wrap">
               <Link href="/resources" className="btn btn-outline-gold" style={{ borderColor: "rgba(52,211,153,0.3)", color: "#6ee7b7" }}>New Muslim Resources</Link>

@@ -9,7 +9,7 @@ import { getHalalPlaces } from "@/lib/content";
 import HalalList from "@/components/ui/HalalList";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
-export const metadata: Metadata = { title: "Freshers Hub", description: "New to Aston? Prayer rooms, halal food, welcome events, and your ISOC community all in one place." };
+export const metadata: Metadata = { title: "Freshers Hub", description: "New to Aston? Prayer rooms, halal food, welcome events, and your ISOC community, all in one place." };
 
 
 const GUIDE: { icon: IconName; title: string; desc: string; href: string; external: boolean }[] = [
@@ -18,7 +18,7 @@ const GUIDE: { icon: IconName; title: string; desc: string; href: string; extern
   { icon: "users",     title: "Brothers WhatsApp",  desc: "Brothers Freshers Group",                  href: WHATSAPP.brothersFreshers,     external: true },
   { icon: "mosque",    title: "Prayer Times",       desc: "Live Birmingham prayer times",             href: "/prayer-times",               external: false },
   { icon: "calendar",  title: "Events Calendar",    desc: "What's on this term",                      href: "/events",                     external: false },
-  { icon: "instagram", title: "Instagram",          desc: "@astonisoc all the latest",              href: SOCIAL.instagram,              external: true },
+  { icon: "instagram", title: "Instagram",          desc: "@astonisoc for all the latest",              href: SOCIAL.instagram,              external: true },
 ];
 
 export default async function FreshersPage() {
@@ -49,7 +49,7 @@ export default async function FreshersPage() {
             {[
               { title: "Freshers Fair Location", desc: "ISOC stall location, stand number and map to follow." },
               { title: "Welcome Week Timetable", desc: "Full schedule of ISOC events during welcome week." },
-              { title: "Welcome Pack", desc: "Digital pack prayer guide, halal map, and key contacts." },
+              { title: "Welcome Pack", desc: "Digital pack: prayer guide, halal map, and key contacts." },
             ].map(item => (
               <div key={item.title} className="p-6" style={{ border: "1px dashed rgba(216,175,114,0.25)", borderRadius: "1rem", background: "rgba(216,175,114,0.03)" }}>
                 <p className="text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: "#d8af72", fontFamily: "'DM Sans', sans-serif", background: "rgba(216,175,114,0.1)", display: "inline-block", padding: "0.2rem 0.6rem", borderRadius: "0.25rem" }}>Coming Soon</p>
@@ -87,7 +87,7 @@ export default async function FreshersPage() {
 
         <Reveal>
           <p className="eyebrow mb-4">Birmingham Halal Food Guide</p>
-          <p className="text-sm mb-5" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>Closest halal options to campus always verify certification in-store.</p>
+          <p className="text-sm mb-5" style={{ color: "var(--muted-2)", fontFamily: "'DM Sans', sans-serif" }}>Closest halal options to campus. Always verify certification in-store.</p>
           <div className="mb-4"><HalalList places={halal.slice(0, 6)} /></div>
           <p className="mb-16 text-sm" style={{ fontFamily: "'DM Sans', sans-serif" }}>
             <Link href="/halal-food" className="tap" style={{ color: "#d8af72" }}>Full halal food guide →</Link>
@@ -112,8 +112,8 @@ export default async function FreshersPage() {
               { q: "When do ISOC events start?", a: "Events begin from freshers week in September. Check the Events page for the full schedule." },
               { q: "Is ISOC only for Muslims?", a: "Most events are open to everyone. We warmly welcome non-Muslim students curious about Islam." },
               { q: "How do I join ISOC?", a: "Membership is £5 for the full year via Aston SU. Visit the Join page for the full process." },
-              { q: "Is there a sisters-only space?", a: "Yes dedicated events, private WhatsApp group, and a separate prayer space for sisters." },
-              { q: "I missed freshers week can I still join?", a: "Yes, ISOC is open year-round. Join via Aston SU at any time." },
+              { q: "Is there a sisters-only space?", a: "Yes: dedicated events, private WhatsApp group, and a separate prayer space for sisters." },
+              { q: "I missed freshers week. Can I still join?", a: "Yes, ISOC is open year-round. Join via Aston SU at any time." },
             ].map(faq => (
               <details key={faq.q} style={{ border: "1px solid rgba(216,175,114,0.1)", borderRadius: "0.75rem", overflow: "hidden" }}>
                 <summary className="flex justify-between items-center px-5 py-4 cursor-pointer font-medium text-sm" style={{ color: "#fff", fontFamily: "'DM Sans', sans-serif", listStyle: "none" }}>
@@ -126,7 +126,7 @@ export default async function FreshersPage() {
         </Reveal>
 
         <Reveal>
-          <CtaBanner title="Ready to Join Your Community?" description="Come to one event, meet one person and you'll see why Aston ISOC is home." primaryLabel="Buy Membership Join ISOC" primaryHref={MEMBERSHIP.join} secondaryLabel="View Events" secondaryHref="/events" />
+          <CtaBanner title="Ready to Join Your Community?" description="Come to one event, meet one person, and you'll see why Aston ISOC is home." primaryLabel="Buy Membership Join ISOC" primaryHref={MEMBERSHIP.join} secondaryLabel="View Events" secondaryHref="/events" />
         </Reveal>
       </div>
     </div>

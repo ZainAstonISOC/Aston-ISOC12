@@ -13,7 +13,7 @@ export const metadata: Metadata = { title: "Brothers' Section", description: "Fo
 const PROGRAMMES: { icon: IconName; title: string; desc: string }[] = [
   { icon: "football", title: "Football & Sports", desc: "Weekly football sessions, inter-university tournaments, and gym meetups throughout the year." },
   { icon: "book", title: "Weekly Roots Classes", desc: "Structured Islamic learning in partnership with Roots Academy, building knowledge week by week." },
-  { icon: "mic", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today faith, identity, and purpose." },
+  { icon: "mic", title: "Monthly Speakers", desc: "Talks addressing issues relevant to Muslim men today: faith, identity, and purpose." },
   { icon: "briefcase", title: "Careers Network", desc: "Connecting brothers with Muslim professionals, employers, and industry mentors." },
   { icon: "handshake", title: "Mentorship", desc: "Senior brothers mentor fresher students through their first year at Aston." },
   { icon: "phone", title: "Brothers' WhatsApp", desc: "Private brotherhood group for announcements, community and organising meetups." },
@@ -61,7 +61,7 @@ export default async function BrothersPage() {
             <Reveal>
               <div className="flex items-end justify-between mb-6">
                 <p className="eyebrow">Upcoming Brothers&apos; Events</p>
-                <Link href="/events" className="text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72" }}>All Events →</Link>
+                <Link href="/events" className="tap text-xs font-semibold tracking-widest uppercase" style={{ color: "#d8af72" }}>All Events →</Link>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {brothersEvents.map((e) => <EventCard key={e.id} event={e} />)}

@@ -15,7 +15,7 @@ export const resources: Resource[] = [
   {
     id: "new-muslim-guide",
     title: "New Muslim Guide",
-    description: "A comprehensive beginner's guide to Islam beliefs, prayer, and community. Free from the New Muslim Network UK.",
+    description: "A comprehensive beginner's guide to Islam: beliefs, prayer, and community. Free from the New Muslim Network UK.",
     category: "new-muslim", type: "link",
     url: "https://newmuslim.net/new-muslim-guide/", isExternal: true,
   },
@@ -77,7 +77,7 @@ export const resources: Resource[] = [
   {
     id: "dua-student",
     title: "Student Dua Collection (Supplication.net)",
-    description: "Duas for exams, anxiety, morning and evening essential for every student.",
+    description: "Duas for exams, anxiety, morning and evening. Essential for every student.",
     category: "dua", type: "link",
     url: "https://www.supplication.net", isExternal: true,
   },
@@ -93,7 +93,7 @@ export const resources: Resource[] = [
   {
     id: "student-minds",
     title: "Student Minds",
-    description: "The UK's leading student mental health charity guides, support, and peer networks.",
+    description: "The UK's leading student mental health charity: guides, support, and peer networks.",
     category: "wellbeing", type: "link",
     url: "https://www.studentminds.org.uk", isExternal: true,
   },
@@ -116,7 +116,7 @@ export const resources: Resource[] = [
   {
     id: "islamic-student-fin",
     title: "Islamic Student Finance (UK Gov)",
-    description: "Sharia-compliant alternative student finance interest-free, government-backed.",
+    description: "Sharia-compliant alternative student finance: interest-free, government-backed.",
     category: "student-finance", type: "link",
     url: "https://www.gov.uk/get-undergraduate-student-loan/islamic-student-finance", isExternal: true,
   },
@@ -125,21 +125,21 @@ export const resources: Resource[] = [
   {
     id: "green-lane-masjid",
     title: "Green Lane Masjid",
-    description: "One of Birmingham's most active masajid 1.2 miles from campus. Daily prayers, classes, events.",
+    description: "One of Birmingham's most active masajid, 1.2 miles from campus. Daily prayers, classes, events.",
     category: "community", type: "link",
     url: "https://www.greenlanemasjid.org", isExternal: true,
   },
   {
     id: "bcm",
     title: "Birmingham Central Mosque",
-    description: "Birmingham's largest mosque 0.4 miles from campus. Open to all.",
+    description: "Birmingham's largest mosque, 0.4 miles from campus. Open to all.",
     category: "community", type: "link",
     url: "https://centralmosque.org.uk", isExternal: true,
   },
   {
     id: "fosis",
     title: "FOSIS",
-    description: "Federation of Student Islamic Societies our national umbrella organisation.",
+    description: "Federation of Student Islamic Societies, our national umbrella organisation.",
     category: "community", type: "link",
     url: "https://www.fosis.org.uk", isExternal: true,
   },

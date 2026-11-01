@@ -6,7 +6,7 @@ import { PageHeader, CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import { getCommittee, getStats } from "@/lib/content";
 
-export const metadata: Metadata = { title: "About Us", description: "Learn about Aston University Islamic Society our mission, history, and the community we've built." };
+export const metadata: Metadata = { title: "About Us", description: "Learn about Aston University Islamic Society: our mission, history, and the community we've built." };
 
 const MISSION = [
   "Facilitate the five daily prayers and Friday Jumu'ah on campus",

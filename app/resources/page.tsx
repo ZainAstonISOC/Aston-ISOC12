@@ -13,7 +13,7 @@ export default function ResourcesPage() {
   return (
     <PageShell>
       <Breadcrumb crumbs={[{ label: "Resources" }]} />
-      <PageHeader label="Islamic Library" title="Resources" subtitle="Curated resources for Muslim students Islamic learning, wellbeing, student finance, and more." />
+      <PageHeader label="Islamic Library" title="Resources" subtitle="Curated resources for Muslim students: Islamic learning, wellbeing, student finance, and more." />
       <Reveal>
         <div className="flex flex-wrap gap-2 mb-12">
           {populated.map(cat => (

@@ -555,7 +555,8 @@ p { color: var(--muted); line-height: 1.78; }
 .breadcrumb { font-size: 0.82rem; color: var(--muted-2); letter-spacing: 0.04em; margin-bottom: 1.2rem; }
 .breadcrumb a:hover { color: var(--gold); }
 /* Pads short standalone links to a 24px+ touch target without moving the text. */
-.breadcrumb a, .tap { display: inline-block; padding-block: 0.35rem; margin-block: -0.35rem; }
+/* Grows the touch area to ~40px without moving anything: padding out, margin back in. */
+.breadcrumb a, .tap { display: inline-block; padding-block: 0.75rem; margin-block: -0.75rem; }
 
 /* ---------- Forms ---------- */
 .field-wrap { margin-bottom: 1.2rem; }
@@ -1114,3 +1115,37 @@ div.relative.overflow-hidden { overflow: hidden; }
 .card--stack > .pill,
 .card--stack > .btn { align-self: flex-start; }
 .card--stack > .card__push { margin-top: auto; }
+
+/* ---------- Phone compaction (layout unchanged above 620px) ---------- */
+/* Hero stats: a tidy 2×2 instead of a ragged wrap. */
+@media (max-width: 620px) {
+  .hero-stats { display: grid !important; grid-template-columns: 1fr 1fr; gap: 1.6rem 1rem !important; }
+}
+/* Feature cards: icon beside the title rather than above it. */
+@media (max-width: 620px) {
+  .card.feature--row { display: grid; grid-template-columns: auto 1fr; column-gap: 0.9rem; align-items: center; padding: 1.25rem; }
+  .card.feature--row .icon-badge { width: 42px; height: 42px; border-radius: 12px; margin-bottom: 0; }
+  .card.feature--row .icon-badge svg { width: 20px; height: 20px; }
+  .card.feature--row > p { grid-column: 1 / -1; }
+}
+/* MobileFold: a plain disclosure on phones, invisible chrome on desktop. */
+.mobile-fold > summary {
+  display: none;
+  cursor: pointer;
+  list-style: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 0.7rem 0;
+  min-height: 44px;
+}
+.mobile-fold > summary::-webkit-details-marker { display: none; }
+.mobile-fold > summary::after { content: "+"; margin-left: 0.45rem; }
+.mobile-fold[open] > summary::after { content: "−"; }
+@media (max-width: 620px) {
+  .mobile-fold > summary { display: flex; align-items: center; }
+  .mobile-fold[open] > summary { margin-bottom: 0.6rem; }
+}

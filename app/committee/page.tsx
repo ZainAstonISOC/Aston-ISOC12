@@ -8,6 +8,7 @@ import { SOCIAL } from "@/lib/social";
 import MemberCard from "@/components/ui/MemberCard";
 import { departments } from "@/data/departments";
 import Icon from "@/components/ui/Icon";
+import MobileFold from "@/components/ui/MobileFold";
 
 export async function generateMetadata(): Promise<Metadata> {
   const year = (await getCommittee()).find(m => m.year)?.year;
@@ -116,6 +117,7 @@ export default async function CommitteePage() {
                       <p style={{ fontFamily: DM, fontSize: "0.78rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#d8af72", marginBottom: "0.85rem" }}>{d.tagline}</p>
                       <p style={{ fontFamily: DM, fontSize: "0.92rem", color: "var(--muted)", lineHeight: 1.75, marginBottom: "1.5rem" }}>{d.mission}</p>
 
+                      <MobileFold summary="Objectives and initiatives">
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.25rem" }}>
                         <div>
                           <p style={{ fontFamily: DM, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted-2)", marginBottom: "0.6rem" }}>Objectives</p>
@@ -139,6 +141,7 @@ export default async function CommitteePage() {
                           </div>
                         </div>
                       </div>
+                      </MobileFold>
                     </div>
                   </div>
                 </div>

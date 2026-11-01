@@ -15,7 +15,7 @@ import { getJumuah, jamaatList } from "@/lib/jumuah";
 import { SOCIAL, WHATSAPP, MEMBERSHIP } from "@/lib/social";
 
 export const metadata: Metadata = {
-  title: "Aston ISOC Faith. Community. Excellence.",
+  title: "Aston ISOC · Faith. Community. Excellence.",
   description: "Aston University Islamic Society. Serving Muslim students at Aston University, Birmingham.",
 };
 export const revalidate = 3600;
@@ -91,7 +91,7 @@ export default async function HomePage() {
           </div>
 
           <Reveal delay={340} className="hero-grid__stats">
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(1.5rem,5vw,3.5rem)", marginTop: "3.5rem", paddingTop: "2.2rem", borderTop: "1px solid rgba(216,175,114,0.12)" }}>
+            <div className="hero-stats" style={{ display: "flex", flexWrap: "wrap", gap: "clamp(1.5rem,5vw,3.5rem)", marginTop: "3.5rem", paddingTop: "2.2rem", borderTop: "1px solid rgba(216,175,114,0.12)" }}>
               {[
                 { n: stats.members, label: "Members" },
                 { n: "5×", label: "Daily prayers on campus" },
@@ -144,7 +144,7 @@ export default async function HomePage() {
         <div className="container">
           <div className="section-head center">
             <Reveal><p className="eyebrow" style={{ justifyContent: "center" }}>What we offer</p></Reveal>
-            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>More than a society a community</h2></Reveal>
+            <Reveal delay={80}><h2 style={{ fontFamily: PF }}>More than a society, a community</h2></Reveal>
             <Reveal delay={140}><p className="lede" style={{ margin: "0 auto" }}>Everything you need to keep your deen strong while you study, all in one place.</p></Reveal>
           </div>
           <div className="grid cols-3">
@@ -152,12 +152,12 @@ export default async function HomePage() {
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>, title: "Prayer & Jumu'ah", desc: "Dedicated brothers' and sisters' prayer spaces, with congregational Jumu'ah every Friday at the SU Hall." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>, title: "Weekly Roots Classes", desc: "Structured Islamic learning with Roots Academy, plus guest speakers from across the UK." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>, title: "Charity & Sadaqah", desc: "Make your time at university count. Our Charity Week and year-round fundraising support causes at home and abroad." },
-              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>, title: "Sisters & Brothers", desc: "From football and futsal to game nights and meals out find your people and make friendships that last." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>, title: "Sisters & Brothers", desc: "From football and futsal to game nights and meals out, find your people and make friendships that last." },
               { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg>, title: "Mentoring & Support", desc: "New to Aston? Our mentoring scheme pairs first-years with senior students for guidance, academic and spiritual." },
-              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/></svg>, title: "Community \u0026 Dawah", desc: "From Friday gatherings to open conversations a week of talks, exhibitions and open conversations welcoming the whole university." },
+              { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3 2.7 6.2 6.8.5-5.2 4.4 1.6 6.6L12 17l-5.9 3.7 1.6-6.6L2.5 9.7l6.8-.5z"/></svg>, title: "Community \u0026 Dawah", desc: "From Friday gatherings to Discover Islam Week: talks, exhibitions and open conversations welcoming the whole university." },
             ].map((item, i) => (
               <Reveal key={item.title} delay={(i % 3) * 80}>
-                <article className="card feature">
+                <article className="card feature feature--row">
                   <div className="icon-badge">{item.icon}</div>
                   <h3 style={{ fontFamily: PF, color: "#fff", fontSize: "1.25rem" }}>{item.title}</h3>
                   <p style={{ fontFamily: DM, fontSize: "0.95rem", marginTop: "0.5rem" }}>{item.desc}</p>

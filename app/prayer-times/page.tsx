@@ -122,7 +122,7 @@ export default async function PrayerTimesPage() {
           </div>
           <div className="grid cols-2">
             {[
-              { title: "Your first Jumu\u2019ah?", desc: `Head to ${jumuah.location} a few minutes early; the times are in the Jumu'ah box above.${jumuah.sisters ? ` Sisters: ${jumuah.sisters.charAt(0).toLowerCase()}${jumuah.sisters.slice(1)}.` : ""} Not sure where to go? Message us on Instagram.` },
+              { title: "Your first Jumu\u2019ah?", desc: `Head to ${jumuah.location} a few minutes early; the times are in the Jumu'ah box above.${jumuah.sisters ? ` Sisters: ${/^[A-Z][a-z]/.test(jumuah.sisters) ? jumuah.sisters.charAt(0).toLowerCase() + jumuah.sisters.slice(1) : jumuah.sisters}.` : ""} Not sure where to go? Message us on Instagram.` },
               { title: "Everyone is welcome", desc: "You don't need to be a member to use the prayer rooms. New Muslims and non-Muslims are always welcome." },
               { title: "Bring nothing but yourself", desc: "Prayer mats and Qur'ans are provided. Wudu areas are right next door." },
               { title: "Find us if you're lost", desc: "Message us on Instagram or WhatsApp and a committee member will walk you to the prayer room." },
