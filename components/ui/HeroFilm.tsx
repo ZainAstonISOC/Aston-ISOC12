@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 // poster is all that loads for visitors who asked for reduced motion or less
 // data, and for anyone without JavaScript.
 const REDUCE = "(prefers-reduced-motion: reduce)";
+const POSTER = "/hero/isoc-film-poster.webp";
 function subscribe(onChange: () => void) {
   const mq = window.matchMedia(REDUCE);
   mq.addEventListener("change", onChange);
@@ -18,49 +19,65 @@ function motionAllowed() {
   return !window.matchMedia(REDUCE).matches && !saveData;
 }
 
+/*
+ * ONE video element for the whole visit.
+ * Leaving the homepage unmounts this component; coming back used to build a
+ * brand-new <video> that had to load, restart the film and get Safari to set
+ * up drawing again, and Safari often showed an empty or frozen box for a long
+ * while. Instead the element is made once, kept (paused) while the visitor is
+ * elsewhere, and put back where it left off. React never renders it, so it
+ * never tries to remove or replace it.
+ */
+let film: HTMLVideoElement | null = null;
+let pausedByVisitor = false;
+
+function filmVideo(): HTMLVideoElement {
+  if (film) return film;
+  const v = document.createElement("video");
+  v.className = "hero-film__video";
+  v.poster = POSTER;
+  v.muted = true;
+  v.defaultMuted = true;
+  v.loop = true;
+  v.playsInline = true;
+  v.preload = "none";
+  v.tabIndex = -1;
+  v.width = 1080;
+  v.height = 1350;
+  for (const name of ["muted", "playsinline", "disablepictureinpicture", "disableremoteplayback"]) v.setAttribute(name, "");
+  v.setAttribute("aria-hidden", "true");
+  for (const [src, media] of [["/hero/isoc-film-720.mp4", "(max-width: 767px)"], ["/hero/isoc-film-1080.mp4", ""]]) {
+    const s = document.createElement("source");
+    s.src = src;
+    s.type = "video/mp4";
+    if (media) s.media = media;
+    v.appendChild(s);
+  }
+  return (film = v);
+}
+
 export default function HeroFilm() {
-  const video = useRef<HTMLVideoElement>(null);
   const stage = useRef<HTMLDivElement>(null);
-  const userPaused = useRef(false);
   // False on the server and for visitors who asked for less motion or data.
   const canPlay = useSyncExternalStore(subscribe, motionAllowed, () => false);
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    const v = video.current;
-    if (!v) return;
-    if (!canPlay) { v.pause(); return; }
-
-    v.muted = true; // React sets `muted` as a property only; be explicit before play()
+    const host = stage.current;
+    if (!host || !canPlay) return;
+    const v = filmVideo();
+    host.appendChild(v);
 
     // iOS Low Power Mode (and some data savers) refuse autoplay without saying
     // so; the poster just sits there. Try again on the visitor's first touch.
-    const retry = () => { if (!userPaused.current && v.paused) v.play().catch(() => {}); };
+    const retry = () => { if (!pausedByVisitor && v.paused) v.play().catch(() => {}); };
     const gestures = ["pointerdown", "touchend", "keydown"] as const;
     const armRetry = () => gestures.forEach(g => window.addEventListener(g, retry, { once: true, passive: true }));
-    const play = () => { if (!userPaused.current) v.play().catch(armRetry); };
+    const play = () => { if (!pausedByVisitor) v.play().catch(armRetry); };
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
     v.addEventListener("play", onPlay);
     v.addEventListener("pause", onPause);
-
-    // Safari sometimes leaves a masked video undrawn (an empty box) after the
-    // page is shown again from another section. Dropping the mask for one
-    // frame when frames start flowing makes it composite the layer afresh.
-    let frame = 0;
-    const redraw = () => {
-      const s = stage.current;
-      if (!s) return;
-      s.style.setProperty("-webkit-mask-image", "none");
-      s.style.setProperty("mask-image", "none");
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        s.style.removeProperty("-webkit-mask-image");
-        s.style.removeProperty("mask-image");
-      });
-    };
-    const redrawOn = ["loadeddata", "playing"] as const;
-    redrawOn.forEach(ev => v.addEventListener(ev, redraw));
 
     // Only decode while it is on screen.
     let inView = typeof IntersectionObserver === "undefined";
@@ -74,13 +91,13 @@ export default function HeroFilm() {
       observer.observe(v);
     }
 
-    // Self-healing. Safari pauses or starves background-ish media on its own
-    // (many tabs, other media playing, power), and a stalled first download
-    // leaves the poster frozen until a refresh. While the film is on screen
-    // and the visitor hasn't paused it, keep it playing.
+    // Self-healing. Safari pauses or starves media on its own (many tabs,
+    // other media playing, power), and a stalled first download leaves the
+    // poster frozen. While the film is on screen and the visitor hasn't
+    // paused it, keep it playing.
     let stalledTicks = 0;
     const heal = () => {
-      if (!inView || userPaused.current || document.visibilityState !== "visible") { stalledTicks = 0; return; }
+      if (!inView || pausedByVisitor || document.visibilityState !== "visible") { stalledTicks = 0; return; }
       if (v.paused) { play(); return; }
       stalledTicks = v.readyState < 3 ? stalledTicks + 1 : 0;
       if (stalledTicks >= 2) { stalledTicks = 0; v.load(); play(); }
@@ -93,41 +110,29 @@ export default function HeroFilm() {
       window.clearInterval(watchdog);
       document.removeEventListener("visibilitychange", heal);
       gestures.forEach(g => window.removeEventListener(g, retry));
-      cancelAnimationFrame(frame);
-      redrawOn.forEach(ev => v.removeEventListener(ev, redraw));
       v.removeEventListener("play", onPlay);
       v.removeEventListener("pause", onPause);
+      // Kept, not destroyed: paused and taken out of the page until Home is shown again.
+      v.pause();
+      v.remove();
     };
   }, [canPlay]);
 
   const toggle = () => {
-    const v = video.current;
+    const v = film;
     if (!v) return;
-    if (v.paused) { userPaused.current = false; v.play().catch(() => {}); }
-    else { userPaused.current = true; v.pause(); }
+    if (v.paused) { pausedByVisitor = false; v.play().catch(() => {}); }
+    else { pausedByVisitor = true; v.pause(); }
   };
 
   return (
     <div className="hero-film">
       <div ref={stage} className="hero-film__stage">
-        <video
-          ref={video}
-          className="hero-film__video"
-          poster="/hero/isoc-film-poster.webp"
-          muted
-          loop
-          playsInline
-          preload="none"
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-hidden="true"
-          tabIndex={-1}
-          width={1080}
-          height={1350}
-        >
-          <source src="/hero/isoc-film-720.mp4" type="video/mp4" media="(max-width: 767px)" />
-          <source src="/hero/isoc-film-1080.mp4" type="video/mp4" />
-        </video>
+        {/* The film's first frame, always underneath the video: what shows
+            before it plays, without JavaScript, for reduced motion, and if a
+            browser is ever slow to draw the video itself. */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- must be the exact poster pixels, unresized */}
+        <img src={POSTER} alt="" aria-hidden="true" className="hero-film__video" width={1080} height={1350} fetchPriority="high" />
       </div>
       {canPlay && (
         <button type="button" className="hero-film__toggle" onClick={toggle} aria-label={playing ? "Pause the film" : "Play the film"}>
