@@ -15,7 +15,7 @@ import { createRequire } from "node:module";
 const SITE = (process.env.SITE ?? "https://www.astonisoc.com").replace(/\/$/, "");
 const PAGES = [
   "/", "/events", "/prayer-times", "/quran", "/quran/36", "/ayah", "/committee", "/about", "/join",
-  "/freshers", "/halal-food", "/volunteer", "/charity", "/donate", "/sponsors", "/zakat", "/search", "/start-here",
+  "/freshers", "/halal-food", "/volunteer", "/careers", "/charity", "/donate", "/sponsors", "/zakat", "/search", "/start-here",
 ];
 const VIEWPORTS = [{ name: "phone", width: 390, height: 844 }, { name: "desktop", width: 1440, height: 900 }];
 

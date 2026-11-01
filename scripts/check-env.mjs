@@ -39,6 +39,11 @@ if (has("ADMIN_PASSWORD")) {
 }
 
 if (has("ADZUNA_APP_ID") !== has("ADZUNA_APP_KEY")) errors.push("ADZUNA_APP_ID and ADZUNA_APP_KEY must both be set, or neither.");
+// Careers board sources: each one is optional and simply skipped without its key.
+if (isProd) {
+  for (const k of ["REED_API_KEY", "GOV_UK_DISPLAY_ADVERT_API_KEY"]) if (!has(k)) warnings.push(`${k} is not set: the careers board skips that source.`);
+  if (!has("CRON_SECRET")) warnings.push("CRON_SECRET is not set: the daily careers refresh is refused, so the page rebuilds its own board every six hours.");
+}
 if (has("QURAN_CLIENT_ID") !== has("QURAN_CLIENT_SECRET")) errors.push("QURAN_CLIENT_ID and QURAN_CLIENT_SECRET must both be set, or neither.");
 
 for (const w of warnings) console.warn(`⚠ env: ${w}`);

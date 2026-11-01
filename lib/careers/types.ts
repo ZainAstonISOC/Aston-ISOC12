@@ -1,104 +1,111 @@
 /**
  * OPPORTUNITY MODEL
  * ---------------------------------------------------------------
- * One shape for every source. Curated committee entries and API results are
- * normalised into this before they reach the UI, so adding a provider never
- * touches a component.
+ * One shape for every source. Each provider normalises its API's results into
+ * this before they reach the UI, so adding a source never touches a component.
+ * Every `applyUrl` is the listing itself (the employer's posting, or that
+ * specific advert on Reed, GOV.UK or Adzuna), never a site's homepage.
  */
 
 export type OpportunityCategory =
   | "internship"
   | "placement"
   | "graduate"
-  | "spring-week"
   | "insight"
   | "apprenticeship"
   | "part-time"
-  | "charity"
-  | "islamic-finance"
-  | "volunteering";
+  | "event";
 
-export type EmploymentType =
-  | "Full-time"
-  | "Part-time"
-  | "Fixed-term"
-  | "Internship"
-  | "Apprenticeship"
-  | "Voluntary";
+export type Region = "Birmingham" | "London" | "Rest of UK" | "Remote";
 
-export type ExperienceLevel =
-  | "Any year"
-  | "First year"
-  | "Penultimate year"
-  | "Final year"
-  | "Graduate"
-  | "School leaver";
+export type SourceId = "employer" | "govuk" | "reed" | "adzuna";
 
 export interface Opportunity {
   id: string;
   title: string;
   employer: string;
-  /** Free text, e.g. "Birmingham", "London (hybrid)", "Remote". */
+  /** As the source wrote it, e.g. "London, United Kingdom" or "B4 7ET". */
   location: string;
+  region: Region;
   category: OpportunityCategory;
-  /** Broad sector used by the industry filter, e.g. "Finance", "Healthcare". */
-  industry: string;
-  employmentType: EmploymentType;
-  experienceLevel: ExperienceLevel;
-  /** ISO date. `null` means rolling / no published closing date. */
+  /** ISO date. `null` when the source publishes no closing date. */
   deadline: string | null;
-  description: string;
-  applyUrl: string;
-  /** Which provider produced this row. */
-  source: string;
-  featured?: boolean;
-  /** ISO date the entry was added or published. */
+  /** ISO date the listing went up. */
   postedAt: string;
+  /** One or two sentences; full details are on the listing. */
+  description: string;
+  salary?: string;
+  applyUrl: string;
+  source: SourceId;
+  /** Higher is more worth a student's attention; drives "Top opportunities". */
+  score: number;
 }
 
+/** What a provider returns; index.ts adds the score. */
+export type OpportunityDraft = Omit<Opportunity, "score">;
+
 export const CATEGORY_LABELS: Record<OpportunityCategory, string> = {
-  internship: "Internship",
-  placement: "Placement Year",
-  graduate: "Graduate Role",
-  "spring-week": "Spring Week",
-  insight: "Insight Programme",
-  apprenticeship: "Apprenticeship",
-  "part-time": "Part-Time",
-  charity: "Charity & Non-Profit",
-  "islamic-finance": "Islamic Finance",
-  volunteering: "Volunteering",
+  internship: "Internships",
+  placement: "Placement years",
+  graduate: "Graduate schemes",
+  insight: "Spring weeks & insights",
+  apprenticeship: "Apprenticeships",
+  "part-time": "Part-time",
+  event: "Events",
 };
 
-/** Display order for the category rail — broadly the student journey. */
+/** Singular, for the badge on each card. */
+export const CATEGORY_BADGE: Record<OpportunityCategory, string> = {
+  internship: "Internship",
+  placement: "Placement year",
+  graduate: "Graduate",
+  insight: "Spring week / insight",
+  apprenticeship: "Apprenticeship",
+  "part-time": "Part-time",
+  event: "Event",
+};
+
+/** Tab order: broadly the student journey, first year to final year. */
 export const CATEGORY_ORDER: OpportunityCategory[] = [
-  "spring-week",
   "insight",
   "internship",
   "placement",
   "graduate",
   "apprenticeship",
   "part-time",
-  "islamic-finance",
-  "charity",
-  "volunteering",
+  "event",
 ];
 
+export const SOURCE_LABELS: Record<SourceId, string> = {
+  employer: "Direct from employer",
+  govuk: "GOV.UK Find an apprenticeship",
+  reed: "Reed",
+  adzuna: "Adzuna",
+};
+
 /**
- * A source of opportunities. Implement this and register it in `providers.ts`
- * — nothing else needs to change.
+ * A source of opportunities. Implement this and register it in index.ts;
+ * nothing else needs to change.
  */
 export interface OpportunityProvider {
-  id: string;
+  id: SourceId;
   label: string;
   /** False when the provider's credentials are absent, so it is skipped. */
   isEnabled(): boolean;
-  load(): Promise<Opportunity[]>;
+  load(): Promise<OpportunityDraft[]>;
 }
 
 export interface ProviderStatus {
-  id: string;
+  id: SourceId;
   label: string;
   enabled: boolean;
   count: number;
   error?: string;
+}
+
+export interface OpportunityBoardData {
+  opportunities: Opportunity[];
+  sources: ProviderStatus[];
+  /** ISO timestamp of the refresh that produced this board. */
+  updatedAt: string;
 }

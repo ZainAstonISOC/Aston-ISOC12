@@ -5,27 +5,35 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { CtaBanner } from "@/components/ui/Cards";
 import Reveal from "@/components/ui/Reveal";
 import OpportunityBoard from "@/components/careers/OpportunityBoard";
-import { getOpportunityBoard, CATEGORY_LABELS, CATEGORY_ORDER } from "@/lib/careers";
+import { getOpportunityBoard, CATEGORY_LABELS, CATEGORY_ORDER, type Opportunity } from "@/lib/careers";
 import { SOCIAL } from "@/lib/social";
 
 export const metadata: Metadata = {
   title: "Careers & Opportunities",
   description:
-    "Internships, placement years, graduate roles, spring weeks, apprenticeships, Islamic finance and volunteering — searchable and filtered, for Aston ISOC members.",
+    "Live internships, placement years, graduate schemes, spring weeks, apprenticeships, part-time jobs and careers events, refreshed every morning. Every link goes straight to the listing.",
 };
 
-// Providers cache for an hour; the page follows the same rhythm.
+// The board itself refreshes daily (/api/cron/careers); the page re-reads it hourly.
 export const revalidate = 3600;
 
 const PF = "'Playfair Display', Georgia, serif";
 const DM = "'DM Sans', sans-serif";
 
-export default async function CareersPage() {
-  const { opportunities, sources } = await getOpportunityBoard();
+/** Rendered at most hourly, so "now" here means the last revalidation. */
+function closingWithin(list: Opportunity[], days: number): number {
+  const by = new Date(Date.now() + days * 86_400_000).toISOString().slice(0, 10);
+  return list.filter(o => o.deadline && o.deadline <= by).length;
+}
 
-  const liveSources = sources.filter(s => s.enabled && !s.error);
+export default async function CareersPage() {
+  const { opportunities, sources, updatedAt } = await getOpportunityBoard();
+
+  const liveSources = sources.filter(s => s.enabled && !s.error && s.count > 0);
   const categoriesCovered = new Set(opportunities.map(o => o.category));
-  const featuredCount = opportunities.filter(o => o.featured).length;
+  const closingSoon = closingWithin(opportunities, 14);
+  const direct = opportunities.filter(o => o.source === "employer").length;
+  const updated = new Date(updatedAt).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/London" });
 
   return (
     <PageShell>
@@ -41,17 +49,17 @@ export default async function CareersPage() {
             </h1>
             <div className="gold-rule" />
             <p className="lede" style={{ fontFamily: DM }}>
-              Spring weeks, placements, graduate schemes, apprenticeships and Islamic finance
-              routes — gathered in one place, searchable, and checked by the committee rather
-              than scraped and forgotten.
+              Live spring weeks, internships, placement years, graduate schemes, apprenticeships
+              and part-time jobs, gathered every morning from employers&apos; own job sites, GOV.UK,
+              Reed and Adzuna. Every link goes straight to the listing.
             </p>
           </div>
 
           <div className="careers-hero__stats">
             {[
-              { n: String(opportunities.length), l: "Opportunities listed" },
-              { n: String(categoriesCovered.size), l: "Categories covered" },
-              { n: String(featuredCount), l: "Committee picks" },
+              { n: String(opportunities.length), l: "Live opportunities" },
+              { n: String(direct), l: "Direct from employers" },
+              { n: String(closingSoon), l: "Closing in 14 days" },
             ].map(s => (
               <div key={s.l}>
                 <b style={{ fontFamily: PF, fontSize: "clamp(1.9rem, 3vw, 2.5rem)", color: "#fff", display: "block", lineHeight: 1 }}>
@@ -82,7 +90,7 @@ export default async function CareersPage() {
             >
               {/* Counts are shown deliberately: a provider that returns nothing
                   used to look identical to one that was working. */}
-              Sources: {liveSources.map(s => `${s.label} (${s.count})`).join(", ")}. Updated hourly.
+              Sources: {liveSources.map(s => `${s.label} (${s.count})`).join(", ")}. Updated {updated}.
             </p>
           </div>
         </div>
@@ -104,12 +112,12 @@ export default async function CareersPage() {
             <div>
               <p className="eyebrow">What we track</p>
               <h2 style={{ fontFamily: PF, color: "#fff", maxWidth: "15ch", marginBottom: "1rem" }}>
-                Ten routes into work, not one
+                Seven routes into work, not one
               </h2>
               <p style={{ fontFamily: DM, fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.8, maxWidth: "48ch" }}>
                 Most students only hear about graduate schemes, and hear about them too late.
                 First-year spring weeks, insight days and degree apprenticeships close months
-                before finalists start looking — so the board covers the whole ladder.
+                before finalists start looking, so the board covers the whole ladder.
               </p>
             </div>
             <ul className="careers-cover__list">
@@ -181,9 +189,9 @@ export default async function CareersPage() {
             maxWidth: "70ch",
           }}
         >
-          Aston ISOC is not the employer for any role listed here and does not handle applications.
-          Always check closing dates and eligibility on the employer&apos;s own page — schemes change
-          their dates year to year. Spotted something out of date?{" "}
+          Listings are gathered automatically and Aston ISOC is not the employer for any of them.
+          Always check eligibility and closing dates on the listing itself before applying. Spotted
+          something wrong?{" "}
           <Link href="/feedback" style={{ color: "var(--gold)" }}>
             Tell us
           </Link>
@@ -194,9 +202,9 @@ export default async function CareersPage() {
       <Reveal>
         <div style={{ marginTop: "clamp(3rem, 7vw, 4.5rem)" }}>
           <CtaBanner
-            title="Know an opportunity we're missing?"
-            description="If your employer runs a placement, spring week or graduate scheme, send it over and we will add it to the board for the next student who looks."
-            primaryLabel="Suggest an opportunity"
+            title="Know an employer we should read?"
+            description="If a company you want to work for isn't showing up, send us its careers page. If its job site can be read automatically, its roles join the board every morning."
+            primaryLabel="Suggest an employer"
             primaryHref="/feedback"
             secondaryLabel="Message us on Instagram"
             secondaryHref={SOCIAL.instagram}
