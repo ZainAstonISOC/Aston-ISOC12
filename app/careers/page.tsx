@@ -81,7 +81,7 @@ export default async function CareersPage() {
                 </span>
               </div>
             ))}
-            <p
+            <p data-sources={JSON.stringify(sources.map(s => [s.id, s.enabled, s.count, s.error ?? null]))}
               style={{
                 fontFamily: DM,
                 fontSize: "0.76rem",
