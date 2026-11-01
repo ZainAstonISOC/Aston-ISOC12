@@ -30,6 +30,9 @@ export default async function CareersPage() {
   const { opportunities, sources, updatedAt } = await getOpportunityBoard();
 
   const liveSources = sources.filter(s => s.enabled && !s.error && s.count > 0);
+  // A source that failed today says so, rather than silently vanishing; the
+  // reason rides along in data-error for whoever is debugging.
+  const failedSources = sources.filter(s => s.enabled && s.error);
   const categoriesCovered = new Set(opportunities.map(o => o.category));
   const closingSoon = closingWithin(opportunities, 14);
   const direct = opportunities.filter(o => o.source === "employer").length;
@@ -90,7 +93,11 @@ export default async function CareersPage() {
             >
               {/* Counts are shown deliberately: a provider that returns nothing
                   used to look identical to one that was working. */}
-              Sources: {liveSources.map(s => `${s.label} (${s.count})`).join(", ")}. Updated {updated}.
+              Sources: {liveSources.map(s => `${s.label} (${s.count})`).join(", ")}.
+              {failedSources.map(s => (
+                <span key={s.id} data-error={s.error}> {s.label} is unavailable today.</span>
+              ))}{" "}
+              Updated {updated}.
             </p>
           </div>
         </div>
