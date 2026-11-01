@@ -657,14 +657,20 @@ p { color: var(--muted); line-height: 1.78; }
 @media (min-width: 1024px) { .hero-film { width: 100%; max-width: 520px; } }
 /* An elliptical feather, so the film's stage dissolves into the page and its
    girih pattern instead of reading as a box. The phone sits inside the solid
-   centre; only the cards that fly out to the edges soften. */
+   centre; only the cards that fly out to the edges soften.
+   The mask sits on a wrapper, never on the <video>: Safari intermittently
+   draws a masked video as nothing at all (it plays, but the box stays empty). */
+.hero-film__stage {
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 66%, transparent 100%);
+          mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 66%, transparent 100%);
+}
 .hero-film__video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  -webkit-mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 66%, transparent 100%);
-          mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 66%, transparent 100%);
 }
 .hero-film__toggle {
   position: absolute;

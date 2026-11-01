@@ -88,24 +88,26 @@ export default function HeroFilm() {
 
   return (
     <div className="hero-film">
-      <video
-        ref={video}
-        className="hero-film__video"
-        poster="/hero/isoc-film-poster.webp"
-        muted
-        loop
-        playsInline
-        preload="none"
-        disablePictureInPicture
-        disableRemotePlayback
-        aria-hidden="true"
-        tabIndex={-1}
-        width={1080}
-        height={1350}
-      >
-        <source src="/hero/isoc-film-720.mp4" type="video/mp4" media="(max-width: 767px)" />
-        <source src="/hero/isoc-film-1080.mp4" type="video/mp4" />
-      </video>
+      <div className="hero-film__stage">
+        <video
+          ref={video}
+          className="hero-film__video"
+          poster="/hero/isoc-film-poster.webp"
+          muted
+          loop
+          playsInline
+          preload="none"
+          disablePictureInPicture
+          disableRemotePlayback
+          aria-hidden="true"
+          tabIndex={-1}
+          width={1080}
+          height={1350}
+        >
+          <source src="/hero/isoc-film-720.mp4" type="video/mp4" media="(max-width: 767px)" />
+          <source src="/hero/isoc-film-1080.mp4" type="video/mp4" />
+        </video>
+      </div>
       {canPlay && (
         <button type="button" className="hero-film__toggle" onClick={toggle} aria-label={playing ? "Pause the film" : "Play the film"}>
           {playing ? (
