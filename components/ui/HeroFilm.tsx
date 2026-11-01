@@ -44,15 +44,35 @@ export default function HeroFilm() {
     v.addEventListener("pause", onPause);
 
     // Only decode while it is on screen.
+    let inView = typeof IntersectionObserver === "undefined";
     let observer: IntersectionObserver | undefined;
-    if (typeof IntersectionObserver === "undefined") play();
+    if (inView) play();
     else {
-      observer = new IntersectionObserver(([e]) => (e.isIntersecting ? play() : v.pause()), { threshold: 0.15 });
+      observer = new IntersectionObserver(([e]) => {
+        inView = e.isIntersecting;
+        if (inView) play(); else v.pause();
+      }, { threshold: 0.15 });
       observer.observe(v);
     }
 
+    // Self-healing. Safari pauses or starves background-ish media on its own
+    // (many tabs, other media playing, power), and a stalled first download
+    // leaves the poster frozen until a refresh. While the film is on screen
+    // and the visitor hasn't paused it, keep it playing.
+    let stalledTicks = 0;
+    const heal = () => {
+      if (!inView || userPaused.current || document.visibilityState !== "visible") { stalledTicks = 0; return; }
+      if (v.paused) { play(); return; }
+      stalledTicks = v.readyState < 3 ? stalledTicks + 1 : 0;
+      if (stalledTicks >= 2) { stalledTicks = 0; v.load(); play(); }
+    };
+    const watchdog = window.setInterval(heal, 2000);
+    document.addEventListener("visibilitychange", heal);
+
     return () => {
       observer?.disconnect();
+      window.clearInterval(watchdog);
+      document.removeEventListener("visibilitychange", heal);
       gestures.forEach(g => window.removeEventListener(g, retry));
       v.removeEventListener("play", onPlay);
       v.removeEventListener("pause", onPause);
