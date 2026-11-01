@@ -20,6 +20,7 @@ function motionAllowed() {
 
 export default function HeroFilm() {
   const video = useRef<HTMLVideoElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const userPaused = useRef(false);
   // False on the server and for visitors who asked for less motion or data.
   const canPlay = useSyncExternalStore(subscribe, motionAllowed, () => false);
@@ -42,6 +43,24 @@ export default function HeroFilm() {
     const onPause = () => setPlaying(false);
     v.addEventListener("play", onPlay);
     v.addEventListener("pause", onPause);
+
+    // Safari sometimes leaves a masked video undrawn (an empty box) after the
+    // page is shown again from another section. Dropping the mask for one
+    // frame when frames start flowing makes it composite the layer afresh.
+    let frame = 0;
+    const redraw = () => {
+      const s = stage.current;
+      if (!s) return;
+      s.style.setProperty("-webkit-mask-image", "none");
+      s.style.setProperty("mask-image", "none");
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        s.style.removeProperty("-webkit-mask-image");
+        s.style.removeProperty("mask-image");
+      });
+    };
+    const redrawOn = ["loadeddata", "playing"] as const;
+    redrawOn.forEach(ev => v.addEventListener(ev, redraw));
 
     // Only decode while it is on screen.
     let inView = typeof IntersectionObserver === "undefined";
@@ -74,6 +93,8 @@ export default function HeroFilm() {
       window.clearInterval(watchdog);
       document.removeEventListener("visibilitychange", heal);
       gestures.forEach(g => window.removeEventListener(g, retry));
+      cancelAnimationFrame(frame);
+      redrawOn.forEach(ev => v.removeEventListener(ev, redraw));
       v.removeEventListener("play", onPlay);
       v.removeEventListener("pause", onPause);
     };
@@ -88,7 +109,7 @@ export default function HeroFilm() {
 
   return (
     <div className="hero-film">
-      <div className="hero-film__stage">
+      <div ref={stage} className="hero-film__stage">
         <video
           ref={video}
           className="hero-film__video"
